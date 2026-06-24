@@ -1,22 +1,98 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* Main Colors */
   --color-tranquil-velvet: #6C1D5F;
-  --color-tranquil-velvet-dark: #4A1E47;
+  --color-tranquil-velvet-dark: var(--tranquil-velvet-dark);
   
   /* Secondary Colors */
   --color-bright-velvet: #84117C;
   
   /* Tertiary Colors */
-  --color-blueish-grey: #F7F8FC;
-  --color-medium-grey: #DADCEA;
+  --color-blueish-grey: var(--bg-page);
+  --color-medium-grey: var(--border-card);
   
   /* Neutral Colors */
-  --color-light-grey: #DEDEDE;
-  --color-dark-grey: #5A5A5A;
+  --color-light-grey: var(--bg-light-grey);
+  --color-dark-grey: var(--text-secondary);
   
   /* Link/CTA Colors */
   --color-emerald: #01AC9F;
   --color-cta-orange: #FF6200;
+
+  /* Custom Theme Tokens */
+  --color-bg-page: var(--bg-page);
+  --color-bg-card: var(--bg-card);
+  --color-border-card: var(--border-card);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+}
+
+:root {
+  --tranquil-velvet-dark: #4A1E47;
+  --bg-page: #F7F8FC;
+  --bg-card: #FFFFFF;
+  --bg-light-grey: #DEDEDE;
+  --border-card: #DADCEA;
+  --text-primary: #000000;
+  --text-secondary: #5A5A5A;
+  --glow-blend-mode: normal;
+}
+
+.dark {
+  --tranquil-velvet-dark: #2A1028;
+  --bg-page: #0F1015;
+  --bg-card: #16171F;
+  --bg-light-grey: #262837;
+  --border-card: #282A3A;
+  --text-primary: #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --glow-blend-mode: plus-lighter;
+}
+
+/* Global Overrides for Dark Mode */
+.dark body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+}
+
+.dark .text-black {
+  color: var(--text-primary) !important;
+}
+
+.dark .text-dark-grey {
+  color: var(--text-secondary) !important;
+}
+
+.dark .bg-white {
+  background-color: var(--bg-card) !important;
+}
+
+.dark .bg-white\/95,
+.dark .bg-white\/90,
+.dark .bg-white\/80 {
+  background-color: rgba(22, 23, 31, 0.9) !important;
+}
+
+.dark .border-medium-grey {
+  border-color: var(--border-card) !important;
+}
+
+.dark .bg-blueish-grey {
+  background-color: var(--bg-page) !important;
+}
+
+.dark input, 
+.dark select, 
+.dark textarea {
+  background-color: var(--bg-page) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-card) !important;
+}
+
+/* Specific elements like Logo background container in Dashboard */
+.dark .cursor-pointer.hover\:opacity-95.transition.bg-white {
+  background-color: #FFFFFF !important; /* Keep Logo card white for Xebia Purple logo readability */
 }
