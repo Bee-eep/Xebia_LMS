@@ -413,7 +413,7 @@ export default function ReportsPage() {
             <p className="text-[10px] text-dark-grey">Configured report pipelines delivering automated database metrics straight to admin inboxes</p>
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto sleek-scrollbar">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-[#F7F8FC] dark:border-[#262837] text-[10px] font-bold text-dark-grey uppercase">

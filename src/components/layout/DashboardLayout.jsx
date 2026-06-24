@@ -16,7 +16,7 @@ export default function DashboardLayout({ children, onSearchChange, searchValue 
         <Navbar onSearchChange={onSearchChange} searchValue={searchValue} />
 
         {/* Dynamic viewport scroll area */}
-        <main className="flex-1 overflow-y-auto bg-blueish-grey dark:bg-bg-page p-6 md:p-8">
+        <main className="flex-1 overflow-y-auto sleek-scrollbar bg-blueish-grey dark:bg-bg-page p-6 md:p-8">
           {children}
         </main>
       </div>

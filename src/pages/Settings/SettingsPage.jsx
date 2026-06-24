@@ -216,7 +216,7 @@ export default function SettingsPage() {
                         <input 
                           type="email" 
                           required
-                          defaultValue="lms-admin@xebia.com" 
+                          defaultValue="apurv.jha@xebia.com" 
                           className="w-full text-xs font-semibold bg-white dark:bg-[#0F1015] border border-medium-grey dark:border-[#282A3A] px-3.5 py-2.5 rounded-xl focus:outline-none"
                         />
                       </div>

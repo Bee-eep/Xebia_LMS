@@ -33,7 +33,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }) {
         {isCollapsed ? <ChevronRight className="h-3.5 w-3.5" /> : <ChevronLeft className="h-3.5 w-3.5" />}
       </button>
 
-      <div className="p-4 flex-1 flex flex-col overflow-y-auto">
+      <div className="p-4 flex-1 flex flex-col overflow-y-auto sleek-scrollbar">
         {/* Logo and Org Name */}
         <div className={`flex items-center gap-3 mb-8 bg-[#FFFFFF] p-2.5 rounded-xl shadow-md border border-medium-grey/40 dark:border-transparent ${isCollapsed ? 'justify-center' : 'justify-start'}`}>
           <Logo className={isCollapsed ? 'h-6' : 'h-8'} />
@@ -82,11 +82,11 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }) {
         {/* Profile Card */}
         <div className={`flex items-center gap-3 ${isCollapsed ? 'justify-center' : 'justify-start'}`}>
           <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-tranquil-velvet to-bright-velvet border-2 border-cta-orange/40 flex items-center justify-center text-white font-extrabold shadow-md shrink-0">
-            JD
+            AJ
           </div>
           {!isCollapsed && (
             <div className="leading-tight">
-              <h4 className="text-xs font-bold text-black dark:text-white">Jane Doe</h4>
+              <h4 className="text-xs font-bold text-black dark:text-white">Apurv Jha</h4>
               <p className="text-[10px] text-dark-grey dark:text-white/55 font-medium">Platform Admin</p>
             </div>
           )}

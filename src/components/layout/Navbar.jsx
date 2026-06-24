@@ -82,7 +82,7 @@ export default function Navbar({ onSearchChange, searchValue }) {
             <div className="fixed inset-0 z-40" onClick={() => setNotifDropdownOpen(false)}></div>
             <div className="absolute right-12 top-12 w-80 bg-white dark:bg-bg-card border border-medium-grey dark:border-border-card rounded-2xl shadow-xl p-4 space-y-3 z-50 animate-in fade-in duration-200">
               <h4 className="text-xs font-extrabold text-black dark:text-white uppercase tracking-wider border-b border-medium-grey/50 pb-2">Recent Notifications</h4>
-              <div className="space-y-3 max-h-60 overflow-y-auto pr-1">
+              <div className="space-y-3 max-h-60 overflow-y-auto sleek-scrollbar pr-2">
                 <div className="text-[11px] leading-relaxed text-dark-grey border-b border-medium-grey/30 pb-2">
                   <p className="font-bold text-black dark:text-white">🚀 System Peak Warning</p>
                   <p className="mt-0.5">Server workload hit 88% due to active DevOps sandboxes.</p>
@@ -105,7 +105,7 @@ export default function Navbar({ onSearchChange, searchValue }) {
           onClick={() => setDropdownOpen(!dropdownOpen)}
           className="h-9 w-9 rounded-xl bg-gradient-to-tr from-tranquil-velvet to-bright-velvet border-2 border-cta-orange/40 flex items-center justify-center text-white font-extrabold shadow-md cursor-pointer hover:scale-105 transition"
         >
-          JD
+          AJ
         </button>
 
         {/* Profile Dropdown */}
@@ -114,7 +114,7 @@ export default function Navbar({ onSearchChange, searchValue }) {
             <div className="fixed inset-0 z-40" onClick={() => setDropdownOpen(false)}></div>
             <div className="absolute right-0 top-12 w-52 bg-white dark:bg-bg-card border border-medium-grey dark:border-border-card rounded-2xl shadow-xl p-2.5 z-50 animate-in fade-in duration-200">
               <div className="px-3.5 py-2 border-b border-medium-grey/50 dark:border-border-card/50 pb-2.5 mb-2 leading-tight">
-                <p className="text-xs font-bold text-black dark:text-white">Jane Doe</p>
+                <p className="text-xs font-bold text-black dark:text-white">Apurv Jha</p>
                 <p className="text-[9px] text-dark-grey uppercase font-bold tracking-wider mt-0.5">Platform Admin</p>
               </div>
 

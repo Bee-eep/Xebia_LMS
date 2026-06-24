@@ -188,7 +188,7 @@ export default function UsersPage({ searchQuery }) {
         </div>
 
         {/* Datatable */}
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto sleek-scrollbar">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
               <tr className="border-b border-medium-grey/50 dark:border-border-card text-dark-grey uppercase font-bold tracking-wider bg-blueish-grey/50 dark:bg-bg-page/50">
