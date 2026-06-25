@@ -82,7 +82,7 @@ export default function UsersPage({ searchQuery }) {
   return (
     <div className="space-y-6">
       {/* Header Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           { title: 'Total Users', count: 12840, change: '+14% growth', icon: Users, color: '304 76 30' },
           { title: 'Active Users', count: 854, change: '+8% this week', icon: UserCheck, color: '176 99 34' },

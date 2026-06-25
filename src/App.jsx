@@ -4,7 +4,6 @@ import Home from './pages/Home.jsx';
 import FAQ from './pages/FAQ.jsx';
 import Contact from './pages/Contact.jsx';
 import Dashboard from './pages/Dashboard.jsx';
-import Dashboard2 from './pages/Dashboard2/Dashboard2.jsx';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 
 const initialCourses = [
@@ -106,7 +105,6 @@ function App() {
               />
             } 
           />
-          <Route path="/dashboard2" element={<Dashboard2 />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

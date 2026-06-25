@@ -40,7 +40,7 @@ export default function CoursesPage({ courses, handleSimulateProgress, searchQue
   return (
     <div className="space-y-6">
       {/* Header Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           { title: 'Total Courses', count: courses.length, icon: BookOpen, color: '304 76 30' },
           { title: 'Published', count: courses.length, icon: CheckCircle, color: '176 99 34' },

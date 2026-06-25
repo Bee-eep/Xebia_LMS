@@ -123,7 +123,7 @@ export default function TutorsPage({ tutors = [], setTutors }) {
       </div>
 
       {/* Stats Counters */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           { title: 'Total Faculty Tutors', count: tutors.length, suffix: '', sub: 'Qualified instructors' },
           { title: 'Tutors Online Now', count: onlineCount, suffix: ' online', sub: 'Active classroom hours' },

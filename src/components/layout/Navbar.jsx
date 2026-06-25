@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { Search, Bell, MessageSquare, Sparkles, LogOut, Settings, HelpCircle, ChevronRight } from 'lucide-react';
+import { Search, Bell, MessageSquare, Sparkles, LogOut, Settings, HelpCircle, ChevronRight, Menu } from 'lucide-react';
 
 const pathTitleMap = {
   '/dashboard': { title: 'Dashboard', category: 'Analytics' },
@@ -12,7 +12,7 @@ const pathTitleMap = {
   '/dashboard/settings': { title: 'System Settings', category: 'Settings' }
 };
 
-export default function Navbar({ onSearchChange, searchValue }) {
+export default function Navbar({ onSearchChange, searchValue, onToggleMobileSidebar }) {
   const location = useLocation();
   const currentPath = location.pathname;
   const pageMeta = pathTitleMap[currentPath] || { title: 'Dashboard', category: 'Analytics' };
@@ -20,26 +20,36 @@ export default function Navbar({ onSearchChange, searchValue }) {
   const [notifDropdownOpen, setNotifDropdownOpen] = useState(false);
 
   return (
-    <header className="h-16 border-b border-medium-grey px-8 flex items-center justify-between bg-white/80 dark:bg-bg-card/85 backdrop-blur-md sticky top-0 z-30 shrink-0">
+    <header className="h-16 border-b border-medium-grey px-4 sm:px-6 md:px-8 flex items-center justify-between bg-white/80 dark:bg-bg-card/85 backdrop-blur-md sticky top-0 z-30 shrink-0">
       
-      {/* Left: Breadcrumbs & Dynamic Title */}
-      <div className="flex flex-col select-none">
-        <div className="flex items-center gap-1 text-[10px] font-bold text-dark-grey uppercase tracking-wider">
-          <span>Admin</span>
-          <ChevronRight className="h-3 w-3" />
-          <span className="text-tranquil-velvet dark:text-amber-400">{pageMeta.category}</span>
+      {/* Left: Breadcrumbs & Dynamic Title & Hamburger Menu */}
+      <div className="flex items-center gap-3 select-none">
+        <button
+          onClick={onToggleMobileSidebar}
+          className="lg:hidden p-2 -ml-2 rounded-xl text-dark-grey hover:text-black dark:hover:text-white hover:bg-blueish-grey dark:hover:bg-[#1E1F29] transition cursor-pointer"
+          aria-label="Open Sidebar"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+
+        <div className="flex flex-col">
+          <div className="flex items-center gap-1 text-[10px] font-bold text-dark-grey uppercase tracking-wider">
+            <span>Admin</span>
+            <ChevronRight className="h-3 w-3" />
+            <span className="text-tranquil-velvet dark:text-amber-400">{pageMeta.category}</span>
+          </div>
+          <h1 className="text-base font-extrabold text-black dark:text-white leading-tight">
+            {pageMeta.title}
+          </h1>
         </div>
-        <h1 className="text-base font-extrabold text-black dark:text-white leading-tight">
-          {pageMeta.title}
-        </h1>
       </div>
 
       {/* Center: Global Search Bar */}
-      <div className="flex items-center gap-3 w-full max-w-xs md:max-w-sm px-3.5 py-1.5 bg-blueish-grey dark:bg-[#1E1F29] border border-medium-grey dark:border-[#2D3043] rounded-xl focus-within:border-tranquil-velvet transition duration-200">
+      <div className="flex items-center gap-2 flex-1 max-w-[130px] sm:max-w-xs md:max-w-sm px-2.5 sm:px-3.5 py-1.5 bg-blueish-grey dark:bg-[#1E1F29] border border-medium-grey dark:border-[#2D3043] rounded-xl focus-within:border-tranquil-velvet transition duration-200">
         <Search className="h-4.5 w-4.5 text-dark-grey shrink-0" />
         <input 
           type="text" 
-          placeholder="Search records, parameters, lists..." 
+          placeholder="Search..." 
           value={searchValue || ''}
           onChange={onSearchChange}
           className="bg-transparent text-xs text-black dark:text-white placeholder-dark-grey/50 focus:outline-none w-full font-medium"
@@ -47,25 +57,27 @@ export default function Navbar({ onSearchChange, searchValue }) {
       </div>
 
       {/* Right: Actions Menu */}
-      <div className="flex items-center gap-3 relative">
+      <div className="flex items-center gap-2 sm:gap-3 relative">
         {/* AI Assistant Button */}
         <button 
           onClick={() => alert("AI Assistant panel toggled! Under sandbox development.")}
-          className="px-3.5 py-1.5 bg-gradient-to-r from-tranquil-velvet to-bright-velvet hover:opacity-95 text-white text-[11px] font-bold rounded-xl transition duration-150 flex items-center gap-1.5 shadow-md shadow-tranquil-velvet/20 cursor-pointer border border-transparent"
+          className="p-2 sm:px-3.5 sm:py-1.5 bg-gradient-to-r from-tranquil-velvet to-bright-velvet hover:opacity-95 text-white text-[11px] font-bold rounded-xl transition duration-150 flex items-center gap-1.5 shadow-md shadow-tranquil-velvet/20 cursor-pointer border border-transparent"
         >
           <Sparkles className="h-3.5 w-3.5" />
           <span className="hidden sm:inline">AI Copilot</span>
         </button>
 
-        <div className="h-6 w-px bg-medium-grey dark:bg-border-card"></div>
+        <div className="h-6 w-px bg-medium-grey dark:bg-border-card hidden sm:block"></div>
 
         {/* Messaging button */}
         <button 
           onClick={() => alert("Inbox widget opened! Sandbox simulation active.")}
-          className="relative p-2 text-dark-grey hover:text-black dark:hover:text-white transition rounded-xl hover:bg-blueish-grey dark:hover:bg-[#1E1F29] cursor-pointer"
+          className="relative p-2 text-dark-grey hover:text-black dark:hover:text-white transition rounded-xl hover:bg-blueish-grey dark:hover:bg-[#1E1F29] cursor-pointer hidden sm:block"
         >
           <MessageSquare className="h-5 w-5" />
         </button>
+
+        <div className="h-6 w-px bg-medium-grey dark:bg-border-card"></div>
 
         {/* Notification bell */}
         <button 
@@ -80,7 +92,7 @@ export default function Navbar({ onSearchChange, searchValue }) {
         {notifDropdownOpen && (
           <>
             <div className="fixed inset-0 z-40" onClick={() => setNotifDropdownOpen(false)}></div>
-            <div className="absolute right-12 top-12 w-80 bg-white dark:bg-bg-card border border-medium-grey dark:border-border-card rounded-2xl shadow-xl p-4 space-y-3 z-50 animate-in fade-in duration-200">
+            <div className="absolute right-0 sm:right-12 top-12 w-[calc(100vw-32px)] sm:w-80 bg-white dark:bg-bg-card border border-medium-grey dark:border-border-card rounded-2xl shadow-xl p-4 space-y-3 z-50 animate-in fade-in duration-200">
               <h4 className="text-xs font-extrabold text-black dark:text-white uppercase tracking-wider border-b border-medium-grey/50 pb-2">Recent Notifications</h4>
               <div className="space-y-3 max-h-60 overflow-y-auto sleek-scrollbar pr-2">
                 <div className="text-[11px] leading-relaxed text-dark-grey border-b border-medium-grey/30 pb-2">

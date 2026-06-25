@@ -18,20 +18,22 @@ const navItems = [
   { path: '/dashboard/settings', label: 'Settings', icon: Settings },
 ];
 
-export default function Sidebar({ isCollapsed, setIsCollapsed }) {
+export default function Sidebar({ isCollapsed, setIsCollapsed, isMobile = false, onClose }) {
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   return (
-    <aside className={`h-screen bg-white dark:bg-[#11050F] text-black dark:text-white flex flex-col justify-between transition-all duration-300 relative border-r border-medium-grey dark:border-white/5 shadow-lg dark:shadow-2xl ${isCollapsed ? 'w-20' : 'w-64'}`}>
+    <aside className={`h-screen bg-white dark:bg-[#11050F] text-black dark:text-white flex flex-col justify-between transition-all duration-300 relative border-r border-medium-grey dark:border-white/5 shadow-lg dark:shadow-2xl ${isCollapsed ? 'w-20' : 'w-64'} ${isMobile ? 'border-r-0 shadow-none' : ''}`}>
       
       {/* Collapse Toggle */}
-      <button 
-        onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute -right-3 top-6 h-6 w-6 rounded-full bg-cta-orange text-white flex items-center justify-center shadow-lg border border-white/10 hover:scale-115 transition duration-150 cursor-pointer z-50"
-      >
-        {isCollapsed ? <ChevronRight className="h-3.5 w-3.5" /> : <ChevronLeft className="h-3.5 w-3.5" />}
-      </button>
+      {!isMobile && (
+        <button 
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="absolute -right-3 top-6 h-6 w-6 rounded-full bg-cta-orange text-white flex items-center justify-center shadow-lg border border-white/10 hover:scale-115 transition duration-150 cursor-pointer z-50"
+        >
+          {isCollapsed ? <ChevronRight className="h-3.5 w-3.5" /> : <ChevronLeft className="h-3.5 w-3.5" />}
+        </button>
+      )}
 
       <div className="p-4 flex-1 flex flex-col overflow-y-auto sleek-scrollbar">
         {/* Logo and Org Name */}
@@ -54,6 +56,11 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }) {
                 key={item.path}
                 to={item.path}
                 end={item.path === '/dashboard'}
+                onClick={() => {
+                  if (isMobile && onClose) {
+                    onClose();
+                  }
+                }}
                 className={({ isActive }) => 
                   `flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer group relative ${
                     isActive 

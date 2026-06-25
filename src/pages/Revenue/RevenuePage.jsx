@@ -20,7 +20,7 @@ export default function RevenuePage() {
   return (
     <div className="space-y-6">
       {/* Metrics Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           { title: 'Monthly Recurring (MRR)', count: 43000, change: '+12% vs last month', icon: DollarSign, color: '176 99 34', prefix: '$' },
           { title: 'Annual Run Rate (ARR)', count: 516000, change: 'Projection target $600k', icon: Calendar, color: '304 76 30', prefix: '$' },

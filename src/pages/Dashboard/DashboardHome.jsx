@@ -76,7 +76,7 @@ export default function DashboardHome({ tutors = [] }) {
   return (
     <div className="space-y-6">
       {/* Bento Grid Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-12 auto-rows-[170px] gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-12 md:auto-rows-[170px] gap-6">
         
         {/* BENTO CARD 1: Hero Platform Overview (col-span-6, row-span-2) */}
         <div className="md:col-span-6 md:row-span-2">
@@ -307,7 +307,7 @@ export default function DashboardHome({ tutors = [] }) {
               </div>
 
               {/* Chart */}
-              <div className="flex-1 min-h-[200px]">
+              <div className="flex-1 min-h-[240px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={getAnalyticsData()} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
                     <defs>
