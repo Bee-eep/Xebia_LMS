@@ -8,7 +8,7 @@ import BorderGlow from '../components/BorderGlow.jsx';
 import Typewriter from '../components/Typewriter.jsx';
 import CountUp from '../components/CountUp.jsx';
 import { useTheme } from '../context/ThemeContext.jsx';
-import heroImg from '../assets/hero2.png';
+import heroImg from '../assets/Hero2.png';
 import bg1Img from '../assets/BG1.png';
 
 const featuredCourses = [
