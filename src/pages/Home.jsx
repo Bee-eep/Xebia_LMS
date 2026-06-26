@@ -239,7 +239,7 @@ export default function Home() {
             <motion.div
               variants={fadeUpItem}
               whileHover="hover"
-              className="inline-flex items-center gap-2 bg-tranquil-velvet/10 border border-tranquil-velvet/20 px-3.5 py-1.5 rounded-full text-tranquil-velvet font-bold text-xs select-none cursor-default"
+              className="inline-flex items-center gap-2 bg-tranquil-velvet/10 border border-tranquil-velvet/20 px-3.5 py-1.5 rounded-full text-tranquil-velvet dark:text-[#b25fa6] dark:bg-tranquil-velvet/25 dark:border-tranquil-velvet/40 font-bold text-xs select-none cursor-default"
             >
               <motion.span
                 variants={{
@@ -255,7 +255,7 @@ export default function Home() {
 
             <motion.h1
               variants={fadeUpItem}
-              className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-black dark:text-white tracking-tight leading-[110%] font-extrabold"
+              className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-text-primary dark:text-white tracking-tight leading-[110%]"
             >
               Accelerate your{' '}
               <br></br>
@@ -267,15 +267,15 @@ export default function Home() {
                   "System Architectures",
                   "Engineering Scale"
                 ]}
-                className="bg-gradient-to-r from-tranquil-velvet to-bright-velvet bg-clip-text text-transparent"
+                className="bg-gradient-to-r from-tranquil-velvet to-bright-velvet dark:from-[#802370] dark:to-[#9E1B94] bg-clip-text text-transparent"
               />{' '}
               <br></br>
-              with <span className="bg-gradient-to-r from-tranquil-velvet to-bright-velvet bg-clip-text text-transparent">Xebia</span>
+              with <span className="bg-gradient-to-r from-tranquil-velvet to-bright-velvet dark:from-[#802370] dark:to-[#9E1B94] bg-clip-text text-transparent">Xebia</span>
             </motion.h1>
 
             <motion.p
               variants={fadeUpItem}
-              className="text-dark-grey dark:text-white/75 text-base md:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed"
+              className="text-text-secondary dark:text-white/95 text-base md:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed"
             >
               Empower your engineers with tailored learning paths, interactive sandbox simulations, and certified corporate curriculum designed by leading software authorities.
             </motion.p>
