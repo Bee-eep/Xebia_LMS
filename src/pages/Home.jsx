@@ -1,52 +1,78 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Compass, CheckCircle, Trophy, ArrowRight, Star, Clock, ChevronRight, Check } from 'lucide-react';
+import { Shield, ArrowRight, HelpCircle, Search, ChevronDown, Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 import HeaderNav from '../components/HeaderNav.jsx';
 import Footer from '../components/Footer.jsx';
 import BorderGlow from '../components/BorderGlow.jsx';
 import Typewriter from '../components/Typewriter.jsx';
-import CountUp from '../components/CountUp.jsx';
 import { useTheme } from '../context/ThemeContext.jsx';
 import heroImg from '../assets/Hero2.png';
 import bg1Img from '../assets/BG1.png';
 
-const featuredCourses = [
+const faqData = [
   {
     id: 1,
-    title: "Enterprise React with Tailwind CSS",
-    instructor: "Sarah Jenkins",
-    category: "Frontend",
-    rating: 4.9,
-    reviews: 128,
-    duration: "12h 45m",
-    level: "Intermediate",
-    description: "Build robust, state-of-the-art corporate web platforms with advanced state management and optimized rendering configurations.",
-    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=400&q=80"
+    category: "general",
+    question: "What is Xebia LMS?",
+    answer: "Xebia LMS is a next-generation corporate Learning Management System specifically designed to accelerate development, deployment, and structural design capabilities for enterprise software engineering departments."
   },
   {
     id: 2,
-    title: "Fullstack Architecture & Design Patterns",
-    instructor: "Alex Rivera",
-    category: "Architecture",
-    rating: 4.8,
-    reviews: 94,
-    duration: "18h 30m",
-    level: "Advanced",
-    description: "Design highly maintainable distributed systems, master clean architecture, and implement production-ready software patterns.",
-    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80"
+    category: "general",
+    question: "How do I enroll in a learning path?",
+    answer: "Learning path enrollments can be authorized by your department's administrator, or you can register directly from the Learning Paths page inside the LMS platform."
   },
   {
     id: 3,
-    title: "Introduction to Cloud Native & Kubernetes",
-    instructor: "Michael Chen",
-    category: "DevOps",
-    rating: 4.7,
-    reviews: 156,
-    duration: "8h 15m",
-    level: "Beginner",
-    description: "Deploy scalable microservices pipelines. Master configuration maps, storage management, and advanced pod distribution metrics.",
-    image: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?"
+    category: "portal",
+    question: "How can I simulate completing a lesson?",
+    answer: "To simulate a complete lesson, navigate to the Student Portal (LMS Dashboard), select a course, and in the bottom of the Course Details page, click 'Simulate Complete Lesson'. This increases your progress bar by one module."
+  },
+  {
+    id: 4,
+    category: "portal",
+    question: "Where do I download certificates?",
+    answer: "Once a course progress bar reaches 100%, graduation credentials are automatically registered. You can review and download certificates in the 'Certificates' tab in the Student Portal sidebar."
+  },
+  {
+    id: 5,
+    category: "corporate",
+    question: "Do you support custom event-driven labs?",
+    answer: "Yes, Xebia LMS supports enterprise sandboxed lab configurations for Kubernetes node scaling, event streaming deployments with Kafka, and React component integration pipelines."
+  },
+  {
+    id: 6,
+    category: "corporate",
+    question: "How do I request a dedicated client dashboard?",
+    answer: "Submit a request form in the Contact Us section below, and one of our enterprise curriculum consultants will connect with you to review your team size and coordinate setup configurations."
+  }
+];
+
+const officeLocations = [
+  {
+    city: "Amsterdam (HQ)",
+    address: "Wibautstraat 224, 1097 DN Amsterdam, Netherlands",
+    phone: "+31 (0)20 333 0606",
+    email: "info@xebia.com"
+  },
+  {
+    city: "Noida",
+    address: "Logix Techno Park, Sector 127, Noida, UP 201301, India",
+    phone: "+91 120 409 2700",
+    email: "india-info@xebia.com"
+  },
+  {
+    city: "Atlanta",
+    address: "Peachtree St NE, Suite 1400, Atlanta, GA 30309, USA",
+    phone: "+1 (404) 474 4114",
+    email: "usa-info@xebia.com"
+  },
+  {
+    city: "Paris",
+    address: "Rue de la Chaussée d'Antin, 75009 Paris, France",
+    phone: "+33 (0)1 83 62 10 10",
+    email: "france-info@xebia.com"
   }
 ];
 
@@ -70,78 +96,129 @@ const fadeUpItem = {
   }
 };
 
-const hoverCard = {
-  hover: {
-    y: -8,
-    scale: 1.01,
-    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-    transition: { duration: 0.3, ease: "easeOut" }
-  }
-};
-
-const scrollReveal = {
-  hidden: { opacity: 0, y: 35 },
+const faqContainerVariants = {
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: "easeOut" }
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.05
+    }
   }
 };
 
-const tabItemVariant = {
+const faqItemVariants = {
   hidden: { opacity: 0, y: 15 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: "spring", stiffness: 120, damping: 18 }
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { type: "spring", stiffness: 100, damping: 15 } 
   }
 };
 
-const getBorderGlowConfig = (category) => {
-  switch (category) {
-    case 'Frontend':
-      return {
-        glowColor: '304 76 30',
-        colors: ['#6C1D5F', '#84117C', '#FF6200']
-      };
-    case 'Architecture':
-      return {
-        glowColor: '304 76 30',
-        colors: ['#84117C', '#6C1D5F', '#01AC9F']
-      };
-    case 'DevOps':
-      return {
-        glowColor: '176 99 34',
-        colors: ['#01AC9F', '#FF6200', '#6C1D5F']
-      };
-    default:
-      return {
-        glowColor: '304 76 30',
-        colors: ['#6C1D5F', '#84117C', '#FF6200']
-      };
+const contactContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.1
+    }
+  }
+};
+
+const contactItemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { type: "spring", stiffness: 100, damping: 15 } 
   }
 };
 
 export default function Home() {
-  const [activeCurriculumTab, setActiveCurriculumTab] = useState('frontend');
-  const [hoveredCourseId, setHoveredCourseId] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
   const { theme } = useTheme();
 
-  const handleGoToDashboard = (course = null) => {
-    if (course) {
-      navigate('/dashboard', { state: { courseId: course.id } });
-    } else {
-      navigate('/dashboard');
+  // FAQ States
+  const [faqSearchQuery, setFaqSearchQuery] = useState('');
+  const [activeFaqCategory, setActiveFaqCategory] = useState('all');
+  const [expandedFaqId, setExpandedFaqId] = useState(null);
+
+  // Contact States
+  const [contactForm, setContactForm] = useState({ name: '', email: '', subject: 'demo', message: '' });
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const [activeHighlight, setActiveHighlight] = useState(null);
+
+  // Custom Event Listener for smooth scrolling and highlighting
+  useEffect(() => {
+    const handleScrollEvent = (e) => {
+      const id = e.detail;
+      const element = document.getElementById(id);
+      if (element) {
+        setActiveHighlight(id);
+        element.scrollIntoView({ behavior: 'smooth' });
+        
+        // Remove highlight after animation completes
+        const clearTimer = setTimeout(() => {
+          setActiveHighlight(null);
+        }, 2000);
+        return () => clearTimeout(clearTimer);
+      }
+    };
+
+    window.addEventListener('app-scroll-to', handleScrollEvent);
+    return () => window.removeEventListener('app-scroll-to', handleScrollEvent);
+  }, []);
+
+  // Handle initial page load hash and location updates
+  useEffect(() => {
+    if (location.hash) {
+      const targetId = location.hash.slice(1);
+      const timer = setTimeout(() => {
+        const event = new CustomEvent('app-scroll-to', { detail: targetId });
+        window.dispatchEvent(event);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [location.pathname, location.hash]);
+
+  const handleScrollTo = (id) => {
+    // Set hash manually to keep url in sync
+    window.history.pushState(null, '', `#${id}`);
+    const event = new CustomEvent('app-scroll-to', { detail: id });
+    window.dispatchEvent(event);
+  };
+
+
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+    if (contactForm.name && contactForm.email && contactForm.message) {
+      setFormSubmitted(true);
+      setTimeout(() => {
+        setFormSubmitted(false);
+        setContactForm({ name: '', email: '', subject: 'demo', message: '' });
+      }, 5000);
     }
   };
 
+  // Filtered FAQs
+  const filteredFaqs = faqData.filter(faq => {
+    const matchesCategory = activeFaqCategory === 'all' || faq.category === activeFaqCategory;
+    const matchesSearch = faq.question.toLowerCase().includes(faqSearchQuery.toLowerCase()) || 
+                          faq.answer.toLowerCase().includes(faqSearchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
   return (
-    <div className="flex flex-col min-h-screen bg-blueish-grey overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-blueish-grey dark:bg-[#0F1015] overflow-x-hidden transition-colors duration-250">
       <HeaderNav />
 
       {/* Hero Section Wrapper with Background Image */}
       <div
+        id="hero"
         className="relative bg-cover bg-center overflow-hidden border-b border-medium-grey"
         style={{ backgroundImage: `url(${bg1Img})` }}
       >
@@ -178,7 +255,7 @@ export default function Home() {
 
             <motion.h1
               variants={fadeUpItem}
-              className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-black tracking-tight leading-[110%] font-extrabold"
+              className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-black dark:text-white tracking-tight leading-[110%] font-extrabold"
             >
               Accelerate your{' '}
               <br></br>
@@ -198,7 +275,7 @@ export default function Home() {
 
             <motion.p
               variants={fadeUpItem}
-              className="text-dark-grey text-base md:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed"
+              className="text-dark-grey dark:text-white/75 text-base md:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed"
             >
               Empower your engineers with tailored learning paths, interactive sandbox simulations, and certified corporate curriculum designed by leading software authorities.
             </motion.p>
@@ -208,7 +285,7 @@ export default function Home() {
               className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4"
             >
               <motion.button
-                onClick={() => handleGoToDashboard()}
+                onClick={() => navigate('/login')}
                 variants={{
                   hover: { scale: 1.03 }
                 }}
@@ -216,7 +293,7 @@ export default function Home() {
                 whileTap={{ scale: 0.97 }}
                 className="px-6 py-3.5 bg-cta-orange hover:bg-[#E05600] text-white font-bold rounded-xl text-sm shadow-lg shadow-cta-orange/20 transition-colors duration-150 flex items-center gap-2 cursor-pointer border border-transparent group"
               >
-                <span>Start Enrolling Now</span>
+                <span>Get Started Now</span>
                 <motion.span
                   variants={{
                     hover: { x: 5 }
@@ -227,14 +304,14 @@ export default function Home() {
                   <ArrowRight className="h-4 w-4" />
                 </motion.span>
               </motion.button>
-              <motion.a
-                href="#curriculum"
+              <motion.button
+                onClick={() => handleScrollTo('faq')}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className="px-6 py-3.5 bg-white hover:bg-light-grey/20 text-black border border-medium-grey font-bold rounded-xl text-sm transition-colors duration-150 text-center"
+                className="px-6 py-3.5 bg-white dark:bg-[#16171F] hover:bg-light-grey/20 text-black dark:text-white border border-medium-grey dark:border-[#282A3A] font-bold rounded-xl text-sm transition-colors duration-150 text-center cursor-pointer"
               >
-                Explore Curriculum
-              </motion.a>
+                Read FAQs
+              </motion.button>
             </motion.div>
           </motion.div>
 
@@ -273,578 +350,287 @@ export default function Home() {
         </section>
       </div>
 
-      {/* Features Section */}
-      <section id="features" className="py-20 bg-white border-y border-medium-grey">
-        <div className="max-w-7xl mx-auto px-8 md:px-16 w-full space-y-12">
-          <motion.div
-            className="text-center space-y-3"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={scrollReveal}
-          >
-            <span className="text-cta-orange text-xs font-bold uppercase tracking-widest font-semibold">Designed for Innovation</span>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-black tracking-tight font-extrabold">Standardized Core Pillars</h2>
-            <p className="text-dark-grey text-sm max-w-lg mx-auto leading-relaxed">
-              Enterprise-scale development modules structured to maximize practical capabilities.
-            </p>
-          </motion.div>
+      {/* FAQ Section */}
+      <section id="faq" className="py-20 border-b border-medium-grey bg-white dark:bg-[#0F1015] transition-colors duration-250 relative overflow-hidden">
+        {/* Animated highlight pulse */}
+        <AnimatePresence>
+          {activeHighlight === 'faq' && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 0.4, 0.4, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 2.0, times: [0, 0.15, 0.85, 1] }}
+              className="absolute inset-0 bg-gradient-to-b from-tranquil-velvet/20 to-transparent pointer-events-none z-0"
+            />
+          )}
+        </AnimatePresence>
 
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
-            variants={staggerContainer}
-          >
-            {/* Pillar 1 */}
-            <motion.div
-              variants={{
-                ...fadeUpItem,
-                hover: { y: -6, transition: { duration: 0.2 } }
-              }}
-              whileHover="hover"
-              className="p-8 rounded-2xl border border-medium-grey bg-blueish-grey hover:border-tranquil-velvet/40 hover:shadow-md transition-colors duration-200 space-y-4 group cursor-default"
-            >
-              <div className="h-12 w-12 rounded-xl bg-tranquil-velvet/10 flex items-center justify-center text-tranquil-velvet group-hover:bg-tranquil-velvet group-hover:text-white transition-colors duration-300">
-                <motion.div
-                  variants={{
-                    hover: { rotate: 360 }
-                  }}
-                  transition={{ type: "spring", stiffness: 100, damping: 10 }}
-                  className="inline-flex"
-                >
-                  <Compass className="h-6 w-6" />
-                </motion.div>
-              </div>
-              <h3 className="text-lg font-bold text-black font-semibold">Structured Career roadmaps</h3>
-              <p className="text-dark-grey text-xs leading-relaxed">
-                Transition junior staff into seasoned tech-leads with customized pathways tailored to company stacks.
-              </p>
-            </motion.div>
-
-            {/* Pillar 2 */}
-            <motion.div
-              variants={{
-                ...fadeUpItem,
-                hover: { y: -6, transition: { duration: 0.2 } }
-              }}
-              whileHover="hover"
-              className="p-8 rounded-2xl border border-medium-grey bg-blueish-grey hover:border-emerald/40 hover:shadow-md transition-colors duration-200 space-y-4 group cursor-default"
-            >
-              <div className="h-12 w-12 rounded-xl bg-emerald/10 flex items-center justify-center text-emerald group-hover:bg-emerald group-hover:text-white transition-colors duration-300">
-                <motion.div
-                  variants={{
-                    hover: { y: [0, -6, 0] }
-                  }}
-                  transition={{ type: "spring", stiffness: 300, damping: 8 }}
-                  className="inline-flex"
-                >
-                  <CheckCircle className="h-6 w-6" />
-                </motion.div>
-              </div>
-              <h3 className="text-lg font-bold text-black font-semibold">Interactive Sandbox Labs</h3>
-              <p className="text-dark-grey text-xs leading-relaxed">
-                Practice microservice management and frontend compilation inside sandboxed configurations with zero local setups.
-              </p>
-            </motion.div>
-
-            {/* Pillar 3 */}
-            <motion.div
-              variants={{
-                ...fadeUpItem,
-                hover: { y: -6, transition: { duration: 0.2 } }
-              }}
-              whileHover="hover"
-              className="p-8 rounded-2xl border border-medium-grey bg-blueish-grey hover:border-cta-orange/40 hover:shadow-md transition-colors duration-200 space-y-4 group cursor-default"
-            >
-              <div className="h-12 w-12 rounded-xl bg-cta-orange/10 flex items-center justify-center text-cta-orange group-hover:bg-cta-orange group-hover:text-white transition-colors duration-300">
-                <motion.div
-                  variants={{
-                    hover: { rotate: [0, -15, 15, -15, 15, 0] }
-                  }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                  className="inline-flex"
-                >
-                  <Trophy className="h-6 w-6" />
-                </motion.div>
-              </div>
-              <h3 className="text-lg font-bold text-black font-semibold">Industry Certified Credentials</h3>
-              <p className="text-dark-grey text-xs leading-relaxed">
-                Earn enterprise badges and qualified LinkedIn certifications verified by principal software engineers.
-              </p>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Curriculum Pathway Tabs Section */}
-      <section id="curriculum" className="py-20 max-w-7xl mx-auto px-8 md:px-16 w-full space-y-12">
-        <motion.div
-          className="text-center space-y-3"
+        <motion.div 
+          className="max-w-4xl mx-auto px-8 w-full space-y-12 z-10 relative"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
-          variants={scrollReveal}
+          viewport={{ once: true, margin: "-80px" }}
+          variants={faqContainerVariants}
+          animate={activeHighlight === 'faq' ? { 
+            scale: [1, 1.015, 1],
+          } : {}}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
         >
-          <span className="text-tranquil-velvet text-xs font-bold uppercase tracking-widest font-semibold">LMS Syllabus</span>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-black tracking-tight font-extrabold">Structured Curriculums</h2>
-          <p className="text-dark-grey text-sm max-w-lg mx-auto">
-            Explore specialized tracks organized by role and technical complexity.
-          </p>
-        </motion.div>
-
-        {/* Tab Controls with Vercel-style Sliding Pill */}
-        <div className="flex justify-center">
-          <div className="flex bg-[#F0F1F5] dark:bg-[#16171F] p-1.5 rounded-2xl border border-medium-grey/40 dark:border-[#282A3A] relative">
-            {[
-              { id: 'frontend', label: 'Frontend Development' },
-              { id: 'devops', label: 'DevOps & Infrastructure' },
-              { id: 'architecture', label: 'Systems Architecture' }
-            ].map(tab => {
-              const isActive = activeCurriculumTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveCurriculumTab(tab.id)}
-                  className={`relative px-6 py-3.5 text-xs md:text-sm font-bold transition cursor-pointer duration-250 rounded-xl z-10 focus:outline-none ${isActive ? 'text-white' : 'text-dark-grey hover:text-black dark:text-white/60 dark:hover:text-white'}`}
-                >
-                  <span className="relative z-20">{tab.label}</span>
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeTabPill"
-                      className="absolute inset-0 bg-tranquil-velvet rounded-xl z-10 shadow-md"
-                      transition={{ type: "spring", stiffness: 320, damping: 25 }}
-                    />
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Tab Details with AnimatePresence Page Transition */}
-        <div className="bg-white dark:bg-[#16171F] border border-medium-grey dark:border-[#282A3A] rounded-2xl p-8 md:p-10 shadow-sm relative min-h-[380px] overflow-hidden">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeCurriculumTab}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={{
-                hidden: { opacity: 0 },
-                visible: {
-                  opacity: 1,
-                  transition: {
-                    staggerChildren: 0.08,
-                    delayChildren: 0.05
-                  }
-                },
-                exit: { opacity: 0, transition: { duration: 0.15 } }
-              }}
-            >
-              {activeCurriculumTab === 'frontend' && (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-                  <div className="space-y-6">
-                    <motion.span variants={tabItemVariant} className="text-xs bg-tranquil-velvet/10 text-tranquil-velvet border border-tranquil-velvet/20 px-2.5 py-1 rounded-full font-bold uppercase select-none inline-block">Frontend Path</motion.span>
-                    <motion.h3 variants={tabItemVariant} className="text-2xl font-bold text-black dark:text-white font-semibold">Modern Frontend Architectures</motion.h3>
-                    <motion.p variants={tabItemVariant} className="text-dark-grey text-sm leading-relaxed">
-                      Equip developers with deep React frameworks expertise, scalable design system rules, Tailwind CSS optimization, and modular micro-frontend components.
-                    </motion.p>
-                    <motion.ul variants={tabItemVariant} className="space-y-3 text-xs text-dark-grey font-medium">
-                      <li className="flex items-center gap-2.5">
-                        <Check className="h-4 w-4 text-emerald" />
-                        <span>Tailwind CSS configuration models and custom themes</span>
-                      </li>
-                      <li className="flex items-center gap-2.5">
-                        <Check className="h-4 w-4 text-emerald" />
-                        <span>Advanced state management models (Zustand/Redux)</span>
-                      </li>
-                    </motion.ul>
-                    <motion.button
-                      variants={tabItemVariant}
-                      onClick={() => handleGoToDashboard()}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="px-5 py-2.5 bg-cta-orange hover:bg-[#E05600] text-white text-xs font-bold rounded-xl transition-colors shadow-md shadow-cta-orange/15 cursor-pointer border border-transparent"
-                    >
-                      Explore Courses
-                    </motion.button>
-                  </div>
-                  <motion.div variants={tabItemVariant}>
-                    <div className="bg-blueish-grey dark:bg-[#0F1015] border border-medium-grey dark:border-[#282A3A] p-6 rounded-2xl space-y-4">
-                      <h4 className="text-sm font-bold text-black dark:text-white font-semibold">Syllabus Overview</h4>
-                      <div className="space-y-3">
-                        <motion.div
-                          whileHover={{ x: 6, scale: 1.01 }}
-                          className="p-3 bg-white dark:bg-[#16171F] border border-medium-grey dark:border-[#282A3A] rounded-xl flex justify-between items-center text-xs shadow-xs hover:border-tranquil-velvet/40 transition duration-150 cursor-pointer"
-                        >
-                          <span className="font-semibold text-black dark:text-white">1. JSX Core & React State Engine</span>
-                          <span className="text-tranquil-velvet font-bold">12 Lessons</span>
-                        </motion.div>
-                        <motion.div
-                          whileHover={{ x: 6, scale: 1.01 }}
-                          className="p-3 bg-white dark:bg-[#16171F] border border-medium-grey dark:border-[#282A3A] rounded-xl flex justify-between items-center text-xs shadow-xs hover:border-tranquil-velvet/40 transition duration-150 cursor-pointer"
-                        >
-                          <span className="font-semibold text-black dark:text-white">2. Tailwind CSS Styling & Variables</span>
-                          <span className="text-tranquil-velvet font-bold">8 Lessons</span>
-                        </motion.div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
-              )}
-
-              {activeCurriculumTab === 'devops' && (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-                  <div className="space-y-6">
-                    <motion.span variants={tabItemVariant} className="text-xs bg-emerald/10 text-emerald border border-emerald/20 px-2.5 py-1 rounded-full font-bold uppercase select-none inline-block">DevOps & Cloud</motion.span>
-                    <motion.h3 variants={tabItemVariant} className="text-2xl font-bold text-black dark:text-white font-semibold">Cloud Native & Infrastructure at Scale</motion.h3>
-                    <motion.p variants={tabItemVariant} className="text-dark-grey text-sm leading-relaxed">
-                      Deploy highly resilient systems using Kubernetes clusters, Docker image registries, CI/CD automated orchestration pipelines, and advanced microservice distributions.
-                    </motion.p>
-                    <motion.ul variants={tabItemVariant} className="space-y-3 text-xs text-dark-grey font-medium">
-                      <li className="flex items-center gap-2.5">
-                        <Check className="h-4 w-4 text-emerald" />
-                        <span>Kubernetes Pod orchestration and ingress controllers</span>
-                      </li>
-                      <li className="flex items-center gap-2.5">
-                        <Check className="h-4 w-4 text-emerald" />
-                        <span>Dockerizing Node.js microservices and building caches</span>
-                      </li>
-                    </motion.ul>
-                    <motion.button
-                      variants={tabItemVariant}
-                      onClick={() => handleGoToDashboard()}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="px-5 py-2.5 bg-cta-orange hover:bg-[#E05600] text-white text-xs font-bold rounded-xl transition-colors shadow-md shadow-cta-orange/15 cursor-pointer border border-transparent"
-                    >
-                      Explore Courses
-                    </motion.button>
-                  </div>
-                  <motion.div variants={tabItemVariant}>
-                    <div className="bg-blueish-grey dark:bg-[#0F1015] border border-medium-grey dark:border-[#282A3A] p-6 rounded-2xl space-y-4">
-                      <h4 className="text-sm font-bold text-black dark:text-white font-semibold">Syllabus Overview</h4>
-                      <div className="space-y-3">
-                        <motion.div
-                          whileHover={{ x: 6, scale: 1.01 }}
-                          className="p-3 bg-white dark:bg-[#16171F] border border-medium-grey dark:border-[#282A3A] rounded-xl flex justify-between items-center text-xs shadow-xs hover:border-tranquil-velvet/40 transition duration-150 cursor-pointer"
-                        >
-                          <span className="font-semibold text-black dark:text-white">1. Dockerizing Microservices</span>
-                          <span className="text-tranquil-velvet font-bold">10 Lessons</span>
-                        </motion.div>
-                        <motion.div
-                          whileHover={{ x: 6, scale: 1.01 }}
-                          className="p-3 bg-white dark:bg-[#16171F] border border-medium-grey dark:border-[#282A3A] rounded-xl flex justify-between items-center text-xs shadow-xs hover:border-tranquil-velvet/40 transition duration-150 cursor-pointer"
-                        >
-                          <span className="font-semibold text-black dark:text-white">2. Kubernetes Configuration Maps & Secrets</span>
-                          <span className="text-tranquil-velvet font-bold">15 Lessons</span>
-                        </motion.div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
-              )}
-
-              {activeCurriculumTab === 'architecture' && (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-                  <div className="space-y-6">
-                    <motion.span variants={tabItemVariant} className="text-xs bg-bright-velvet/10 text-bright-velvet border border-bright-velvet/20 px-2.5 py-1 rounded-full font-bold uppercase select-none inline-block">Architecture Path</motion.span>
-                    <motion.h3 variants={tabItemVariant} className="text-2xl font-bold text-black dark:text-white font-semibold">Systems Architecture & Patterns</motion.h3>
-                    <motion.p variants={tabItemVariant} className="text-dark-grey text-sm leading-relaxed">
-                      Study the theory and practice of enterprise-grade architectures: Clean code practices, distributed event streaming (Kafka), domain-driven design, and database replication patterns.
-                    </motion.p>
-                    <motion.ul variants={tabItemVariant} className="space-y-3 text-xs text-dark-grey font-medium">
-                      <li className="flex items-center gap-2.5">
-                        <Check className="h-4 w-4 text-emerald" />
-                        <span>Domain-Driven Design (DDD) fundamentals</span>
-                      </li>
-                      <li className="flex items-center gap-2.5">
-                        <Check className="h-4 w-4 text-emerald" />
-                        <span>Event Streaming patterns with Apache Kafka</span>
-                      </li>
-                    </motion.ul>
-                    <motion.button
-                      variants={tabItemVariant}
-                      onClick={() => handleGoToDashboard()}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="px-5 py-2.5 bg-cta-orange hover:bg-[#E05600] text-white text-xs font-bold rounded-xl transition-colors shadow-md shadow-cta-orange/15 cursor-pointer border border-transparent"
-                    >
-                      Explore Courses
-                    </motion.button>
-                  </div>
-                  <motion.div variants={tabItemVariant}>
-                    <div className="bg-blueish-grey dark:bg-[#0F1015] border border-medium-grey dark:border-[#282A3A] p-6 rounded-2xl space-y-4">
-                      <h4 className="text-sm font-bold text-black dark:text-white font-semibold">Syllabus Overview</h4>
-                      <div className="space-y-3">
-                        <motion.div
-                          whileHover={{ x: 6, scale: 1.01 }}
-                          className="p-3 bg-white dark:bg-[#16171F] border border-medium-grey dark:border-[#282A3A] rounded-xl flex justify-between items-center text-xs shadow-xs hover:border-tranquil-velvet/40 transition duration-150 cursor-pointer"
-                        >
-                          <span className="font-semibold text-black dark:text-white">1. Clean Architecture Frameworks</span>
-                          <span className="text-tranquil-velvet font-bold">14 Lessons</span>
-                        </motion.div>
-                        <motion.div
-                          whileHover={{ x: 6, scale: 1.01 }}
-                          className="p-3 bg-white dark:bg-[#16171F] border border-medium-grey dark:border-[#282A3A] rounded-xl flex justify-between items-center text-xs shadow-xs hover:border-tranquil-velvet/40 transition duration-150 cursor-pointer"
-                        >
-                          <span className="font-semibold text-black dark:text-white">2. Event-Driven Systems Design</span>
-                          <span className="text-tranquil-velvet font-bold">18 Lessons</span>
-                        </motion.div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
-              )}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </section>
-
-      {/* Stats Bar */}
-      <section className="bg-tranquil-velvet-dark py-12 text-white">
-        <div className="max-w-7xl mx-auto px-8 md:px-16 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-          <div>
-            <p className="text-4xl font-extrabold text-white">
-              <CountUp from={0} to={50} duration={1.5} />k+
-            </p>
-            <p className="text-xs text-white/75 mt-1 font-semibold uppercase tracking-wider">Engineers Certified</p>
-          </div>
-          <div>
-            <p className="text-4xl font-extrabold text-white">
-              <CountUp from={0} to={250} duration={1.8} separator="," />+
-            </p>
-            <p className="text-xs text-white/75 mt-1 font-semibold uppercase tracking-wider">Enterprise Clients</p>
-          </div>
-          <div>
-            <p className="text-4xl font-extrabold text-white">
-              <CountUp from={0} to={95} duration={1.5} />%
-            </p>
-            <p className="text-xs text-white/75 mt-1 font-semibold uppercase tracking-wider">Completion Velocity</p>
-          </div>
-          <div>
-            <p className="text-4xl font-extrabold text-white">
-              <CountUp from={0.0} to={4.8} duration={1.5} />
-            </p>
-            <p className="text-xs text-white/75 mt-1 font-semibold uppercase tracking-wider">Instructor Rating</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Courses Showcase Grid */}
-      <section id="courses" className="py-20 bg-white border-b border-medium-grey">
-        <div className="max-w-7xl mx-auto px-8 md:px-16 w-full space-y-12">
-          <motion.div
-            className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={scrollReveal}
-          >
-            <div className="space-y-3">
-              <span className="text-cta-orange text-xs font-bold uppercase tracking-widest font-semibold">Active Curriculum</span>
-              <h2 className="text-3xl font-extrabold text-black tracking-tight font-extrabold">Featured Engineering Modules</h2>
+          {/* FAQ Header block */}
+          <motion.div className="text-center space-y-4" variants={faqItemVariants}>
+            <div className="inline-flex items-center gap-2 bg-tranquil-velvet/10 border border-tranquil-velvet/20 px-3.5 py-1.5 rounded-full text-tranquil-velvet dark:text-[#d38bca] font-bold text-xs select-none">
+              <HelpCircle className="h-4 w-4" />
+              <span>Frequently Asked Questions</span>
             </div>
-            <button
-              onClick={() => handleGoToDashboard()}
-              className="text-sm font-bold text-tranquil-velvet hover:text-bright-velvet transition flex items-center gap-1 shrink-0 cursor-pointer"
-            >
-              <span>Browse all courses</span>
-              <ChevronRight className="h-4 w-4" />
-            </button>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-black dark:text-white tracking-tight font-extrabold">Got Questions? We’ve Got Answers</h2>
+            <p className="text-dark-grey dark:text-white/60 text-sm max-w-xl mx-auto">
+              Search our knowledge base or select a category below to quickly resolve your doubts about modules, tracks, and certifications.
+            </p>
           </motion.div>
 
-          {/* Course Grid with Scroll Reveal Stagger */}
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-40px" }}
-            variants={staggerContainer}
+          {/* Search FAQ Bar */}
+          <motion.div 
+            className="bg-white dark:bg-[#16171F] border border-medium-grey dark:border-[#282A3A] p-4 rounded-2xl shadow-sm flex items-center gap-3 transition-colors duration-250"
+            variants={faqItemVariants}
           >
-            {featuredCourses.map(course => {
-              const glowConfig = getBorderGlowConfig(course.category);
-              const isHovered = hoveredCourseId === course.id;
-              const isAnyHovered = hoveredCourseId !== null;
+            <Search className="h-5 w-5 text-dark-grey dark:text-white/40" />
+            <input 
+              type="text" 
+              placeholder="Search FAQs (e.g. certificates, sandbox, progress)..." 
+              value={faqSearchQuery}
+              onChange={(e) => setFaqSearchQuery(e.target.value)}
+              className="bg-transparent text-sm text-black dark:text-white placeholder-dark-grey/50 dark:placeholder-white/30 focus:outline-none w-full font-medium"
+            />
+          </motion.div>
 
-              return (
-                <motion.div
-                  key={course.id}
-                  variants={fadeUpItem}
-                  whileHover="hover"
-                  custom={course.id}
-                  className="flex flex-col justify-between cursor-default h-full"
-                  style={{ originY: 0.5 }}
-                  onMouseEnter={() => setHoveredCourseId(course.id)}
-                  onMouseLeave={() => setHoveredCourseId(null)}
-                  animate={{
-                    opacity: !isAnyHovered || isHovered ? 1 : 0.6,
-                    scale: isHovered ? 1.025 : 1,
-                  }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
-                >
-                  <BorderGlow
-                    edgeSensitivity={15}
-                    glowColor={glowConfig.glowColor}
-                    backgroundColor={theme === 'dark' ? '#16171F' : '#F7F8FC'}
-                    borderRadius={16}
-                    glowRadius={50}
-                    glowIntensity={2.5}
-                    fillOpacity={0.8}
-                    coneSpread={28}
-                    colors={glowConfig.colors}
-                    className="h-full w-full flex flex-col justify-between"
+          {/* Categories and List Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            
+            {/* Category selector */}
+            <motion.div className="space-y-1 md:col-span-1" variants={faqItemVariants}>
+              {[
+                { id: 'all', label: 'All FAQs' },
+                { id: 'general', label: 'General' },
+                { id: 'portal', label: 'Student Portal' },
+                { id: 'corporate', label: 'Enterprise' }
+              ].map(cat => {
+                const isActive = activeFaqCategory === cat.id;
+                return (
+                  <button 
+                    key={cat.id}
+                    onClick={() => { setActiveFaqCategory(cat.id); setExpandedFaqId(null); }}
+                    className={`w-full text-left px-4 py-2.5 rounded-lg text-xs font-bold transition duration-200 cursor-pointer relative focus:outline-none ${isActive ? 'text-white font-extrabold' : 'text-dark-grey dark:text-white/60 hover:bg-blueish-grey/50 dark:hover:bg-white/5 border border-transparent'}`}
                   >
-                    <div className="flex flex-col justify-between h-full min-h-[460px]">
-                      <div>
-                        <div className="h-48 relative overflow-hidden bg-white dark:bg-[#16171F] border-b border-medium-grey dark:border-[#282A3A]">
-                          {/* Hover zoom effect */}
-                          <motion.img
-                            src={course.image}
-                            className="h-full w-full object-cover"
-                            alt=""
-                            variants={{
-                              hover: { scale: 1.05, transition: { duration: 0.4 } }
-                            }}
-                          />
-                          <div className="absolute top-3 left-3 flex gap-1">
-                            <span className="text-[9px] bg-white/90 dark:bg-[#0F1015]/90 text-tranquil-velvet dark:text-[#d38bca] border border-tranquil-velvet/20 px-2 py-0.5 rounded font-bold uppercase shadow-sm">
-                              {course.category}
-                            </span>
-                          </div>
-                        </div>
+                    <span className="relative z-10">{cat.label}</span>
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeFaqCategoryPill"
+                        className="absolute inset-0 bg-tranquil-velvet rounded-lg shadow-sm"
+                        transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                      />
+                    )}
+                  </button>
+                );
+              })}
+            </motion.div>
 
-                        <div className="p-6 space-y-3">
-                          <div className="flex items-center gap-1.5 text-xs text-amber-500 font-bold">
-                            <Star className="h-4 w-4 fill-amber-500 text-amber-500" />
-                            <span>{course.rating}</span>
-                            <span className="text-dark-grey font-medium">({course.reviews} reviews)</span>
-                          </div>
-                          <h3 className="text-base font-bold text-black dark:text-white hover:text-tranquil-velvet transition line-clamp-1">
-                            {course.title}
-                          </h3>
-                          <p className="text-dark-grey text-xs leading-relaxed line-clamp-3">
-                            {course.description}
-                          </p>
-                        </div>
-                      </div>
+            {/* Accordion FAQ List */}
+            <motion.div className="md:col-span-3 space-y-4" variants={faqItemVariants}>
+              <AnimatePresence mode="popLayout">
+                {filteredFaqs.map(faq => {
+                  const isExpanded = expandedFaqId === faq.id;
+                  return (
+                    <motion.div 
+                      layout
+                      key={faq.id} 
+                      className="bg-white dark:bg-[#16171F] border border-medium-grey dark:border-[#282A3A] rounded-xl overflow-hidden shadow-sm transition duration-200 hover:border-medium-grey/85 dark:hover:border-[#282A3A]/85"
+                    >
+                      <button 
+                        onClick={() => setExpandedFaqId(isExpanded ? null : faq.id)}
+                        className="w-full px-6 py-4.5 text-left flex justify-between items-center font-bold text-sm text-black dark:text-white hover:text-tranquil-velvet dark:hover:text-[#d38bca] transition cursor-pointer focus:outline-none"
+                      >
+                        <span>{faq.question}</span>
+                        <ChevronDown className={`h-4 w-4 text-dark-grey dark:text-white/40 transition-transform duration-200 ${isExpanded ? 'transform rotate-180' : ''}`} />
+                      </button>
+                      
+                      <AnimatePresence initial={false}>
+                        {isExpanded && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.2, ease: "easeInOut" }}
+                            className="overflow-hidden"
+                          >
+                            <div className="px-6 pb-5 text-xs text-dark-grey dark:text-white/70 leading-relaxed border-t border-blueish-grey dark:border-[#282A3A] pt-4 bg-blueish-grey/20 dark:bg-[#121319]/40 font-medium">
+                              {faq.answer}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
 
-                      <div className="p-6 pt-0 border-t border-medium-grey/40 dark:border-[#282A3A]/40 flex justify-between items-center mt-4">
-                        <span className="text-xs text-dark-grey font-medium flex items-center gap-1">
-                          <Clock className="h-3.5 w-3.5 text-dark-grey/65" />
-                          <span>{course.duration}</span>
-                        </span>
-                        <motion.button
-                          onClick={() => handleGoToDashboard(course)}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="px-4 py-2 bg-cta-orange hover:bg-[#E05600] text-white text-xs font-bold rounded-lg transition-colors duration-150 cursor-pointer border border-transparent shadow-sm shadow-cta-orange/10"
-                        >
-                          Start Learning
-                        </motion.button>
-                      </div>
-                    </div>
-                  </BorderGlow>
+              {filteredFaqs.length === 0 && (
+                <motion.div 
+                  layout
+                  className="py-12 text-center bg-white dark:bg-[#16171F] rounded-xl border border-medium-grey dark:border-[#282A3A] shadow-sm transition-colors duration-250"
+                >
+                  <HelpCircle className="h-10 w-10 text-medium-grey dark:text-white/20 mx-auto mb-2" />
+                  <p className="text-xs text-dark-grey dark:text-white/60 font-semibold">No answers match your query</p>
+                  <button onClick={() => { setFaqSearchQuery(''); setActiveFaqCategory('all'); }} className="text-xs text-tranquil-velvet dark:text-[#d38bca] hover:underline mt-2 cursor-pointer font-bold">
+                    Clear Search filters
+                  </button>
                 </motion.div>
-              );
-            })}
-          </motion.div>
-        </div>
+              )}
+            </motion.div>
+          </div>
+        </motion.div>
       </section>
 
-      {/* Testimonial Section */}
-      <section id="testimonials" className="py-20 max-w-7xl mx-auto px-8 md:px-16 w-full space-y-12">
-        <motion.div
-          className="text-center space-y-3"
+      {/* Contact Section */}
+      <section id="contact" className="py-20 bg-blueish-grey dark:bg-[#0F1015] transition-colors duration-250 relative overflow-hidden">
+        {/* Animated highlight pulse */}
+        <AnimatePresence>
+          {activeHighlight === 'contact' && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 0.4, 0.4, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 2.0, times: [0, 0.15, 0.85, 1] }}
+              className="absolute inset-0 bg-gradient-to-b from-cta-orange/20 to-transparent pointer-events-none z-0"
+            />
+          )}
+        </AnimatePresence>
+
+        <motion.div 
+          className="max-w-6xl mx-auto px-8 w-full space-y-12 z-10 relative"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
-          variants={scrollReveal}
+          viewport={{ once: true, margin: "-80px" }}
+          variants={contactContainerVariants}
+          animate={activeHighlight === 'contact' ? { 
+            scale: [1, 1.015, 1],
+          } : {}}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
         >
-          <span className="text-tranquil-velvet text-xs font-bold uppercase tracking-widest font-semibold">User Impact</span>
-          <h2 className="text-3xl font-extrabold text-black tracking-tight font-extrabold">What Engineers Say</h2>
-        </motion.div>
-
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-40px" }}
-          variants={staggerContainer}
-        >
-          <motion.div
-            variants={fadeUpItem}
-            whileHover={{ y: -5 }}
-            className="bg-white border border-medium-grey p-8 rounded-2xl shadow-sm space-y-4 transition-all duration-255 cursor-default"
-          >
-            <div className="flex gap-1 text-amber-500">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-current" />
-              ))}
-            </div>
-            <p className="text-dark-grey text-xs italic leading-relaxed">
-              "The frontend pathways were incredibly comprehensive. Building the scaling design systems inside the practical labs helped us standardise our React UI code."
+          <motion.div className="text-center space-y-3" variants={contactItemVariants}>
+            <span className="text-cta-orange text-xs font-bold uppercase tracking-widest font-semibold">Connect With Us</span>
+            <h2 className="text-3xl font-extrabold text-black dark:text-white tracking-tight font-extrabold">Let’s Start a Conversation</h2>
+            <p className="text-dark-grey dark:text-white/60 text-sm max-w-lg mx-auto">
+              Have questions about corporate training setups, roadmap authorization, or private labs? Our support representatives are here to help.
             </p>
-            <div className="flex gap-3 items-center">
-              <div className="h-10 w-10 bg-tranquil-velvet/15 rounded-full flex items-center justify-center text-tranquil-velvet font-bold text-xs">
-                ML
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-black">Marcus Long</h4>
-                <p className="text-[10px] text-dark-grey">Senior React Engineer, TechCorp</p>
-              </div>
-            </div>
           </motion.div>
 
-          <motion.div
-            variants={fadeUpItem}
-            whileHover={{ y: -5 }}
-            className="bg-white border border-medium-grey p-8 rounded-2xl shadow-sm space-y-4 transition-all duration-255 cursor-default"
-          >
-            <div className="flex gap-1 text-amber-500">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-current" />
-              ))}
-            </div>
-            <p className="text-dark-grey text-xs italic leading-relaxed">
-              "Mastering Kubernetes deployment configurations via Xebia’s DevOps sandbox removed the deployment bottlenecks in our releases."
-            </p>
-            <div className="flex gap-3 items-center">
-              <div className="h-10 w-10 bg-emerald/15 rounded-full flex items-center justify-center text-emerald font-bold text-xs">
-                KA
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-black">Karla Abbott</h4>
-                <p className="text-[10px] text-dark-grey">Lead DevOps Engineer, CloudSystem</p>
-              </div>
-            </div>
-          </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            {/* Message form on left */}
+            <motion.div className="lg:col-span-7 bg-white dark:bg-[#16171F] border border-medium-grey dark:border-[#282A3A] rounded-2xl p-8 shadow-sm space-y-6" variants={contactItemVariants}>
+              <h3 className="text-lg font-bold text-black dark:text-white border-b border-blueish-grey dark:border-[#282A3A] pb-4">Send Us A Message</h3>
+              
+              {formSubmitted ? (
+                <div className="bg-emerald/10 border border-emerald/20 text-emerald p-6 rounded-xl space-y-2">
+                  <h4 className="text-sm font-bold flex items-center gap-2">
+                    <CheckCircle className="h-5 w-5" />
+                    <span>Message Received!</span>
+                  </h4>
+                  <p className="text-xs text-emerald-900 dark:text-emerald-300 leading-relaxed font-medium">
+                    Thank you for contacting Xebia Academy support. A dedicated learning pathways manager has received your request and will reach out to you within 24 hours.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleContactSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-dark-grey dark:text-white/60">Your Name</label>
+                      <input 
+                        type="text" 
+                        required
+                        value={contactForm.name}
+                        onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
+                        placeholder="Jane Doe"
+                        className="w-full px-4.5 py-2.5 text-xs text-black dark:text-white bg-blueish-grey dark:bg-[#1C1D26] border border-medium-grey dark:border-[#282A3A] rounded-lg focus:outline-none focus:border-tranquil-velvet transition font-medium"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-dark-grey dark:text-white/60">Email Address</label>
+                      <input 
+                        type="email" 
+                        required
+                        value={contactForm.email}
+                        onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                        placeholder="jane.doe@company.com"
+                        className="w-full px-4.5 py-2.5 text-xs text-black dark:text-white bg-blueish-grey dark:bg-[#1C1D26] border border-medium-grey dark:border-[#282A3A] rounded-lg focus:outline-none focus:border-tranquil-velvet transition font-medium"
+                      />
+                    </div>
+                  </div>
 
-          <motion.div
-            variants={fadeUpItem}
-            whileHover={{ y: -5 }}
-            className="bg-white border border-medium-grey p-8 rounded-2xl shadow-sm space-y-4 transition-all duration-255 cursor-default"
-          >
-            <div className="flex gap-1 text-amber-500">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-current" />
-              ))}
-            </div>
-            <p className="text-dark-grey text-xs italic leading-relaxed">
-              "A truly premium learning system. The event-driven systems syllabus was highly engaging. Completing my microservices badge verified my qualifications."
-            </p>
-            <div className="flex gap-3 items-center">
-              <div className="h-10 w-10 bg-cta-orange/15 rounded-full flex items-center justify-center text-cta-orange font-bold text-xs">
-                TR
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-dark-grey dark:text-white/60">Request Subject</label>
+                    <select 
+                      value={contactForm.subject}
+                      onChange={(e) => setContactForm({ ...contactForm, subject: e.target.value })}
+                      className="w-full px-4.5 py-2.5 text-xs text-black dark:text-white bg-blueish-grey dark:bg-[#1C1D26] border border-medium-grey dark:border-[#282A3A] rounded-lg focus:outline-none focus:border-tranquil-velvet transition font-bold"
+                    >
+                      <option value="demo">Request Corporate Demo</option>
+                      <option value="billing">Enterprise Pricing & Contracts</option>
+                      <option value="technical">Technical Support / Sandbox Issues</option>
+                      <option value="other">General Inquiries</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-dark-grey dark:text-white/60">Message</label>
+                    <textarea 
+                      rows="5"
+                      required
+                      value={contactForm.message}
+                      onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+                      placeholder="Tell us about your team size, curriculum requirements, or support needs..."
+                      className="w-full px-4.5 py-2.5 text-xs text-black dark:text-white bg-blueish-grey dark:bg-[#1C1D26] border border-medium-grey dark:border-[#282A3A] rounded-lg focus:outline-none focus:border-tranquil-velvet transition resize-none font-medium"
+                    ></textarea>
+                  </div>
+
+                  <button 
+                    type="submit"
+                    className="w-full py-3 bg-cta-orange hover:bg-[#E05600] text-white text-xs font-bold rounded-xl transition duration-150 flex items-center justify-center gap-2 shadow-md shadow-cta-orange/20 cursor-pointer border border-transparent"
+                  >
+                    <Send className="h-4 w-4" />
+                    <span>Send Message</span>
+                  </button>
+                </form>
+              )}
+            </motion.div>
+
+            {/* Office directory grid on right */}
+            <motion.div className="lg:col-span-5 space-y-6" variants={contactItemVariants}>
+              <div className="bg-white dark:bg-[#16171F] border border-medium-grey dark:border-[#282A3A] rounded-2xl p-8 shadow-sm space-y-4">
+                <h3 className="text-lg font-bold text-black dark:text-white border-b border-blueish-grey dark:border-[#282A3A] pb-4">Corporate Office Directory</h3>
+                <div className="space-y-6 max-h-[400px] overflow-y-auto sleek-scrollbar pr-2">
+                  {officeLocations.map((loc, idx) => (
+                    <div key={idx} className="space-y-2 border-b border-blueish-grey/50 dark:border-[#282A3A]/50 pb-4 last:border-0 last:pb-0">
+                      <h4 className="text-sm font-bold text-tranquil-velvet dark:text-[#d38bca] flex items-center gap-1.5">
+                        <MapPin className="h-4 w-4 text-cta-orange" />
+                        <span>{loc.city} Office</span>
+                      </h4>
+                      <div className="space-y-1 text-xs text-dark-grey dark:text-white/60 leading-relaxed pl-5 font-medium">
+                        <p>{loc.address}</p>
+                        <p className="flex items-center gap-1.5 mt-1 text-black dark:text-white">
+                          <Phone className="h-3.5 w-3.5 text-tranquil-velvet-dark dark:text-white/40" />
+                          <span>{loc.phone}</span>
+                        </p>
+                        <p className="flex items-center gap-1.5 text-black dark:text-white">
+                          <Mail className="h-3.5 w-3.5 text-tranquil-velvet-dark dark:text-white/40" />
+                          <span>{loc.email}</span>
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div>
-                <h4 className="text-xs font-bold text-black">Toby Reynolds</h4>
-                <p className="text-[10px] text-dark-grey">Solutions Architect, ApexData</p>
-              </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </motion.div>
       </section>
 

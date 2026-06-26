@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home.jsx';
-import FAQ from './pages/FAQ.jsx';
-import Contact from './pages/Contact.jsx';
+import Auth from './pages/Auth.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 
@@ -94,8 +93,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Auth />} />
           <Route 
             path="/dashboard/*" 
             element={

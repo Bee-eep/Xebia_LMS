@@ -16,8 +16,8 @@ export default function Footer() {
           <h4 className="font-bold text-black font-semibold">General Links</h4>
           <ul className="space-y-2">
             <li><Link to="/" className="hover:text-tranquil-velvet cursor-pointer text-left block">Home Page</Link></li>
-            <li><Link to="/faq" className="hover:text-tranquil-velvet cursor-pointer text-left block">FAQ Help</Link></li>
-            <li><Link to="/contact" className="hover:text-tranquil-velvet cursor-pointer text-left block">Contact Information</Link></li>
+            <li><Link to="/#faq" className="hover:text-tranquil-velvet cursor-pointer text-left block">FAQ Help</Link></li>
+            <li><Link to="/#contact" className="hover:text-tranquil-velvet cursor-pointer text-left block">Contact Information</Link></li>
           </ul>
         </div>
         <div className="space-y-3">

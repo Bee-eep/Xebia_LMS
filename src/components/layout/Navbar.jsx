@@ -140,7 +140,7 @@ export default function Navbar({ onSearchChange, searchValue, onToggleMobileSide
               </Link>
               
               <Link 
-                to="/faq"
+                to="/#faq"
                 onClick={() => setDropdownOpen(false)}
                 className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-dark-grey hover:bg-blueish-grey dark:hover:bg-[#1E1F29] rounded-lg transition"
               >
