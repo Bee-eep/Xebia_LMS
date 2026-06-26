@@ -101,7 +101,8 @@ export default function HeaderNav() {
         </button>
 
         <Link 
-          to="/login"
+          to="/#hero-auth-form"
+          onClick={() => handleScroll('hero-auth-form')}
           className="px-4 py-2.5 text-xs font-bold text-dark-grey hover:text-black dark:text-white/80 dark:hover:text-white transition duration-200 cursor-pointer"
         >
           Login
