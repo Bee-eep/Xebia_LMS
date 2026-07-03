@@ -1,22 +1,61 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { 
-  Layers, Users, BookOpen, BarChart2, DollarSign, 
-  FileText, Settings, ChevronLeft, ChevronRight, Sun, Moon, LogOut, Sparkles, GraduationCap
+  LayoutDashboard, Layers, Key, Shield, Users, Building, Globe, GraduationCap, 
+  BookOpen, FileText, User, Settings, Calendar, ClipboardList, DollarSign, Briefcase,
+  ChevronLeft, ChevronRight, Sun, Moon, LogOut
 } from 'lucide-react';
 import Logo from '@/components/ui/Logo.jsx';
 import { useTheme } from '@/context/ThemeContext.jsx';
 
-
-const navItems = [
-  { path: '/dashboard', label: 'Dashboard', icon: Layers },
-  { path: '/dashboard/users', label: 'Users', icon: Users },
-  { path: '/dashboard/tutors', label: 'Tutors', icon: GraduationCap },
-  { path: '/dashboard/courses', label: 'Courses', icon: BookOpen },
-  { path: '/dashboard/analytics', label: 'Analytics', icon: BarChart2 },
-  { path: '/dashboard/revenue', label: 'Revenue', icon: DollarSign },
-  { path: '/dashboard/reports', label: 'Reports', icon: FileText },
-  { path: '/dashboard/settings', label: 'Settings', icon: Settings },
+const navigationGroups = [
+  {
+    items: [
+      { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard }
+    ]
+  },
+  {
+    section: 'Access Control',
+    items: [
+      { path: '/dashboard/modules', label: 'Modules', icon: Layers },
+      { path: '/dashboard/permissions', label: 'Permissions', icon: Key },
+      { path: '/dashboard/roles-grants', label: 'Roles & Grants', icon: Shield },
+      { path: '/dashboard/users', label: 'Users', icon: Users }
+    ]
+  },
+  {
+    section: 'Directory',
+    items: [
+      { path: '/dashboard/organisations', label: 'Organisations', icon: Building },
+      { path: '/dashboard/domains', label: 'Domains', icon: Globe },
+      { path: '/dashboard/parents', label: 'Parents', icon: Users },
+      { path: '/dashboard/learners', label: 'Learners', icon: GraduationCap },
+      { path: '/dashboard/batches', label: 'Batches', icon: Layers },
+      { path: '/dashboard/courses', label: 'Courses', icon: BookOpen }
+    ]
+  },
+  {
+    section: 'Governance',
+    items: [
+      { path: '/dashboard/audit-log', label: 'Audit Log', icon: FileText }
+    ]
+  },
+  {
+    section: 'Account',
+    items: [
+      { path: '/dashboard/profile', label: 'Profile', icon: User }
+    ]
+  },
+  {
+    section: 'Modules',
+    items: [
+      { path: '/dashboard/administration', label: 'Administration', icon: Settings },
+      { path: '/dashboard/scheduling', label: 'Scheduling', icon: Calendar },
+      { path: '/dashboard/assessment', label: 'Assessment', icon: ClipboardList },
+      { path: '/dashboard/finance', label: 'Finance', icon: DollarSign },
+      { path: '/dashboard/trainer', label: 'Trainer', icon: Briefcase }
+    ]
+  }
 ];
 
 export default function Sidebar({ isCollapsed, setIsCollapsed, isMobile = false, onClose }) {
@@ -42,47 +81,57 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, isMobile = false,
           <Logo className={isCollapsed ? 'h-6' : 'h-8'} />
           {!isCollapsed && (
             <div className="text-black leading-tight select-none">
-              <h3 className="text-xs font-extrabold tracking-wider text-tranquil-velvet">LMS ADMIN</h3>
-              <p className="text-[10px] text-dark-grey font-medium">Xebia Academy</p>
+              <h3 className="text-xs font-extrabold tracking-wider text-tranquil-velvet">XebiaLMS</h3>
+              <p className="text-[10px] text-dark-grey font-medium">Platform Console</p>
             </div>
           )}
         </div>
 
         {/* Navigation Items */}
-        <nav className="space-y-1">
-          {navItems.map(item => {
-            const Icon = item.icon;
-            return (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                end={item.path === '/dashboard'}
-                onClick={() => {
-                  if (isMobile && onClose) {
-                    onClose();
-                  }
-                }}
-                className={({ isActive }) => 
-                  `flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer group relative ${
-                    isActive 
-                      ? 'bg-tranquil-velvet/10 text-tranquil-velvet border-l-4 border-cta-orange font-semibold shadow-xs dark:bg-white/10 dark:text-white dark:shadow-inner' 
-                      : 'text-dark-grey hover:bg-[#F7F8FC] hover:text-black dark:text-white/70 dark:hover:bg-white/5 dark:hover:text-white'
-                  }`
-                }
-              >
-                <Icon className="h-5 w-5 shrink-0" />
-                {!isCollapsed && <span>{item.label}</span>}
-                
-                {/* Tooltip when collapsed */}
-                {isCollapsed && (
-                  <div className="absolute left-16 scale-0 group-hover:scale-100 transition duration-150 origin-left bg-black/90 text-white text-xs font-semibold px-2.5 py-1.5 rounded-md shadow-md z-50 whitespace-nowrap pointer-events-none">
-                    {item.label}
-                  </div>
-                )}
-              </NavLink>
-            );
-          })}
+        <nav className="space-y-4">
+          {navigationGroups.map((group, groupIdx) => (
+            <div key={groupIdx} className="space-y-1">
+              {group.section && !isCollapsed && (
+                <div className="text-[9px] font-extrabold text-text-secondary uppercase tracking-widest px-3.5 pt-2 pb-1 select-none opacity-80">
+                  {group.section}
+                </div>
+              )}
+              {group.items.map(item => {
+                const Icon = item.icon;
+                return (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    end={item.path === '/dashboard'}
+                    onClick={() => {
+                      if (isMobile && onClose) {
+                        onClose();
+                      }
+                    }}
+                    className={({ isActive }) => 
+                      `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer group relative ${
+                        isActive 
+                          ? 'bg-tranquil-velvet/10 text-tranquil-velvet border-l-4 border-cta-orange font-bold shadow-xs dark:bg-white/10 dark:text-white dark:shadow-inner' 
+                          : 'text-text-secondary hover:bg-bg-hover hover:text-text-primary dark:text-text-secondary dark:hover:bg-bg-hover dark:hover:text-text-primary'
+                      }`
+                    }
+                  >
+                    <Icon className="h-4.5 w-4.5 shrink-0" />
+                    {!isCollapsed && <span>{item.label}</span>}
+                    
+                    {/* Tooltip when collapsed */}
+                    {isCollapsed && (
+                      <div className="absolute left-16 scale-0 group-hover:scale-100 transition duration-150 origin-left bg-black/90 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-md shadow-md z-50 whitespace-nowrap pointer-events-none">
+                        {item.label}
+                      </div>
+                    )}
+                  </NavLink>
+                );
+              })}
+            </div>
+          ))}
         </nav>
+
       </div>
 
       {/* Sidebar Footer */}

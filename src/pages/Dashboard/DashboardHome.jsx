@@ -56,7 +56,7 @@ const recentActivity = [
 
 const cardHoverVariant = {
   hover: {
-    y: -4,
+    y: -2,
     transition: { type: 'spring', stiffness: 300, damping: 20 }
   }
 };
@@ -460,83 +460,19 @@ export default function DashboardHome({ tutors = [] }) {
             <motion.div
               whileHover="hover"
               variants={cardHoverVariant}
-              onClick={() => navigate('/dashboard/tutors')}
+              onClick={() => navigate('/dashboard/trainer')}
               className="p-5 flex flex-col justify-between h-full bg-white dark:bg-[#16171F] border border-medium-grey dark:border-[#282A3A] rounded-2xl cursor-pointer"
             >
               <div className="space-y-0.5 mb-2">
                 <span className="text-[9px] font-bold text-dark-grey uppercase tracking-widest">Faculty Audit</span>
                 <h3 className="text-sm font-extrabold text-black dark:text-white">Faculty & Online Tutors</h3>
               </div>
-              {(() => {
-                const onlineTutors = tutors.filter(t => t.status === 'Online');
-                const avgRating = tutors.length > 0
-                  ? (tutors.reduce((acc, t) => acc + t.rating, 0) / tutors.length).toFixed(2)
-                  : '0.0';
-                
-                const getInitials = (name) => {
-                  if (!name) return '';
-                  const parts = name.trim().split(/\s+/);
-                  if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
-                  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-                };
-
-                const colorClasses = [
-                  'bg-[#6C1D5F]/10 text-[#6C1D5F] dark:bg-[#d38bca]/20 dark:text-[#d38bca]',
-                  'bg-[#01AC9F]/10 text-[#01AC9F] dark:bg-[#5ce7d4]/20 dark:text-[#5ce7d4]',
-                  'bg-[#FF6200]/10 text-[#FF6200] dark:bg-[#ff8f43]/20 dark:text-[#ff8f43]',
-                  'bg-[#84117C]/10 text-[#84117C] dark:bg-[#f689eb]/20 dark:text-[#f689eb]',
-                ];
-
-                return (
-                  <>
-                    <div className="flex justify-between items-center">
-                      <div className="space-y-0.5">
-                        <p className="text-2xl font-extrabold text-black dark:text-white">{avgRating}<span className="text-xs text-dark-grey">/5.0</span></p>
-                        <p className="text-[9px] text-dark-grey font-bold uppercase">Avg Instructor Rating</p>
-                      </div>
-                      <div className="bg-emerald/10 border border-emerald/20 text-emerald text-xs px-2.5 py-1 rounded-full font-bold select-none">
-                        96% Engagement
-                      </div>
-                    </div>
-
-                    {/* Online Tutors Avatars Stack */}
-                    <div className="flex justify-between items-center mt-3 pt-3 border-t border-[#F7F8FC] dark:border-[#262837]">
-                      <div className="flex -space-x-2.5 overflow-hidden">
-                        {onlineTutors.slice(0, 4).map((t, i) => {
-                          const initials = getInitials(t.name);
-                          const bgClass = colorClasses[i % colorClasses.length];
-                          return (
-                            <div 
-                              key={t.id} 
-                              className={`h-8 w-8 rounded-full border-2 border-white dark:border-[#16171F] flex items-center justify-center text-[9px] font-black shadow-xs ${bgClass} relative`}
-                              title={t.name}
-                            >
-                              <span>{initials}</span>
-                              <span className="absolute bottom-0 right-0 h-1.5 w-1.5 rounded-full bg-emerald border border-white dark:border-[#16171F]"></span>
-                            </div>
-                          );
-                        })}
-                        {onlineTutors.length > 4 && (
-                          <div className="h-8 w-8 rounded-full border-2 border-white dark:border-[#16171F] bg-[#F7F8FC] dark:bg-[#0F1015] text-dark-grey flex items-center justify-center text-[9px] font-bold shadow-xs relative">
-                            +{onlineTutors.length - 4}
-                          </div>
-                        )}
-                        {onlineTutors.length === 0 && (
-                          <span className="text-[10px] text-dark-grey font-medium italic">No tutors online</span>
-                        )}
-                      </div>
-
-                      <div className="text-right leading-tight">
-                        <p className="text-[10px] font-bold text-emerald uppercase tracking-wider flex items-center gap-1 justify-end">
-                          {onlineTutors.length > 0 && <span className="h-1.5 w-1.5 rounded-full bg-emerald animate-pulse"></span>}
-                          {onlineTutors.length} Online Now
-                        </p>
-                        <p className="text-[9px] text-dark-grey font-medium mt-0.5">Click to view directory</p>
-                      </div>
-                    </div>
-                  </>
-                );
-              })()}
+              <div className="mt-2 text-left">
+                <p className="text-2xl font-extrabold text-black dark:text-white tracking-tight">
+                  {tutors.length} {tutors.length === 1 ? 'trainer' : 'trainers'}
+                </p>
+                <p className="text-[10px] text-dark-grey font-medium mt-1">Active on the platform</p>
+              </div>
             </motion.div>
           </BorderGlow>
         </div>
@@ -639,6 +575,7 @@ export default function DashboardHome({ tutors = [] }) {
         </div>
 
       </div>
+      <div className="h-6"></div> {/* Bottom buffer space to prevent glow clip/overflow */}
     </div>
   );
 }

@@ -57,7 +57,15 @@ export default function Dashboard({ courses, handleSimulateProgress, coursesLoad
     <DashboardLayout onSearchChange={handleSearchChange} searchValue={searchQuery}>
       <Routes>
         <Route path="/" element={<DashboardHome searchQuery={searchQuery} tutors={tutors} />} />
+        <Route path="/modules" element={<BlankPage name="Modules" />} />
+        <Route path="/permissions" element={<BlankPage name="Permissions" />} />
+        <Route path="/roles-grants" element={<BlankPage name="Roles & Grants" />} />
         <Route path="/users" element={<UsersPage searchQuery={searchQuery} />} />
+        <Route path="/organisations" element={<BlankPage name="Organisations" />} />
+        <Route path="/domains" element={<BlankPage name="Domains" />} />
+        <Route path="/parents" element={<BlankPage name="Parents" />} />
+        <Route path="/learners" element={<BlankPage name="Learners" />} />
+        <Route path="/batches" element={<BlankPage name="Batches" />} />
         <Route 
           path="/courses" 
           element={
@@ -69,12 +77,14 @@ export default function Dashboard({ courses, handleSimulateProgress, coursesLoad
             />
           } 
         />
-        <Route path="/analytics" element={<AnalyticsPage />} />
-        <Route path="/revenue" element={<RevenuePage />} />
-        <Route path="/reports" element={<ReportsPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/audit-log" element={<BlankPage name="Audit Log" />} />
+        <Route path="/profile" element={<BlankPage name="Profile" />} />
+        <Route path="/administration" element={<SettingsPage />} />
+        <Route path="/scheduling" element={<BlankPage name="Scheduling" />} />
+        <Route path="/assessment" element={<BlankPage name="Assessment" />} />
+        <Route path="/finance" element={<RevenuePage />} />
         <Route 
-          path="/tutors" 
+          path="/trainer" 
           element={
             <TutorsPage 
               tutors={tutors} 
@@ -88,4 +98,13 @@ export default function Dashboard({ courses, handleSimulateProgress, coursesLoad
     </DashboardLayout>
   );
 }
+
+function BlankPage({ name }) {
+  return (
+    <div className="p-6 text-text-secondary text-sm font-medium bg-bg-card border border-border-card rounded-2xl max-w-md mx-auto mt-12 text-center shadow-xs">
+      {name} Content Placeholder
+    </div>
+  );
+}
+
 

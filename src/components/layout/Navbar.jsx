@@ -3,13 +3,24 @@ import { useLocation, Link } from 'react-router-dom';
 import { Search, Bell, MessageSquare, Sparkles, LogOut, Settings, HelpCircle, ChevronRight, Menu } from 'lucide-react';
 
 const pathTitleMap = {
-  '/dashboard': { title: 'Dashboard', category: 'Analytics' },
-  '/dashboard/users': { title: 'Users Directory', category: 'Users' },
-  '/dashboard/courses': { title: 'Course Catalog', category: 'Courses' },
-  '/dashboard/analytics': { title: 'Learning Analytics', category: 'Analytics' },
-  '/dashboard/revenue': { title: 'Revenue Overview', category: 'Revenue' },
-  '/dashboard/reports': { title: 'Report Centers', category: 'Reports' },
-  '/dashboard/settings': { title: 'System Settings', category: 'Settings' }
+  '/dashboard': { title: 'Platform Dashboard', category: 'Platform' },
+  '/dashboard/modules': { title: 'Modules Manager', category: 'Access Control' },
+  '/dashboard/permissions': { title: 'Permissions Guard', category: 'Access Control' },
+  '/dashboard/roles-grants': { title: 'Roles & Grants Controller', category: 'Access Control' },
+  '/dashboard/users': { title: 'Users Directory', category: 'Access Control' },
+  '/dashboard/organisations': { title: 'Organisations Directory', category: 'Directory' },
+  '/dashboard/domains': { title: 'Domain Registry', category: 'Directory' },
+  '/dashboard/parents': { title: 'Parents Directory', category: 'Directory' },
+  '/dashboard/learners': { title: 'Learners Directory', category: 'Directory' },
+  '/dashboard/batches': { title: 'Learners Batches', category: 'Directory' },
+  '/dashboard/courses': { title: 'Course Catalog', category: 'Directory' },
+  '/dashboard/audit-log': { title: 'System Audit Log', category: 'Governance' },
+  '/dashboard/profile': { title: 'Profile Settings', category: 'Account' },
+  '/dashboard/administration': { title: 'Administration Panel', category: 'Modules' },
+  '/dashboard/scheduling': { title: 'Scheduling Planner', category: 'Modules' },
+  '/dashboard/assessment': { title: 'Assessments Engine', category: 'Modules' },
+  '/dashboard/finance': { title: 'Finance Center', category: 'Modules' },
+  '/dashboard/trainer': { title: 'Trainer Dashboard', category: 'Modules' }
 };
 
 export default function Navbar({ onSearchChange, searchValue, onToggleMobileSidebar }) {
