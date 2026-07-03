@@ -4,7 +4,7 @@ Welcome to the **Xebia LMS** frontend codebase! This repository is built with **
 
 ---
 
-## 🚀 Quick Start & Onboarding
+## Quick Start & Onboarding
 
 ### 1. Prerequisites
 Ensure you have **Node.js** (v18 or higher) and **npm** installed on your system.
@@ -31,7 +31,7 @@ This builds optimized assets in the `/dist` directory.
 
 ---
 
-## 📁 Repository Directory Structure
+## Repository Directory Structure
 
 ```
 Xebia_LMS/
@@ -71,7 +71,7 @@ Xebia_LMS/
 
 ---
 
-## 🔍 UI Element & File Reference Map
+## UI Element & File Reference Map
 
 If you want to customize specific layout elements or feature pages, use this quick map to find their source code:
 
@@ -107,7 +107,7 @@ If you want to customize specific layout elements or feature pages, use this qui
 
 ---
 
-## 🛠️ Key Developer Workflows
+## Key Developer Workflows
 
 ### How to Modify Mock Data
 All mock datasets are centralized in [src/data/mockData.js](src/data/mockData.js). To add new users, mock courses, or faculty records, simply append them to:
@@ -127,7 +127,7 @@ To connect to a live REST API:
 
 ---
 
-## 🎨 Theme and Design System
+## Theme and Design System
 
 The layout relies on a clean, modern **Zinc & Velvet** styling system.
 
