@@ -29,16 +29,7 @@
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
 
-  /* Override radius tokens to be sharp */
-  --radius: 0px;
-  --radius-xs: 0px;
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
-  --radius-2xl: 0px;
-  --radius-3xl: 0px;
-  --radius-4xl: 0px;
+
 }
 
 :root {
@@ -53,11 +44,11 @@
 }
 
 .dark {
-  --tranquil-velvet-dark: #2A1028;
-  --bg-page: #0F1015;
-  --bg-card: #16171F;
-  --bg-light-grey: #262837;
-  --border-card: #282A3A;
+  --tranquil-velvet-dark: #3F183C;
+  --bg-page: #171821;
+  --bg-card: #20222F;
+  --bg-light-grey: #2E3144;
+  --border-card: #32354A;
   --text-primary: #F3F4F6;
   --text-secondary: #9CA3AF;
   --glow-blend-mode: plus-lighter;
@@ -84,7 +75,7 @@
 .dark .bg-white\/95,
 .dark .bg-white\/90,
 .dark .bg-white\/80 {
-  background-color: rgba(22, 23, 31, 0.9) !important;
+  background-color: rgba(32, 34, 47, 0.9) !important;
 }
 
 .dark .border-medium-grey {
@@ -100,6 +91,44 @@
 .dark textarea {
   background-color: var(--bg-page) !important;
   color: var(--text-primary) !important;
+  border-color: var(--border-card) !important;
+}
+
+/* Hardcoded dark mode class overrides for consistency with lighter theme */
+.dark .bg-\[\#0F1015\],
+.dark .dark\:bg-\[\#0F1015\] {
+  background-color: var(--bg-page) !important;
+}
+.dark .bg-\[\#16171F\],
+.dark .dark\:bg-\[\#16171F\] {
+  background-color: var(--bg-card) !important;
+}
+.dark .bg-\[\#1E1F29\],
+.dark .dark\:bg-\[\#1E1F29\] {
+  background-color: var(--bg-light-grey) !important;
+}
+.dark .bg-\[\#262837\],
+.dark .dark\:bg-\[\#262837\] {
+  background-color: var(--bg-light-grey) !important;
+}
+.dark .border-\[\#282A3A\],
+.dark .dark\:border-\[\#282A3A\] {
+  border-color: var(--border-card) !important;
+}
+.dark .border-\[\#2D3043\],
+.dark .dark\:border-\[\#2D3043\] {
+  border-color: var(--border-card) !important;
+}
+.dark .hover\:bg-\[\#262837\]:hover,
+.dark .dark\:hover\:bg-\[\#262837\]:hover {
+  background-color: var(--bg-light-grey) !important;
+}
+.dark .hover\:bg-\[\#1E1F29\]:hover,
+.dark .dark\:hover\:bg-\[\#1E1F29\]:hover {
+  background-color: var(--bg-light-grey) !important;
+}
+.dark .divide-\[\#262837\] > :not([hidden]) ~ :not([hidden]),
+.dark .dark\:divide-\[\#262837\] > :not([hidden]) ~ :not([hidden]) {
   border-color: var(--border-card) !important;
 }
 
@@ -127,7 +156,7 @@
 
 .sleek-scrollbar::-webkit-scrollbar-thumb {
   background-color: rgba(108, 29, 95, 0.3);
-  border-radius: 0px;
+  border-radius: 3px;
 }
 
 .sleek-scrollbar::-webkit-scrollbar-thumb:hover {
@@ -144,18 +173,4 @@
 
 .dark .sleek-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: rgba(211, 139, 202, 0.6);
-}
-
-/* Ensure BorderGlow custom cards are also sharp */
-.border-glow-card,
-.border-glow-card::before,
-.border-glow-card::after,
-.border-glow-card > .edge-light {
-  --border-radius: 0px !important;
-  border-radius: 0px !important;
-}
-
-/* Ensure form elements, buttons, and images are sharp */
-button, input, select, textarea, img {
-  border-radius: 0px !important;
 }
