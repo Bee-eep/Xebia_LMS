@@ -9,6 +9,7 @@ import RevenuePage from '@/pages/Revenue/RevenuePage.jsx';
 import ReportsPage from '@/pages/Reports/ReportsPage.jsx';
 import SettingsPage from '@/pages/Settings/SettingsPage.jsx';
 import ModulesPage from '@/pages/Modules/ModulesPage.jsx';
+import OrganisationsPage from '@/pages/Organisations/OrganisationsPage.jsx';
 import AssessmentPage from '@/pages/Assessment/AssessmentPage.jsx';
 import SchedulingPage from '@/pages/Scheduling/SchedulingPage.jsx';
 import ProfilePage from '@/pages/Profile/ProfilePage.jsx';

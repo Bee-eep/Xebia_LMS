@@ -80,3 +80,94 @@ export const initialUsers = [
   { id: 7, name: 'David Vance', email: 'david.vance@architects.net', role: 'Principal Architect', enrollments: 6, progress: 15, lastLogin: '1 week ago', status: 'inactive' }
 ];
 
+
+/* @ author : Gurnoor Singh
+@email: gsingh13_be23@thapar.edu
+mobile : +91- 7814205303
+Thapar institute of engineering and technology, Patiala
+*/
+
+/*
+ * Data: mockOrganization
+ * Purpose: Provides hardcoded mock data for organisations to simulate
+ * a backend API response for the LMS platform.
+ */
+export const initialOrganisations = [
+  {
+    id: 1,
+    name: "Xebia Software Services",
+    domain: "xebia-internal.lms.com",
+    plan: "ENTERPRISE",
+    seats: 900,
+    usedSeats: 812,
+    owner: "Apurv Jha",
+    mrr: 384000,
+    status: "ACTIVE"
+  },
+  {
+    id: 2,
+    name: "TechCorp Global",
+    domain: "techcorp.lms.com",
+    plan: "GROWTH",
+    seats: 250,
+    usedSeats: 214,
+    owner: "Marcus Long",
+    mrr: 96400,
+    status: "ACTIVE"
+  },
+  {
+    id: 3,
+    name: "CloudSystem Inc.",
+    domain: "cloudsystem.lms.com",
+    plan: "GROWTH",
+    seats: 200,
+    usedSeats: 180,
+    owner: "Karla Abbott",
+    mrr: 81200,
+    status: "ACTIVE"
+  },
+  {
+    id: 4,
+    name: "ApexData Analytics",
+    domain: "apexdata.lms.com",
+    plan: "STARTER",
+    seats: 50,
+    usedSeats: 34,
+    owner: "Toby Reynolds",
+    mrr: 18000,
+    status: "TRIAL"
+  },
+  {
+    id: 5,
+    name: "Webflow Studios",
+    domain: "webflow.lms.com",
+    plan: "STARTER",
+    seats: 50,
+    usedSeats: 22,
+    owner: "Sarah Jenkins",
+    mrr: 12500,
+    status: "TRIAL"
+  },
+  {
+    id: 6,
+    name: "CodeMinded",
+    domain: "codeminded.lms.com",
+    plan: "GROWTH",
+    seats: 150,
+    usedSeats: 96,
+    owner: "Alex Rivera",
+    mrr: 54000,
+    status: "SUSPENDED"
+  },
+  {
+    id: 7,
+    name: "NimbusWorks",
+    domain: "nimbusworks.lms.com",
+    plan: "ENTERPRISE",
+    seats: 700,
+    usedSeats: 640,
+    owner: "Priya Nair",
+    mrr: 288000,
+    status: "ACTIVE"
+  }
+];
