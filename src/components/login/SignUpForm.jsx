@@ -10,6 +10,7 @@ export default function SignUpForm() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [role, setRole] = useState("student");
+    const [organisation, setOrganisation] = useState("Xebia");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
@@ -53,6 +54,7 @@ export default function SignUpForm() {
             email,
             password,
             role,
+            organisation,
             title: titleMap[role] || "User"
         };
 
@@ -159,6 +161,34 @@ export default function SignUpForm() {
                                 <option value="superadmin" style={{ background: "var(--background)", color: "var(--text-primary)" }}>Superadmin</option>
                             </select>
                             <label htmlFor="role" style={{ transform: "translateY(-23px)", fontSize: "0.8em" }}>Platform Role</label>
+                        </div>
+
+                        {/* Organisation field dropdown */}
+                        <div className={styles.inputBox} style={{ marginBottom: "22px" }}>
+                            <select
+                                id="organisation"
+                                value={organisation}
+                                onChange={(e) => setOrganisation(e.target.value)}
+                                className={styles.selectField}
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    background: "transparent",
+                                    border: "none",
+                                    outline: "none",
+                                    fontSize: "1em",
+                                    color: "var(--text-primary)",
+                                    padding: "0 35px 0 5px",
+                                    cursor: "pointer",
+                                    appearance: "none",
+                                    fontWeight: "500"
+                                }}
+                            >
+                                <option value="Xebia" style={{ background: "var(--background)", color: "var(--text-primary)" }}>Xebia</option>
+                                <option value="Google" style={{ background: "var(--background)", color: "var(--text-primary)" }}>Google</option>
+                                <option value="Microsoft" style={{ background: "var(--background)", color: "var(--text-primary)" }}>Microsoft</option>
+                            </select>
+                            <label htmlFor="organisation" style={{ transform: "translateY(-23px)", fontSize: "0.8em" }}>Organization Membership</label>
                         </div>
 
                         {/* Password field */}

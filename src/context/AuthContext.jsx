@@ -3,10 +3,10 @@ import React, { createContext, useContext, useState } from 'react';
 const AuthContext = createContext();
 
 const MOCK_USERS = [
-  { email: 'superadmin@xebia.com', password: 'superadmin123', name: 'Super Admin', role: 'superadmin', title: 'System Controller' },
-  { email: 'admin@xebia.com', password: 'admin123', name: 'Apurv Jha', role: 'admin', title: 'Platform Admin' },
-  { email: 'trainer@xebia.com', password: 'trainer123', name: 'Sarah Jenkins', role: 'trainer', title: 'Senior Trainer' },
-  { email: 'student@xebia.com', password: 'student123', name: 'Marcus Long', role: 'student', title: 'Student Learner' }
+  { email: 'superadmin@xebia.com', password: 'superadmin123', name: 'Super Admin', role: 'superadmin', title: 'System Controller', organisation: 'Xebia' },
+  { email: 'admin@xebia.com', password: 'admin123', name: 'Apurv Jha', role: 'admin', title: 'Platform Admin', organisation: 'Xebia' },
+  { email: 'trainer@xebia.com', password: 'trainer123', name: 'Sarah Jenkins', role: 'trainer', title: 'Senior Trainer', organisation: 'Xebia' },
+  { email: 'student@xebia.com', password: 'student123', name: 'Marcus Long', role: 'student', title: 'Student Learner', organisation: 'Xebia' }
 ];
 
 export function AuthProvider({ children }) {
@@ -34,7 +34,8 @@ export function AuthProvider({ children }) {
         name: user.name,
         email: user.email,
         role: user.role,
-        title: user.title
+        title: user.title,
+        organisation: user.organisation || 'Xebia'
       };
       localStorage.setItem('lms_current_user', JSON.stringify(userPayload));
       setCurrentUser(userPayload);

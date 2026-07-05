@@ -9,7 +9,9 @@ export const initialCourses = [
     lessons: 24,
     completedLessons: 18,
     level: "Intermediate",
-    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=400&q=80"
+    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=400&q=80",
+    visibility: "restricted",
+    allowedOrganisations: ["Xebia"]
   },
   {
     id: 2,
@@ -21,7 +23,9 @@ export const initialCourses = [
     lessons: 36,
     completedLessons: 14,
     level: "Advanced",
-    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80"
+    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80",
+    visibility: "public",
+    allowedOrganisations: []
   },
   {
     id: 3,
@@ -33,7 +37,9 @@ export const initialCourses = [
     lessons: 15,
     completedLessons: 13,
     level: "Beginner",
-    image: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=400&q=80"
+    image: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=400&q=80",
+    visibility: "restricted",
+    allowedOrganisations: ["Google"]
   },
   {
     id: 4,
@@ -45,7 +51,9 @@ export const initialCourses = [
     lessons: 40,
     completedLessons: 6,
     level: "Advanced",
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=400&q=80"
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=400&q=80",
+    visibility: "restricted",
+    allowedOrganisations: ["Microsoft"]
   },
   {
     id: 5,
@@ -57,7 +65,9 @@ export const initialCourses = [
     lessons: 20,
     completedLessons: 0,
     level: "Intermediate",
-    image: "https://images.unsplash.com/photo-1561070791-26c113006238?auto=format&fit=crop&w=400&q=80"
+    image: "https://images.unsplash.com/photo-1561070791-26c113006238?auto=format&fit=crop&w=400&q=80",
+    visibility: "public",
+    allowedOrganisations: []
   }
 ];
 

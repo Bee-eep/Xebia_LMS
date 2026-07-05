@@ -34,7 +34,7 @@ export default function CoursesPage({
 
   const activeSearch = searchQuery || '';
 
-  // Filter courses based on user role and search terms
+  // Filter courses based on user role, organization visibility, and search terms
   const getFilteredCourses = () => {
     const searched = localCourses.filter(course => 
       course.title.toLowerCase().includes(activeSearch.toLowerCase()) ||
@@ -42,18 +42,39 @@ export default function CoursesPage({
       course.category.toLowerCase().includes(activeSearch.toLowerCase())
     );
 
+    // Filter by Organization Scope
+    const scoped = searched.filter(course => {
+      // Admins and Superadmins bypass checks
+      if (currentUser?.role === 'admin' || currentUser?.role === 'superadmin') {
+        return true;
+      }
+      // Trainers see their own courses
+      if (currentUser?.role === 'trainer' && course.instructor === currentUser.name) {
+        return true;
+      }
+      // Public courses are visible to everyone
+      if (course.visibility === 'public' || !course.visibility) {
+        return true;
+      }
+      // Restricted check matching user's organisation
+      if (course.visibility === 'restricted') {
+        return course.allowedOrganisations?.includes(currentUser?.organisation);
+      }
+      return false;
+    });
+
     if (currentUser?.role === 'admin' || currentUser?.role === 'superadmin') {
       // Admins see published courses in the catalog list (pending list is rendered separately)
-      return searched.filter(c => c.status === 'published');
+      return scoped.filter(c => c.status === 'published');
     }
 
     if (currentUser?.role === 'trainer') {
       // Trainers see all published courses plus their own pending proposals
-      return searched.filter(c => c.status === 'published' || (c.status === 'pending' && c.instructor === currentUser.name));
+      return scoped.filter(c => c.status === 'published' || (c.status === 'pending' && c.instructor === currentUser.name));
     }
 
     // Students only see published courses
-    return searched.filter(c => c.status === 'published');
+    return scoped.filter(c => c.status === 'published');
   };
 
   const filteredCourses = getFilteredCourses();
@@ -162,9 +183,16 @@ export default function CoursesPage({
                       <span className="text-[9px] bg-tranquil-velvet/10 text-tranquil-velvet border border-tranquil-velvet/20 px-2 py-0.5 rounded font-bold uppercase">
                         {course.category}
                       </span>
-                      <span className="text-[9px] bg-cta-orange/10 text-cta-orange font-bold uppercase px-2 py-0.5 rounded">
-                        Pending Approval
-                      </span>
+                      <div className="flex gap-1.5">
+                        {course.visibility === 'restricted' && (
+                          <span className="text-[9px] bg-blue-500/10 text-blue-500 font-bold uppercase px-2 py-0.5 rounded">
+                            {course.allowedOrganisations?.[0]}
+                          </span>
+                        )}
+                        <span className="text-[9px] bg-cta-orange/10 text-cta-orange font-bold uppercase px-2 py-0.5 rounded">
+                          Pending
+                        </span>
+                      </div>
                     </div>
                     <h4 className="text-sm font-extrabold text-black dark:text-white line-clamp-1">{course.title}</h4>
                     <p className="text-[10px] text-dark-grey">Proposed by: <b className="text-black dark:text-white">{course.instructor}</b></p>
@@ -224,10 +252,15 @@ export default function CoursesPage({
               <div>
                 <div className="h-44 relative overflow-hidden bg-white dark:bg-bg-page border-b border-medium-grey dark:border-border-card">
                   <img src={course.image} className="h-full w-full object-cover" alt="" />
-                  <div className="absolute top-3 left-3 flex gap-1.5">
+                  <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 max-w-[85%]">
                     <span className="text-[9px] bg-white/90 dark:bg-bg-card/90 text-tranquil-velvet dark:text-amber-400 border border-tranquil-velvet/20 px-2 py-0.5 rounded font-bold uppercase shadow-sm">
                       {course.category}
                     </span>
+                    {course.visibility === 'restricted' && (
+                      <span className="text-[9px] bg-blue-500 text-white px-2 py-0.5 rounded font-bold uppercase shadow-sm">
+                        {course.allowedOrganisations?.[0]} Scope
+                      </span>
+                    )}
                     {course.status === 'pending' && (
                       <span className="text-[9px] bg-cta-orange text-white px-2 py-0.5 rounded font-bold uppercase shadow-sm">
                         Pending

@@ -12,6 +12,8 @@ export default function AddCourseModal({ isOpen, onClose, onAdd, defaultInstruct
   const [level, setLevel] = useState('Intermediate');
   const [lessons, setLessons] = useState(15);
   const [image, setImage] = useState('');
+  const [visibility, setVisibility] = useState('public');
+  const [allowedOrganisation, setAllowedOrganisation] = useState('Xebia');
   const [error, setError] = useState('');
 
   const randomImages = [
@@ -43,12 +45,16 @@ export default function AddCourseModal({ isOpen, onClose, onAdd, defaultInstruct
       instructor,
       level,
       lessons: parseInt(lessons, 10),
-      image: selectedImage
+      image: selectedImage,
+      visibility,
+      allowedOrganisations: visibility === 'restricted' ? [allowedOrganisation] : []
     });
 
     // Reset Form
     setTitle('');
     setImage('');
+    setVisibility('public');
+    setAllowedOrganisation('Xebia');
     onClose();
   };
 
@@ -205,6 +211,40 @@ export default function AddCourseModal({ isOpen, onClose, onAdd, defaultInstruct
                       onChange={(e) => setImage(e.target.value)}
                       className="w-full text-xs font-medium p-3 rounded-xl border border-medium-grey/60 dark:border-[#2D3043] focus:outline-hidden focus:border-tranquil-velvet transition bg-transparent"
                     />
+                  </div>
+
+                  {/* Course Visibility Scope */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-extrabold text-text-secondary uppercase tracking-wider block">
+                        Visibility Scope
+                      </label>
+                      <select
+                        value={visibility}
+                        onChange={(e) => setVisibility(e.target.value)}
+                        className="w-full text-xs font-medium p-3 rounded-xl border border-medium-grey/60 dark:border-[#2D3043] focus:outline-hidden focus:border-tranquil-velvet transition bg-white dark:bg-[#16171F]"
+                      >
+                        <option value="public">Public (All Orgs)</option>
+                        <option value="restricted">Restricted to Org</option>
+                      </select>
+                    </div>
+
+                    {visibility === 'restricted' && (
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-extrabold text-text-secondary uppercase tracking-wider block">
+                          Allowed Organization
+                        </label>
+                        <select
+                          value={allowedOrganisation}
+                          onChange={(e) => setAllowedOrganisation(e.target.value)}
+                          className="w-full text-xs font-medium p-3 rounded-xl border border-medium-grey/60 dark:border-[#2D3043] focus:outline-hidden focus:border-tranquil-velvet transition bg-white dark:bg-[#16171F]"
+                        >
+                          <option value="Xebia">Xebia</option>
+                          <option value="Google">Google</option>
+                          <option value="Microsoft">Microsoft</option>
+                        </select>
+                      </div>
+                    )}
                   </div>
 
                   {/* Footer actions */}
