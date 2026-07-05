@@ -97,5 +97,40 @@ export const api = {
     const updated = users.filter(u => !userIds.includes(u.id));
     setStorageItem('lms_users', updated);
     return updated;
+  },
+
+
+  /* @ author : Gurnoor Singh
+@email: gsingh13_be23@thapar.edu
+mobile : +91- 7814205303
+Thapar institute of engineering and technology, Patiala
+*/
+
+  /*
+   * Service: api
+   * Purpose: Simulates a backend API service for the LMS platform.
+   * It manages local storage caching, simulated network latency, and handles
+   * CRUD operations for courses, tutors, users, and organisations.
+   */
+  // Organisations API
+  async getOrganisations() {
+    await delay();
+    return getStorageItem('lms_organisations', initialOrganisations);
+  },
+
+  async addOrganisation(orgData) {
+    await delay();
+    const orgs = getStorageItem('lms_organisations', initialOrganisations);
+    const newOrg = {
+      id: orgs.length ? Math.max(...orgs.map(o => o.id)) + 1 : 1,
+      usedSeats: 0,
+      status: 'ACTIVE',
+      ...orgData,
+      seats: parseInt(orgData.seats || 0, 10),
+      mrr: parseInt(orgData.mrr || 0, 10)
+    };
+    const updated = [newOrg, ...orgs];
+    setStorageItem('lms_organisations', updated);
+    return updated;
   }
 };

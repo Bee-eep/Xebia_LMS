@@ -65,21 +65,21 @@ export default function Dashboard({ courses, handleSimulateProgress, coursesLoad
         <Route path="/permissions" element={<BlankPage name="Permissions" />} />
         <Route path="/roles-grants" element={<BlankPage name="Roles & Grants" />} />
         <Route path="/users" element={<UsersPage searchQuery={searchQuery} />} />
-        <Route path="/organisations" element={<BlankPage name="Organisations" />} />
+        <Route path="/organisations" element={<OrganisationsPage searchQuery={searchQuery} />} />
         <Route path="/domains" element={<BlankPage name="Domains" />} />
         <Route path="/parents" element={<BlankPage name="Parents" />} />
         <Route path="/learners" element={<BlankPage name="Learners" />} />
         <Route path="/batches" element={<BlankPage name="Batches" />} />
-        <Route 
-          path="/courses" 
+        <Route
+          path="/courses"
           element={
-            <CoursesPage 
-              courses={courses} 
-              handleSimulateProgress={handleSimulateProgress} 
+            <CoursesPage
+              courses={courses}
+              handleSimulateProgress={handleSimulateProgress}
               searchQuery={searchQuery}
               loading={coursesLoading}
             />
-          } 
+          }
         />
         <Route path="/audit-log" element={<BlankPage name="Audit Log" />} />
         <Route path="/profile" element={<ProfilePage />} />
@@ -87,16 +87,16 @@ export default function Dashboard({ courses, handleSimulateProgress, coursesLoad
         <Route path="/scheduling" element={<SchedulingPage />} />
         <Route path="/assessment" element={<AssessmentPage />} />
         <Route path="/finance" element={<RevenuePage />} />
-        <Route 
-          path="/trainer" 
+        <Route
+          path="/trainer"
           element={
-            <TutorsPage 
-              tutors={tutors} 
-              onAddTutor={handleAddTutor} 
-              onDeleteTutor={handleDeleteTutor} 
+            <TutorsPage
+              tutors={tutors}
+              onAddTutor={handleAddTutor}
+              onDeleteTutor={handleDeleteTutor}
               loading={tutorsLoading}
             />
-          } 
+          }
         />
       </Routes>
     </DashboardLayout>
