@@ -25,7 +25,11 @@ export const api = {
   // Courses API
   async getCourses() {
     await delay();
-    return getStorageItem('lms_courses', initialCourses);
+    const courses = getStorageItem('lms_courses', initialCourses);
+    return courses.map(c => ({
+      status: 'published',
+      ...c
+    }));
   },
 
   async updateCourseProgress(courseId) {
@@ -43,6 +47,45 @@ export const api = {
       }
       return course;
     });
+    setStorageItem('lms_courses', updated);
+    return updated;
+  },
+
+  async addCourse(courseData) {
+    await delay();
+    const courses = getStorageItem('lms_courses', initialCourses);
+    const newCourse = {
+      id: courses.length ? Math.max(...courses.map(c => c.id)) + 1 : 1,
+      progress: 0,
+      completedLessons: 0,
+      lessons: parseInt(courseData.lessons || 10, 10),
+      enrollments: 0,
+      rating: 5.0,
+      ...courseData,
+      status: courseData.status || 'published'
+    };
+    const updated = [...courses, newCourse];
+    setStorageItem('lms_courses', updated);
+    return updated;
+  },
+
+  async approveCourse(courseId) {
+    await delay();
+    const courses = getStorageItem('lms_courses', initialCourses);
+    const updated = courses.map(c => {
+      if (c.id === courseId) {
+        return { ...c, status: 'published' };
+      }
+      return c;
+    });
+    setStorageItem('lms_courses', updated);
+    return updated;
+  },
+
+  async deleteCourse(courseId) {
+    await delay();
+    const courses = getStorageItem('lms_courses', initialCourses);
+    const updated = courses.filter(c => c.id !== courseId);
     setStorageItem('lms_courses', updated);
     return updated;
   },

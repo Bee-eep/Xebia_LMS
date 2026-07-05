@@ -46,6 +46,33 @@ function App() {
     }
   };
 
+  const handleAddCourse = async (courseData) => {
+    try {
+      const updated = await api.addCourse(courseData);
+      setCourses(updated);
+    } catch (err) {
+      console.error("Failed to add course:", err);
+    }
+  };
+
+  const handleApproveCourse = async (courseId) => {
+    try {
+      const updated = await api.approveCourse(courseId);
+      setCourses(updated);
+    } catch (err) {
+      console.error("Failed to approve course:", err);
+    }
+  };
+
+  const handleDeleteCourse = async (courseId) => {
+    try {
+      const updated = await api.deleteCourse(courseId);
+      setCourses(updated);
+    } catch (err) {
+      console.error("Failed to delete course:", err);
+    }
+  };
+
   return (
     <ThemeProvider>
       <BrowserRouter>
@@ -79,6 +106,9 @@ function App() {
                 <Dashboard 
                   courses={courses} 
                   handleSimulateProgress={handleSimulateProgress} 
+                  handleAddCourse={handleAddCourse}
+                  handleApproveCourse={handleApproveCourse}
+                  handleDeleteCourse={handleDeleteCourse}
                   coursesLoading={loading}
                 />
               ) : (

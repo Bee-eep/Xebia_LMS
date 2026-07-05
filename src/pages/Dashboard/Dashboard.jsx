@@ -17,7 +17,7 @@ import TutorsPage from '@/pages/Tutors/TutorsPage.jsx';
 import { api } from '@/services/api.js';
 
 
-export default function Dashboard({ courses, handleSimulateProgress, coursesLoading }) {
+export default function Dashboard({ courses, handleSimulateProgress, handleAddCourse, handleApproveCourse, handleDeleteCourse, coursesLoading }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [tutors, setTutors] = useState([]);
   const [tutorsLoading, setTutorsLoading] = useState(true);
@@ -77,6 +77,9 @@ export default function Dashboard({ courses, handleSimulateProgress, coursesLoad
             <CoursesPage
               courses={courses}
               handleSimulateProgress={handleSimulateProgress}
+              handleAddCourse={handleAddCourse}
+              handleApproveCourse={handleApproveCourse}
+              handleDeleteCourse={handleDeleteCourse}
               searchQuery={searchQuery}
               loading={coursesLoading}
             />
