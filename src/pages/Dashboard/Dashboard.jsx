@@ -8,6 +8,10 @@ import AnalyticsPage from '@/pages/Analytics/AnalyticsPage.jsx';
 import RevenuePage from '@/pages/Revenue/RevenuePage.jsx';
 import ReportsPage from '@/pages/Reports/ReportsPage.jsx';
 import SettingsPage from '@/pages/Settings/SettingsPage.jsx';
+import ModulesPage from '@/pages/Modules/ModulesPage.jsx';
+import AssessmentPage from '@/pages/Assessment/AssessmentPage.jsx';
+import SchedulingPage from '@/pages/Scheduling/SchedulingPage.jsx';
+import ProfilePage from '@/pages/Profile/ProfilePage.jsx';
 import TutorsPage from '@/pages/Tutors/TutorsPage.jsx';
 import { api } from '@/services/api.js';
 
@@ -57,7 +61,7 @@ export default function Dashboard({ courses, handleSimulateProgress, coursesLoad
     <DashboardLayout onSearchChange={handleSearchChange} searchValue={searchQuery}>
       <Routes>
         <Route path="/" element={<DashboardHome searchQuery={searchQuery} tutors={tutors} />} />
-        <Route path="/modules" element={<BlankPage name="Modules" />} />
+        <Route path="/modules" element={<ModulesPage />} />
         <Route path="/permissions" element={<BlankPage name="Permissions" />} />
         <Route path="/roles-grants" element={<BlankPage name="Roles & Grants" />} />
         <Route path="/users" element={<UsersPage searchQuery={searchQuery} />} />
@@ -78,10 +82,10 @@ export default function Dashboard({ courses, handleSimulateProgress, coursesLoad
           } 
         />
         <Route path="/audit-log" element={<BlankPage name="Audit Log" />} />
-        <Route path="/profile" element={<BlankPage name="Profile" />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/administration" element={<SettingsPage />} />
-        <Route path="/scheduling" element={<BlankPage name="Scheduling" />} />
-        <Route path="/assessment" element={<BlankPage name="Assessment" />} />
+        <Route path="/scheduling" element={<SchedulingPage />} />
+        <Route path="/assessment" element={<AssessmentPage />} />
         <Route path="/finance" element={<RevenuePage />} />
         <Route 
           path="/trainer" 
