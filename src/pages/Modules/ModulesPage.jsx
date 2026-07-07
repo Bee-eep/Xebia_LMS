@@ -156,33 +156,32 @@ export default function ModulesPage() {
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-[28px] border border-white/60 dark:border-border-card bg-gradient-to-br from-[#fef7f2] via-white to-[#f5f0ff] dark:from-[#16171F] dark:via-[#1a1b24] dark:to-[#181524] p-6 shadow-[0_20px_60px_rgba(132,17,124,0.12)]"
+        className="relative overflow-hidden rounded-xl border border-white/60 dark:border-border-card bg-gradient-to-br from-[#fef7f2] via-white to-[#f5f0ff] dark:from-[#16171F] dark:via-[#1a1b24] dark:to-[#181524] p-6 shadow-[0_20px_60px_rgba(132,17,124,0.12)]"
       >
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top_left,_rgba(255,98,0,0.18),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(132,17,124,0.16),_transparent_35%)]" />
-        <div className="relative flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 rounded-full border border-tranquil-velvet/20 bg-white/80 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.24em] text-tranquil-velvet shadow-sm">
-              <Sparkles className="h-3.5 w-3.5" />
-              Access Control
-            </div>
-            <div>
+        <div className="rounded-xl border border-white/60 bg-white/80 dark:border-border-card dark:bg-[#16171F]/90 p-6 shadow-sm backdrop-blur-sm">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div className="space-y-1">
+              <div className="inline-flex items-center gap-2 rounded-full bg-tranquil-velvet/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-tranquil-velvet">
+                Modules
+              </div>
               <h1 className="text-2xl sm:text-3xl font-extrabold tracking-[-0.8px] text-black dark:text-white">
-                Modules Command Center
+                Module registry
               </h1>
-              <p className="mt-2 max-w-2xl text-sm text-dark-grey">
-                Shape the platform’s core navigation, manage module lifecycle states, and explore your registry in either a polished table or a vibrant card view.
+              <p className="text-sm text-dark-grey max-w-2xl">
+                Manage modules, routes and availability with the same polished workflow as learner creation.
               </p>
             </div>
-          </div>
 
-          <button
-            type="button"
-            onClick={handleOpenCreate}
-            className="inline-flex items-center gap-2 self-start rounded-2xl bg-cta-orange px-4 py-2.5 text-xs font-extrabold text-white shadow-[0_10px_24px_rgba(255,98,0,0.25)] transition hover:-translate-y-0.5 hover:brightness-95 sm:self-auto"
-          >
-            <Plus className="h-4 w-4" />
-            New Module
-          </button>
+            <button
+              type="button"
+              onClick={handleOpenCreate}
+              className="inline-flex items-center gap-2 rounded-xl bg-cta-orange px-4 py-2.5 text-xs font-extrabold text-white shadow-[0_10px_24px_rgba(255,98,0,0.25)] transition hover:brightness-95 self-start sm:self-auto"
+            >
+              <Plus className="h-4 w-4" />
+              New module
+            </button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
@@ -191,7 +190,7 @@ export default function ModulesPage() {
               <div className="p-4">
                   <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div className="text-xs text-dark-grey">Showing {rangeStart}-{rangeEnd} of {modules.length} modules</div>
-                    <div className="inline-flex items-center gap-2 rounded-2xl border border-medium-grey/30 bg-white/80 p-1 shadow-sm dark:bg-[#18181B]/80">
+                    <div className="inline-flex items-center gap-2 rounded-l border border-medium-grey/30 bg-white/80 p-1 shadow-sm dark:bg-[#18181B]/80">
                       <button
                         type="button"
                         onClick={() => handleSetView('table')}
@@ -210,7 +209,7 @@ export default function ModulesPage() {
                   </div>
 
                   {viewMode === 'table' ? (
-                    <div className="relative z-10 min-h-[320px] rounded-[22px] border border-medium-grey/40 bg-[#fcfdff] p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] dark:border-border-card dark:bg-[#12131a]">
+                    <div className="relative z-10 min-h-[320px] rounded-xl border border-medium-grey/40 bg-[#fcfdff] p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] dark:border-border-card dark:bg-[#12131a]">
                       <table className="w-full min-w-[920px] text-left text-xs">
                         <thead>
                           <tr className="bg-gradient-to-r from-[#f7f3ff] to-[#fff7ef] text-dark-grey uppercase tracking-[0.2em] dark:from-[#201d2b] dark:to-[#1d161d]">

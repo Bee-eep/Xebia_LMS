@@ -285,7 +285,7 @@ export default function LearnersPage() {
   return (
     <DashboardLayout onSearchChange={(event) => setSearchQuery(event.target.value)} searchValue={searchQuery}>
       <div className="space-y-6">
-        <div className="flex flex-col gap-4 rounded-3xl border border-white/60 dark:border-border-card bg-white/80 dark:bg-[#16171F]/90 backdrop-blur-sm p-6 shadow-sm">
+        <div className="flex flex-col gap-4 rounded-xl border border-white/60 dark:border-border-card bg-white/80 dark:bg-[#16171F]/90 backdrop-blur-sm p-6 shadow-sm">
           {/* Header Section */}
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div className="space-y-1">
@@ -313,20 +313,20 @@ export default function LearnersPage() {
           {/* Search and Filter Section */}
           <div className="grid gap-4 lg:grid-cols-[1fr_auto]">
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-              <div className="rounded-3xl border border-medium-grey/30 bg-white p-4 shadow-sm dark:border-border-card dark:bg-[#16171F]">
+              <div className="rounded-xl border border-medium-grey/30 bg-white p-4 shadow-sm dark:border-border-card dark:bg-[#16171F]">
                 <p className="text-[10px] uppercase tracking-[0.22em] text-dark-grey">Total Learners</p>
                 <p className="mt-2 text-2xl font-extrabold text-black dark:text-white">{learners.length}</p>
               </div>
-              <div className="rounded-3xl border border-medium-grey/30 bg-white p-4 shadow-sm dark:border-border-card dark:bg-[#16171F]">
+              <div className="rounded-xl border border-medium-grey/30 bg-white p-4 shadow-sm dark:border-border-card dark:bg-[#16171F]">
                 <p className="text-[10px] uppercase tracking-[0.22em] text-dark-grey">Active</p>
                 <p className="mt-2 text-2xl font-extrabold text-black dark:text-white">{activeLearners}</p>
               </div>
-              <div className="rounded-3xl border border-medium-grey/30 bg-white p-4 shadow-sm dark:border-border-card dark:bg-[#16171F]">
+              <div className="rounded-xl border border-medium-grey/30 bg-white p-4 shadow-sm dark:border-border-card dark:bg-[#16171F]">
                 <p className="text-[10px] uppercase tracking-[0.22em] text-dark-grey">Organisations</p>
                 <p className="mt-2 text-2xl font-extrabold text-black dark:text-white">{organisationCount}</p>
               </div>
             </div>
-            <div className="inline-flex items-center justify-end gap-2 rounded-2xl border border-medium-grey/40 bg-white dark:bg-[#16171F] p-1 shadow-sm">
+            <div className="inline-flex items-center justify-end gap-2 rounded-l border border-medium-grey/40 bg-white dark:bg-[#16171F] p-1 shadow-sm">
               <button
                 type="button"
                 onClick={() => handleSetViewMode('table')}
@@ -377,7 +377,7 @@ export default function LearnersPage() {
           </div>
 
           {/* Table Section */}
-          <div className="rounded-2xl border border-medium-grey/30 dark:border-border-card bg-[#FBFBFE] dark:bg-[#0F1015] p-4 md:p-6">
+          <div className="rounded-xl border border-medium-grey/30 dark:border-border-card bg-[#FBFBFE] dark:bg-[#0F1015] p-4 md:p-6">
             {filteredLearners.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12 text-center">
                 <AlertCircle className="h-12 w-12 text-medium-grey/50 mb-3" />
@@ -489,11 +489,11 @@ export default function LearnersPage() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 16 }}
                         transition={{ duration: 0.35, delay: index * 0.04 }}
-                        className="rounded-3xl border border-medium-grey/30 bg-white p-5 shadow-sm dark:border-border-card dark:bg-[#16171F] transition hover:-translate-y-1 hover:shadow-lg"
+                        className="rounded-lg border border-medium-grey/30 bg-white p-5 shadow-sm dark:border-border-card dark:bg-[#16171F] transition hover:-translate-y-1 hover:shadow-lg"
                       >
                         <div className="flex items-center justify-between gap-3">
                           <div className="flex items-center gap-3">
-                            <div className={`flex h-11 w-11 items-center justify-center rounded-2xl font-bold ${getAvatarColor(learner.avatar)}`}>
+                            <div className={`flex h-11 w-11 items-center justify-center rounded-xl font-bold ${getAvatarColor(learner.avatar)}`}>
                               {learner.avatar}
                             </div>
                             <div>
@@ -507,19 +507,19 @@ export default function LearnersPage() {
                         </div>
 
                         <div className="mt-4 grid gap-3 text-sm text-dark-grey sm:grid-cols-2">
-                          <div className="rounded-2xl bg-[#F7F8FC] p-3">
+                          <div className="rounded-lg bg-[#F7F8FC] p-3">
                             <p className="text-[10px] uppercase tracking-[0.18em]">Organisation</p>
                             <p className="mt-2 font-semibold text-black dark:text-white">{learner.organisation}</p>
                           </div>
-                          <div className="rounded-2xl bg-[#F7F8FC] p-3">
+                          <div className="rounded-lg bg-[#F7F8FC] p-3">
                             <p className="text-[10px] uppercase tracking-[0.18em]">Domain</p>
                             <p className="mt-2 font-semibold text-black dark:text-white">{learner.domain}</p>
                           </div>
-                          <div className="rounded-2xl bg-[#F7F8FC] p-3">
+                          <div className="rounded-lg bg-[#F7F8FC] p-3">
                             <p className="text-[10px] uppercase tracking-[0.18em]">Type</p>
                             <p className="mt-2 font-semibold text-black dark:text-white">{learner.type}</p>
                           </div>
-                          <div className="rounded-2xl bg-[#F7F8FC] p-3">
+                          <div className="rounded-lg bg-[#F7F8FC] p-3">
                             <p className="text-[10px] uppercase tracking-[0.18em]">Semester</p>
                             <p className="mt-2 font-semibold text-black dark:text-white">{learner.sem}</p>
                           </div>
@@ -529,21 +529,21 @@ export default function LearnersPage() {
                           <button
                             type="button"
                             onClick={() => openLearnerModal('view', learner)}
-                            className="inline-flex items-center gap-2 rounded-2xl border border-medium-grey/40 bg-white px-3 py-2 text-xs font-bold text-dark-grey transition hover:bg-medium-grey/10"
+                            className="inline-flex items-center gap-2 rounded-xl border border-medium-grey/40 bg-white px-3 py-2 text-xs font-bold text-dark-grey transition hover:bg-medium-grey/10"
                           >
                             <Eye className="h-3.5 w-3.5" /> View
                           </button>
                           <button
                             type="button"
                             onClick={() => openLearnerModal('edit', learner)}
-                            className="inline-flex items-center gap-2 rounded-2xl border border-medium-grey/40 bg-white px-3 py-2 text-xs font-bold text-dark-grey transition hover:bg-medium-grey/10"
+                            className="inline-flex items-center gap-2 rounded-l border border-medium-grey/40 bg-white px-3 py-2 text-xs font-bold text-dark-grey transition hover:bg-medium-grey/10"
                           >
                             <Pencil className="h-3.5 w-3.5" /> Edit
                           </button>
                           <button
                             type="button"
                             onClick={() => handleDeleteLearner(learner.id)}
-                            className="inline-flex items-center gap-2 rounded-2xl border border-cta-orange/20 bg-white px-3 py-2 text-xs font-bold text-cta-orange transition hover:bg-cta-orange/10"
+                            className="inline-flex items-center gap-2 rounded-l border border-cta-orange/20 bg-white px-3 py-2 text-xs font-bold text-cta-orange transition hover:bg-cta-orange/10"
                           >
                             <Trash2 className="h-3.5 w-3.5" /> Delete
                           </button>
