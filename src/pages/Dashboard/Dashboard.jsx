@@ -14,6 +14,7 @@ import AssessmentPage from '@/pages/Assessment/AssessmentPage.jsx';
 import SchedulingPage from '@/pages/Scheduling/SchedulingPage.jsx';
 import ProfilePage from '@/pages/Profile/ProfilePage.jsx';
 import TutorsPage from '@/pages/Tutors/TutorsPage.jsx';
+import DomainsPage from '@/pages/Domains/DomainsPage.jsx';
 import RolesPage from '@/pages/Roles/RolesPage.jsx';
 import PermissionsPage from '@/pages/Permissions/PermissionsPage.jsx';
 import RolesGrantsPage from '@/pages/RolesGrants/RolesGrantsPage.jsx';
@@ -126,8 +127,8 @@ export default function Dashboard({ courses, handleSimulateProgress, handleAddCo
           } 
         />
         <Route path="/users" element={<UsersPage searchQuery={searchQuery} />} />
-        <Route path="/organisations" element={<OrganisationsPage searchQuery={searchQuery} />} />
-        <Route path="/domains" element={<BlankPage name="Domains" />} />
+        <Route path="/organisations" element={<BlankPage name="Organisations" />} />
+        <Route path="/domains" element={<DomainsPage />} />
         <Route path="/parents" element={<BlankPage name="Parents" />} />
         <Route path="/learners" element={<BlankPage name="Learners" />} />
         <Route path="/batches" element={<BlankPage name="Batches" />} />
