@@ -8,6 +8,7 @@ import {
 import Logo from '@/components/ui/Logo.jsx';
 import { useTheme } from '@/context/ThemeContext.jsx';
 import { useAuth } from '@/context/AuthContext.jsx';
+import { usePermissions } from '@/context/PermissionsContext.jsx';
 
 const navigationGroups = [
   {
@@ -62,39 +63,24 @@ const navigationGroups = [
 export default function Sidebar({ isCollapsed, setIsCollapsed, isMobile = false, onClose }) {
   const { theme, toggleTheme } = useTheme();
   const { currentUser, logout } = useAuth();
+  const { hasPermission } = usePermissions();
   const navigate = useNavigate();
 
-  // Filter navigationGroups based on user role
+  const initials = currentUser
+    ? currentUser.name
+        .split(' ')
+        .filter(Boolean)
+        .map(n => n[0])
+        .join('')
+        .slice(0, 2)
+        .toUpperCase()
+    : 'U';
+
+  // Filter navigationGroups based on user role permissions dynamically
   const filteredGroups = navigationGroups.map(group => {
-    if (!currentUser || currentUser.role === 'admin' || currentUser.role === 'superadmin') {
-      return group;
-    }
-
-    if (currentUser.role === 'trainer') {
-      const allowedPaths = [
-        '/dashboard',
-        '/dashboard/courses',
-        '/dashboard/trainer',
-        '/dashboard/scheduling',
-        '/dashboard/administration',
-        '/dashboard/profile'
-      ];
-      const items = group.items.filter(item => allowedPaths.includes(item.path));
-      return items.length > 0 ? { ...group, items } : null;
-    }
-
-    if (currentUser.role === 'student') {
-      const allowedPaths = [
-        '/dashboard',
-        '/dashboard/courses',
-        '/dashboard/profile',
-        '/dashboard/assessment'
-      ];
-      const items = group.items.filter(item => allowedPaths.includes(item.path));
-      return items.length > 0 ? { ...group, items } : null;
-    }
-
-    return group;
+    if (!currentUser) return null;
+    const items = group.items.filter(item => hasPermission(currentUser.role, item.path));
+    return items.length > 0 ? { ...group, items } : null;
   }).filter(Boolean);
 
   return (
@@ -176,7 +162,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, isMobile = false,
         {/* Profile Card */}
         <div className={`flex items-center gap-3 ${isCollapsed ? 'justify-center' : 'justify-start'}`}>
           <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-tranquil-velvet to-bright-velvet border-2 border-cta-orange/40 flex items-center justify-center text-white font-extrabold shadow-md shrink-0 uppercase select-none">
-            {currentUser ? currentUser.name.split(' ').map(n => n[0]).join('') : 'U'}
+            {initials}
           </div>
           {!isCollapsed && (
             <div className="leading-tight">
