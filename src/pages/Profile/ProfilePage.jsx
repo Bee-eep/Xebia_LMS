@@ -41,6 +41,7 @@ export default function ProfilePage() {
   const { hasPermission } = usePermissions();
 
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showPhotoModal, setShowPhotoModal] = useState(false);
   const [showViewScopes, setShowViewScopes] = useState(false);
   const [showModulesModal, setShowModulesModal] = useState(false);
   const [activeModule, setActiveModule] = useState(null);
@@ -59,6 +60,7 @@ export default function ProfilePage() {
         email: currentUser.email || '',
         role: currentUser.role || '',
         subRole: currentUser.title || '',
+        profileImage: currentUser.profileImage || '',
       });
     }
   }, [currentUser]);
@@ -103,8 +105,13 @@ export default function ProfilePage() {
       email: formData.email,
       role: currentUser.role === 'superadmin' ? formData.role.toLowerCase() : currentUser.role,
       title: formData.subRole,
+      profileImage: formData.profileImage,
     });
     setShowEditModal(false);
+  };
+
+  const handleViewPhoto = () => {
+    setShowPhotoModal(true);
   };
 
   const handleOpenModule = (module) => {
@@ -125,18 +132,20 @@ export default function ProfilePage() {
       <ProfileCardFrame className="p-6 bg-[#FFFFFF] dark:bg-[#16171F] border border-[#E7E9F0] dark:border-white/5">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-4">
-            <div className="relative h-20 w-20 overflow-hidden rounded-3xl bg-gradient-to-br from-sky-400 via-cyan-400 to-slate-700 shadow-sm">
+            <div className="relative h-20 w-20 rounded-3xl bg-gradient-to-br from-sky-400 via-cyan-400 to-slate-700 text-white grid place-items-center text-4xl font-black shadow-sm select-none">
               {formData.profileImage ? (
-                <img src={formData.profileImage} alt="Profile" className="h-full w-full object-cover" />
+                <img 
+                  src={formData.profileImage} 
+                  alt="Profile" 
+                  className="h-full w-full object-cover rounded-3xl" 
+                />
               ) : (
-                <div className="grid h-full w-full place-items-center text-4xl font-black text-white">
-                  {formData.displayName?.[0] || 'P'}
-                </div>
+                <span>{formData.displayName?.[0] || currentUser.name?.[0] || 'U'}</span>
               )}
-              <div className="absolute -bottom-2 -right-2 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm border border-[#E7E9F0] text-slate-700">
-            <div className="relative h-20 w-20 rounded-3xl bg-tranquil-velvet text-white grid place-items-center text-4xl font-black shadow-sm select-none">
-              {currentUser.name ? currentUser.name[0].toUpperCase() : 'U'}
-              <div className="absolute -bottom-2 -right-2 flex h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-zinc-800 shadow-sm border border-[#E7E9F0] dark:border-white/10 text-tranquil-velvet cursor-pointer" onClick={handleViewPhoto}>
+              <div 
+                className="absolute -bottom-2 -right-2 flex h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-zinc-800 shadow-sm border border-[#E7E9F0] dark:border-white/10 text-tranquil-velvet cursor-pointer" 
+                onClick={handleViewPhoto}
+              >
                 <Camera className="h-4 w-4" />
               </div>
             </div>
@@ -238,61 +247,10 @@ export default function ProfilePage() {
       <ProfileEditModal
         open={showEditModal}
         onClose={() => setShowEditModal(false)}
-        title="Edit profile details"
-        description="Update your user identity, email, and access role."
-        footer={
-          <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
-            <ProfileActionButton tone="secondary" onClick={() => setShowEditModal(false)}>Cancel</ProfileActionButton>
-            <ProfileActionButton type="submit" form="profileForm">Save</ProfileActionButton>
-          </div>
-        }
-      >
-        <form id="profileForm" onSubmit={handleSaveProfile} className="space-y-4">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="space-y-2 text-sm text-dark-grey">
-              <span className="block text-[10px] font-bold uppercase tracking-[0.18em]">Display name</span>
-              <input
-                value={formData.displayName}
-                onChange={(e) => handleChange('displayName', e.target.value)}
-                className="w-full rounded-2xl border border-medium-grey dark:border-white/10 bg-[#F7F8FC] dark:bg-[#0F1015] px-4 py-3 text-sm text-black dark:text-white focus:outline-none"
-              />
-            </label>
-            <label className="space-y-2 text-sm text-dark-grey">
-              <span className="block text-[10px] font-bold uppercase tracking-[0.18em]">Email</span>
-              <input
-                value={formData.email}
-                onChange={(e) => handleChange('email', e.target.value)}
-                className="w-full rounded-2xl border border-medium-grey dark:border-white/10 bg-[#F7F8FC] dark:bg-[#0F1015] px-4 py-3 text-sm text-black dark:text-white focus:outline-none"
-              />
-            </label>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="space-y-2 text-sm text-dark-grey">
-              <span className="block text-[10px] font-bold uppercase tracking-[0.18em]">Role</span>
-              <select
-                value={formData.role}
-                onChange={(e) => handleChange('role', e.target.value)}
-                disabled={currentUser.role !== 'superadmin'}
-                className="w-full rounded-2xl border border-medium-grey dark:border-white/10 bg-[#F7F8FC] dark:bg-[#0F1015] px-4 py-3 text-sm text-black dark:text-white focus:outline-none cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                <option value="superadmin">SUPERADMIN</option>
-                <option value="admin">ADMIN</option>
-                <option value="trainer">TRAINER</option>
-                <option value="student">STUDENT</option>
-              </select>
-            </label>
-            <label className="space-y-2 text-sm text-dark-grey">
-              <span className="block text-[10px] font-bold uppercase tracking-[0.18em]">Title / Specialty</span>
-              <input
-                value={formData.subRole}
-                onChange={(e) => handleChange('subRole', e.target.value)}
-                className="w-full rounded-2xl border border-medium-grey dark:border-white/10 bg-[#F7F8FC] dark:bg-[#0F1015] px-4 py-3 text-sm text-black dark:text-white focus:outline-none"
-              />
-            </label>
-          </div>
-        </form>
-      </ProfileActionModal>
+        onSubmit={handleSaveProfile}
+        value={formData}
+        onChange={handleChange}
+      />
 
       <ProfileActionModal
         open={showViewScopes}

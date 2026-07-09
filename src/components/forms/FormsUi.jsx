@@ -12,6 +12,7 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X, Save, Camera } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext.jsx';
 
 function Backdrop({ onClose }) {
   return (
@@ -438,6 +439,7 @@ export function LearnerFormModal({ open, onClose, onSubmit, value = {}, onChange
 }
 
 export function ProfileEditModal({ open, onClose, onSubmit, value = {}, onChange }) {
+  const { currentUser } = useAuth();
   const [imagePreview, setImagePreview] = useState(value.profileImage || '');
 
   const handleImageChange = (event) => {
@@ -614,13 +616,15 @@ export function ProfileEditModal({ open, onClose, onSubmit, value = {}, onChange
                   >
                     <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Role</p>
                     <select
-                      value={value.role || 'ADMIN'}
+                      value={value.role || 'admin'}
                       onChange={(event) => onChange('role', event.target.value)}
-                      className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 text-sm text-slate-900 outline-none transition duration-200 ease-out focus:border-[#4338ca] focus:ring-2 focus:ring-[#4338ca]/10 dark:border-slate-700 dark:bg-[#111318] dark:text-white"
+                      disabled={currentUser?.role !== 'superadmin'}
+                      className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 text-sm text-slate-900 outline-none transition duration-200 ease-out focus:border-[#4338ca] focus:ring-2 focus:ring-[#4338ca]/10 dark:border-slate-700 dark:bg-[#111318] dark:text-white disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      <option>ADMIN</option>
-                      <option>MANAGER</option>
-                      <option>EDITOR</option>
+                      <option value="superadmin">SUPERADMIN</option>
+                      <option value="admin">ADMIN</option>
+                      <option value="trainer">TRAINER</option>
+                      <option value="student">STUDENT</option>
                     </select>
                   </motion.div>
                   <motion.div
