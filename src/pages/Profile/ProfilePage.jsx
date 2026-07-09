@@ -12,6 +12,7 @@ import { useTheme } from '@/context/ThemeContext.jsx';
 import { useAuth } from '@/context/AuthContext.jsx';
 import { usePermissions } from '@/context/PermissionsContext.jsx';
 import { ProfileActionButton, ProfileBadge, ProfileCardFrame, ProfileInfoRow, ScopePill, ModuleLinkRow, ProfileActionModal } from '@/components/profile/ProfileUi.jsx';
+import { ProfileEditModal } from '@/components/forms/FormsUi.jsx';
 
 const pathModuleNames = {
   '/dashboard': 'Dashboard Home',
@@ -40,7 +41,6 @@ export default function ProfilePage() {
   const { hasPermission } = usePermissions();
 
   const [showEditModal, setShowEditModal] = useState(false);
-  const [showPhotoModal, setShowPhotoModal] = useState(false);
   const [showViewScopes, setShowViewScopes] = useState(false);
   const [showModulesModal, setShowModulesModal] = useState(false);
   const [activeModule, setActiveModule] = useState(null);
@@ -107,10 +107,6 @@ export default function ProfilePage() {
     setShowEditModal(false);
   };
 
-  const handleViewPhoto = () => {
-    setShowPhotoModal(true);
-  };
-
   const handleOpenModule = (module) => {
     setActiveModule(module);
     setShowModulesModal(true);
@@ -129,6 +125,15 @@ export default function ProfilePage() {
       <ProfileCardFrame className="p-6 bg-[#FFFFFF] dark:bg-[#16171F] border border-[#E7E9F0] dark:border-white/5">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-4">
+            <div className="relative h-20 w-20 overflow-hidden rounded-3xl bg-gradient-to-br from-sky-400 via-cyan-400 to-slate-700 shadow-sm">
+              {formData.profileImage ? (
+                <img src={formData.profileImage} alt="Profile" className="h-full w-full object-cover" />
+              ) : (
+                <div className="grid h-full w-full place-items-center text-4xl font-black text-white">
+                  {formData.displayName?.[0] || 'P'}
+                </div>
+              )}
+              <div className="absolute -bottom-2 -right-2 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm border border-[#E7E9F0] text-slate-700">
             <div className="relative h-20 w-20 rounded-3xl bg-tranquil-velvet text-white grid place-items-center text-4xl font-black shadow-sm select-none">
               {currentUser.name ? currentUser.name[0].toUpperCase() : 'U'}
               <div className="absolute -bottom-2 -right-2 flex h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-zinc-800 shadow-sm border border-[#E7E9F0] dark:border-white/10 text-tranquil-velvet cursor-pointer" onClick={handleViewPhoto}>
@@ -150,7 +155,7 @@ export default function ProfilePage() {
             <ProfileActionButton type="button" tone="secondary" onClick={() => setShowEditModal(true)} className="min-w-[140px] justify-center">
               <Pencil className="h-4 w-4" /> Edit Profile
             </ProfileActionButton>
-            <ProfileActionButton type="button" onClick={handleViewPhoto} className="min-w-[140px] justify-center">
+            <ProfileActionButton type="button" onClick={() => setShowEditModal(true)} className="min-w-[140px] justify-center">
               <Camera className="h-4 w-4" /> Photo
             </ProfileActionButton>
           </div>
@@ -230,7 +235,7 @@ export default function ProfilePage() {
         </div>
       </ProfileCardFrame>
 
-      <ProfileActionModal
+      <ProfileEditModal
         open={showEditModal}
         onClose={() => setShowEditModal(false)}
         title="Edit profile details"

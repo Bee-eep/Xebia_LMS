@@ -6,10 +6,12 @@
  */
 
 import React, { useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Plus, Filter, Download, ArrowRight, Clock, ClipboardList, Activity, CheckCircle2, Flag, RefreshCcw, Trash2 } from 'lucide-react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Cell } from 'recharts';
 import { useTheme } from '@/context/ThemeContext.jsx';
 import { ProfileActionButton, ProfileActionModal } from '@/components/profile/ProfileUi.jsx';
+import { AssessmentFormModal } from '@/components/forms/FormsUi.jsx';
 
 const overviewCards = [
   {
@@ -119,15 +121,6 @@ export default function AssessmentPage() {
   const handleCreateAssessment = () => {
     setCreateModalOpen(true);
   };
-
-  const handleCreateModalClose = () => {
-    setCreateModalOpen(false);
-    setNewAssessmentName('');
-    setNewAssessmentType('Quiz');
-    setNewAssessmentTarget('All Employees');
-    setNewAssessmentStatus('DRAFT');
-  };
-
   const handleCreateModalSubmit = () => {
     if (!newAssessmentName.trim()) {
       window.alert('Please enter an assessment name.');
@@ -145,6 +138,14 @@ export default function AssessmentPage() {
     ]);
 
     handleCreateModalClose();
+  };
+
+  const handleCreateModalClose = () => {
+    setCreateModalOpen(false);
+    setNewAssessmentName('');
+    setNewAssessmentType('Quiz');
+    setNewAssessmentTarget('All Employees');
+    setNewAssessmentStatus('DRAFT');
   };
 
   const handleFilterToggle = () => {
@@ -192,29 +193,79 @@ export default function AssessmentPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-        <div className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-tranquil-velvet">Assessments Engine</p>
-          <h1 className="text-3xl font-extrabold text-black dark:text-white">Manage and monitor platform assessments</h1>
-          <p className="max-w-2xl text-sm text-dark-grey">Manage and monitor all platform assessments and examination modules with real-time performance tracking.</p>
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.55, ease: 'easeOut' }}
+      className="space-y-6"
+    >
+      <div className="grid gap-6 xl:grid-cols-[1.7fr_0.95fr]">
+        <div className="rounded-[32px] border border-medium-grey/30 bg-gradient-to-br from-[#F8F4FF] via-[#F6F2FF] to-[#FEFBFF] p-8 shadow-[0_30px_90px_rgba(99,102,241,0.12)]">
+          <div className="flex flex-col gap-5 xl:items-start xl:justify-between xl:flex-row xl:items-center">
+            <div className="space-y-3">
+              <div className="inline-flex items-center gap-2 rounded-full bg-[#F8EEFF] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#7C3AED]">
+                <span className="h-2.5 w-2.5 rounded-full bg-[#7C3AED]" />
+                Assessments Engine
+              </div>
+              <h1 className="text-4xl font-extrabold tracking-[-0.04em] text-black dark:text-white">Launch high-impact assessments in minutes</h1>
+              <p className="max-w-2xl text-sm leading-7 text-dark-grey">Create comprehensive assessments with confident workflows, rich coverage, and quick status controls — all from one elegant dashboard.</p>
+            </div>
+
+            <div className="flex flex-wrap gap-3 xl:flex-col xl:items-end">
+              <ProfileActionButton
+                onClick={handleCreateAssessment}
+                tone="warning"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#4F46E5] to-[#8B5CF6] px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_45px_rgba(124,58,237,0.28)] transition hover:from-[#5B21B6] hover:to-[#7C3AED]"
+              >
+                <Plus className="h-4 w-4" />
+                Create assessment
+              </ProfileActionButton>
+              <p className="max-w-sm text-xs uppercase tracking-[0.22em] text-dark-grey">Fast setup, clear status, and premium launch control.</p>
+            </div>
+          </div>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="rounded-3xl border border-white/80 bg-white/90 p-4 shadow-sm">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-dark-grey">Launch speed</p>
+              <p className="mt-3 text-3xl font-extrabold text-black">2 min</p>
+            </div>
+            <div className="rounded-3xl border border-white/80 bg-white/90 p-4 shadow-sm">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-dark-grey">Interactive fields</p>
+              <p className="mt-3 text-3xl font-extrabold text-black">4+</p>
+            </div>
+            <div className="rounded-3xl border border-white/80 bg-white/90 p-4 shadow-sm">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-dark-grey">Auto draft</p>
+              <p className="mt-3 text-3xl font-extrabold text-black">Enabled</p>
+            </div>
+            <div className="rounded-3xl border border-white/80 bg-white/90 p-4 shadow-sm">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-dark-grey">Review-ready</p>
+              <p className="mt-3 text-3xl font-extrabold text-black">Always</p>
+            </div>
+          </div>
         </div>
 
-        <ProfileActionButton
-          onClick={handleCreateAssessment}
-          tone="warning"
-          className="inline-flex items-center gap-2 px-5 py-3 text-sm"
-        >
-          <Plus className="h-4 w-4" />
-          Create Assessment
-        </ProfileActionButton>
+        <div className="rounded-[32px] border border-medium-grey/30 bg-white p-6 shadow-sm dark:bg-[#16171F]">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-dark-grey">Assessment snapshot</p>
+          <h2 className="mt-3 text-2xl font-bold text-black dark:text-white">Ready to launch</h2>
+          <p className="mt-3 text-sm text-dark-grey">Track your assessment lifecycle, manage drafts, and keep stakeholder review cycles short.</p>
+          <div className="mt-6 grid gap-3">
+            <div className="rounded-3xl bg-[#F8F4FF] p-4 text-sm font-semibold text-[#5B21B6]">Build high-quality quizzes, compliance checks, and certifications with a polished workflow.</div>
+            <div className="rounded-3xl bg-[#EFF6FF] p-4 text-sm font-semibold text-[#1D4ED8]">Instant visibility for drafts, active sessions, and completion progress.</div>
+          </div>
+        </div>
       </div>
 
       <div className="grid gap-4 xl:grid-cols-4">
-        {overviewCards.map((card) => {
+        {overviewCards.map((card, index) => {
           const Icon = card.icon;
           return (
-            <div key={card.title} className="rounded-3xl border border-medium-grey/40 bg-white dark:bg-[#16171F] p-5 shadow-sm">
+            <motion.div
+              key={card.title}
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: 0.1 + index * 0.05 }}
+              className="rounded-3xl border border-medium-grey/40 bg-white dark:bg-[#16171F] p-5 shadow-sm"
+            >
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-dark-grey">{card.title}</p>
@@ -226,84 +277,97 @@ export default function AssessmentPage() {
               </div>
               <div className="mt-4 flex items-center justify-between gap-2 text-sm text-dark-grey">
                 <span className={card.metaClass || 'text-dark-grey'}>{card.meta}</span>
-                <span>{card.description}</span>
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>
 
-      <div className="rounded-3xl border border-medium-grey/40 bg-white dark:bg-[#16171F] p-5 shadow-sm">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
+        className="rounded-2xl border border-medium-grey/30 dark:border-border-card/30 bg-[#FBFBFE] dark:bg-[#0F1015] p-4 md:p-6"
+      >
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h2 className="text-lg font-bold text-black dark:text-white">Recent Assessments</h2>
-            <p className="text-sm text-dark-grey">Track the latest assessment rollout and stage.</p>
+            <h2 className="text-lg font-bold text-black dark:text-white">Assessment pipeline</h2>
+            <p className="text-sm text-dark-grey">Review current assessments, change status, or remove outdated items.</p>
           </div>
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2">
             <button
-              onClick={handleFilterToggle}
-              className="inline-flex items-center gap-2 rounded-2xl border border-medium-grey/50 bg-white px-4 py-2 text-xs font-bold text-dark-grey transition hover:border-tranquil-velvet hover:text-tranquil-velvet"
-            >
-              <Filter className="h-4 w-4" />
-              Filter
-            </button>
-            <button
+              type="button"
               onClick={handleExport}
-              className="inline-flex items-center gap-2 rounded-2xl border border-medium-grey/50 bg-white px-4 py-2 text-xs font-bold text-dark-grey transition hover:border-tranquil-velvet hover:text-tranquil-velvet"
+              className="inline-flex items-center gap-2 rounded-2xl border border-medium-grey/40 bg-white px-4 py-2 text-sm font-semibold text-dark-grey transition hover:bg-medium-grey/10"
             >
               <Download className="h-4 w-4" />
-              Export
+              Export CSV
+            </button>
+            <button
+              type="button"
+              onClick={handleFilterToggle}
+              className="inline-flex items-center gap-2 rounded-2xl border border-medium-grey/40 bg-white px-4 py-2 text-sm font-semibold text-dark-grey transition hover:bg-medium-grey/10"
+            >
+              <Filter className="h-4 w-4" />
+              {filterOpen ? 'Hide Filters' : 'Filter Status'}
             </button>
           </div>
         </div>
 
         {filterOpen && (
-          <div className="mt-4 rounded-2xl border border-medium-grey/40 bg-blueish-grey/70 p-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <span className="text-xs font-semibold uppercase tracking-[0.18em] text-dark-grey">Status</span>
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="rounded-2xl border border-medium-grey/40 bg-white px-3 py-2 text-sm text-black focus:outline-none"
-              >
-                <option value="All">All</option>
-                <option value="ACTIVE">Active</option>
-                <option value="DRAFT">Draft</option>
-                <option value="COMPLETED">Completed</option>
-              </select>
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
+            className="mt-5 overflow-hidden rounded-3xl border border-medium-grey/30 bg-white p-5 shadow-sm"
+          >
+            <div className="grid gap-4 sm:grid-cols-3">
+              {['All', 'ACTIVE', 'DRAFT', 'COMPLETED'].map((status) => (
+                <button
+                  key={status}
+                  type="button"
+                  onClick={() => setStatusFilter(status)}
+                  className={`rounded-2xl border px-4 py-3 text-sm font-semibold transition ${statusFilter === status ? 'border-tranquil-velvet bg-tranquil-velvet/10 text-tranquil-velvet' : 'border-medium-grey/30 bg-white text-dark-grey hover:bg-medium-grey/10'}`}
+                >
+                  {status}
+                </button>
+              ))}
             </div>
-            <button
-              onClick={() => setStatusFilter('All')}
-              className="rounded-2xl bg-tranquil-velvet px-4 py-2 text-xs font-bold text-white hover:bg-bright-velvet transition"
-            >
-              Clear Filters
-            </button>
-          </div>
+          </motion.div>
         )}
 
-        <div className="mt-5 overflow-x-auto">
-          <table className="w-full min-w-[740px] text-left text-sm">
-            <thead className="border-b border-medium-grey/40 text-dark-grey uppercase tracking-[0.18em] text-[10px]">
-              <tr>
-                <th className="py-4 px-4">Assessment Name</th>
-                <th className="py-4 px-4">Type</th>
-                <th className="py-4 px-4">Target Group</th>
-                <th className="py-4 px-4">Status</th>
-                <th className="py-4 px-4">Actions</th>
+        <div className="overflow-x-auto sleek-scrollbar">
+          <table className="w-full min-w-[800px] text-left text-xs">
+            <thead>
+              <tr className="border-b border-medium-grey/50 dark:border-border-card bg-[#F7F8FC]/80 dark:bg-[#18181B] text-dark-grey uppercase tracking-[0.18em]">
+                <th className="p-4 font-bold">Assessment</th>
+                <th className="p-4 font-bold">Type</th>
+                <th className="p-4 font-bold">Target</th>
+                <th className="p-4 font-bold">Status</th>
+                <th className="p-4 font-bold text-center">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {pageItems.map((item) => (
-                <tr key={item.name} className="border-b border-medium-grey/30 last:border-b-0 hover:bg-[#F7F8FC] dark:hover:bg-white/5 transition-colors">
-                  <td className="py-4 px-4 text-black dark:text-white font-semibold">{item.name}</td>
-                  <td className="py-4 px-4 text-dark-grey">{item.type}</td>
-                  <td className="py-4 px-4 text-dark-grey">{item.target}</td>
-                  <td className="py-4 px-4">
-                    <span className={`inline-flex rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] ${statusStyles[item.status]}`}>
+              {pageItems.map((item, index) => (
+                <motion.tr
+                  key={item.name}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, delay: index * 0.04 }}
+                  className="border-b border-medium-grey/30 dark:border-border-card/30 hover:bg-tranquil-velvet/5 dark:hover:bg-white/5 transition-colors"
+                >
+                  <td className="p-4">
+                    <p className="font-bold text-black dark:text-white">{item.name}</p>
+                  </td>
+                  <td className="p-4 text-dark-grey">{item.type}</td>
+                  <td className="p-4 text-dark-grey">{item.target}</td>
+                  <td className="p-4">
+                    <span className={`inline-flex rounded-full px-3 py-1 text-[10px] font-bold ${statusStyles[item.status]}`}>
                       {item.status}
                     </span>
                   </td>
-                  <td className="py-4 px-4 text-dark-grey">
+                  <td className="p-4">
                     <div className="flex items-center justify-center gap-2">
                       <button
                         type="button"
@@ -323,7 +387,7 @@ export default function AssessmentPage() {
                       </button>
                     </div>
                   </td>
-                </tr>
+                </motion.tr>
               ))}
             </tbody>
           </table>
@@ -359,80 +423,30 @@ export default function AssessmentPage() {
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      {createModalOpen && (
-        <ProfileActionModal open={createModalOpen} onClose={handleCreateModalClose} title="Create Assessment">
-          <div className="space-y-4">
-            <label className="block text-sm font-semibold text-dark-grey">
-              Assessment Name
-              <input
-                type="text"
-                value={newAssessmentName}
-                onChange={(e) => setNewAssessmentName(e.target.value)}
-                className="mt-2 w-full rounded-2xl border border-medium-grey/40 bg-white px-4 py-3 text-sm text-black outline-none focus:border-tranquil-velvet"
-                placeholder="Enter assessment title"
-              />
-            </label>
+      <AssessmentFormModal
+        open={createModalOpen}
+        onClose={handleCreateModalClose}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleCreateModalSubmit();
+        }}
+        value={{ name: newAssessmentName, type: newAssessmentType, target: newAssessmentTarget, status: newAssessmentStatus }}
+        onChange={(field, val) => {
+          if (field === 'name') setNewAssessmentName(val);
+          if (field === 'type') setNewAssessmentType(val);
+          if (field === 'target') setNewAssessmentTarget(val);
+          if (field === 'status') setNewAssessmentStatus(val);
+        }}
+      />
 
-            <label className="block text-sm font-semibold text-dark-grey">
-              Assessment Type
-              <select
-                value={newAssessmentType}
-                onChange={(e) => setNewAssessmentType(e.target.value)}
-                className="mt-2 w-full rounded-2xl border border-medium-grey/40 bg-white px-4 py-3 text-sm text-black outline-none focus:border-tranquil-velvet"
-              >
-                <option value="Quiz">Quiz</option>
-                <option value="Certification">Certification</option>
-                <option value="Compliance">Compliance</option>
-              </select>
-            </label>
-
-            <label className="block text-sm font-semibold text-dark-grey">
-              Target Group
-              <input
-                type="text"
-                value={newAssessmentTarget}
-                onChange={(e) => setNewAssessmentTarget(e.target.value)}
-                className="mt-2 w-full rounded-2xl border border-medium-grey/40 bg-white px-4 py-3 text-sm text-black outline-none focus:border-tranquil-velvet"
-                placeholder="Enter target group"
-              />
-            </label>
-
-            <label className="block text-sm font-semibold text-dark-grey">
-              Status
-              <select
-                value={newAssessmentStatus}
-                onChange={(e) => setNewAssessmentStatus(e.target.value)}
-                className="mt-2 w-full rounded-2xl border border-medium-grey/40 bg-white px-4 py-3 text-sm text-black outline-none focus:border-tranquil-velvet"
-              >
-                <option value="DRAFT">Draft</option>
-                <option value="ACTIVE">Active</option>
-                <option value="COMPLETED">Completed</option>
-              </select>
-            </label>
-
-            <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
-              <button
-                type="button"
-                onClick={handleCreateModalClose}
-                className="rounded-2xl border border-medium-grey/40 bg-white px-5 py-3 text-sm font-bold text-dark-grey transition hover:bg-medium-grey/10"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleCreateModalSubmit}
-                className="rounded-2xl bg-tranquil-velvet px-5 py-3 text-sm font-bold text-white transition hover:bg-bright-velvet"
-              >
-                Create Assessment
-              </button>
-            </div>
-          </div>
-        </ProfileActionModal>
-      )}
-
-      <div className="grid gap-4 xl:grid-cols-[1.7fr_1fr]">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
+        className="grid gap-4 xl:grid-cols-[1.7fr_1fr]"
+      >
         <div className="rounded-3xl border border-medium-grey/40 bg-white dark:bg-[#16171F] p-5 shadow-sm">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -489,7 +503,7 @@ export default function AssessmentPage() {
             <button className="text-sm font-bold text-tranquil-velvet hover:text-bright-velvet transition">View All Activity</button>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
