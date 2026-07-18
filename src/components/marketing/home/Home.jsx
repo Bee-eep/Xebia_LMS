@@ -25,13 +25,17 @@
  */
 
 import { Link } from "react-router-dom";
-import styles from "./Home.module.css";
+import { useState } from "react";
 
 import {
     FiBookOpen,
     FiShield,
     FiLayers,
+    FiAward,
+    FiBarChart2,
+    FiUsers,
 } from "react-icons/fi";
+
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { PiStudentFill } from "react-icons/pi";
 import { IoBook } from "react-icons/io5";
@@ -41,6 +45,55 @@ import { HiMiniTrophy } from "react-icons/hi2";
 /*Count Up animation*/
 import CountUpModule from "react-countup";
 const CountUp = CountUpModule.default;
+
+
+/* 
+6 cards in Feature Section.
+*/
+const features = [
+    {
+        icon: FiBookOpen,
+        category: "COURSES",
+        title: "Course Creation",
+        description:
+            "Build engaging courses with videos, documents, quizzes, assignments, and multimedia content.",
+    },
+    {
+        icon: FiLayers,
+        category: "LEARNING",
+        title: "Learning Paths",
+        description:
+            "Create personalized learning journeys for students, employees, and trainees based on roles or programs.",
+    },
+    {
+        icon: FiAward,
+        category: "CERTIFICATION",
+        title: "Certificates",
+        description:
+            "Award secure digital certificates after successful completion of courses, assessments, or learning paths.",
+    },
+    {
+        icon: FiShield,
+        category: "ASSESSMENTS",
+        title: "Assessments & Quizzes",
+        description:
+            "Evaluate learners using quizzes, assignments, coding challenges, and automated grading tools.",
+    },
+    {
+        icon: FiBarChart2,
+        category: "ANALYTICS",
+        title: "Learning Analytics",
+        description:
+            "Monitor learner progress, engagement, completion rates, and performance through detailed dashboards.",
+    },
+    {
+        icon: FiUsers,
+        category: "MANAGEMENT",
+        title: "Organization Management",
+        description:
+            "Manage learners, instructors, departments, permissions, and administrative roles from one platform.",
+    },
+];
 
 /**
  * Home Component
@@ -54,17 +107,84 @@ const CountUp = CountUpModule.default;
  * - Final call-to-action
  */
 
+const stats = [
+    {
+        icon: IoIosCheckmarkCircle,
+        value: 98,
+        duration: 3.5,
+        suffix: "%",
+        label: "Completion Rate",
+    },
+    {
+        icon: IoBook,
+        value: 50,
+        duration: 2.5,
+        suffix: "+",
+        label: "Expert Courses",
+    },
+    {
+        icon: PiStudentFill,
+        value: 15,
+        duration: 2.5,
+        suffix: "K+",
+        label: "Active Learners",
+    },
+    {
+        icon: HiMiniTrophy,
+        value: 5,
+        duration: 2.5,
+        suffix: "K",
+        label: "Certified Learners",
+    },
+];
+
 export default function Home() {
-    console.log("CountUp:", CountUp);
+    const handleMouseMove = (e) => {
+
+        const rect = e.currentTarget.getBoundingClientRect();
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const rotateX =
+            ((y - rect.height / 2) / rect.height) * - 2.5;
+        const rotateY =
+            ((x - rect.width / 2) / rect.width) * 2.5;
+
+        setMouse({
+            x,
+            y,
+            rotateX,
+            rotateY,
+        });
+    };
+
+    const handleMouseLeave = () => {
+
+        setMouse({
+            x: 0,
+            y: 0,
+            rotateX: 0,
+            rotateY: 0,
+        });
+
+    };
+
+    const [mouse, setMouse] = useState({
+        x: 0,
+        y: 0,
+        rotateX: 0,
+        rotateY: 0,
+    });
+
     return (
         <>
 
             {/* Hero banner introducing the platform
                 and directing users toward primary actions. */}
-            <section className={styles.heroSection}>
+            <section className="relative flex h-screen items-center justify-center overflow-hidden">
 
                 <video
-                    className={styles.heroVideo}
+                    className="fixed inset-0 z-0 mt-5 h-screen w-screen object-cover"
                     autoPlay
                     muted
                     loop
@@ -75,243 +195,290 @@ export default function Home() {
                         type="video/mp4"
                     />
                 </video>
-                <div className={styles.heroBackgroundOverlay}></div>
-                <div className={styles.heroOverlay}>
 
-                    <span className={styles.heroTag}>
+                <div
+                    className="absolute inset-0 z-[1]"
+                    style={{
+                        background:
+                            "linear-gradient(var(--background-gradient2), var(--background-gradient1))",
+                    }}
+                />
+
+                <div className="relative z-[2] text-center">
+
+                    <span className="text-base font-extrabold tracking-[2.5px] text-[var(--primary-second-color)]">
                         ENTERPRISE LEARNING PLATFORM
                     </span>
 
-                    <h1>
+                    <h1 className="mt-[18px] text-5xl leading-none text-[var(--text-primary)] md:text-7xl animate-fade-in-up">
+
                         Innovation & Learning
+
                         <br />
-                        Without <span>Boundaries</span>
+
+                        Without{" "}
+
+                        <span className="text-[var(--primary-second-color)]">
+                            Boundaries
+                        </span>
+
                     </h1>
 
-                    <p>
+                    <p className="mx-auto mt-8 max-w-[700px] leading-7 text-[var(--text-primary)]">
+
                         Empower your workforce with a modern,
                         scalable, and intelligent learning
                         ecosystem designed for enterprise growth.
+
                     </p>
 
-                    <div className={styles.heroButtons}>
+                    <div className="mt-10 flex justify-center gap-10">
 
                         <Link
                             to="/login"
-                            className={styles.primaryButton}
+                            className="
+                                rounded-full
+                                bg-[var(--primary-color)]
+                                px-10
+                                py-4
+                                text-[1.05rem]
+                                font-bold
+                                text-[white]
+                                transition-all
+                                duration-300
+                                hover:-translate-y-1
+                                hover:shadow-xl
+                                active:translate-y-0
+                                active:scale-95
+                            "
                         >
                             Get Started
                         </Link>
 
                         <Link
                             to="/contact"
-                            className={styles.secondaryButton}
+                            className="
+                                rounded-full
+                                border
+                                border-[var(--primary-color)]/40
+                                bg-[var(--primary-color)]/15
+                                px-10
+                                py-4
+                                text-[1.05rem]
+                                font-bold
+                                text-white
+                                backdrop-blur-sm
+                                transition-all
+                                duration-300
+                                hover:-translate-y-1
+                                hover:bg-white/15
+                                hover:border-white/60
+                                hover:shadow-[0_12px_30px_rgba(255,255,255,0.08)]
+                                active:translate-y-0
+                                active:scale-95
+                            "
                         >
                             Contact Us
                         </Link>
-
                     </div>
-
                 </div>
-
             </section>
 
 
             {/* High-level platform metrics used to
                 establish trust and social proof. */}
 
-            <section className={styles.statsSection}>
-                <div className={styles.statCard}>
-                    <IoIosCheckmarkCircle className={styles.statIcon} />
-                    <div>
-                        <h2>
-                            <CountUp end={98} duration={3.5} suffix="%" />
-                        </h2>
-                        <p>Completion Rate</p>
-                    </div>
-                </div>
+            <section className="relative z-[1] grid grid-cols-1 gap-10 bg-[var(--background)] px-[8%] py-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-24">
+                {stats.map((stat) => {
+                    const Icon = stat.icon;
+                    return (
+                        <div
+                            key={stat.label}
+                            className="flex items-center justify-center gap-5"
+                        >
+                            <Icon className="shrink-0 text-[3.5rem] text-[var(--primary-second-color)]" />
 
-                <div className={styles.statCard}>
-                    <IoBook className={styles.statIcon} />
-                    <div>
-                        <h2>
-                            <CountUp end={50} duration={2.5} suffix="+" />
-                        </h2>
-                        <p>Expert Courses</p>
-                    </div>
-                </div>
+                            <div className="text-left">
+                                <h2 className="text-5xl font-normal text-[var(--primary-second-color)] transition-all duration-300">
+                                    <CountUp
+                                        end={stat.value}
+                                        duration={stat.duration}
+                                        suffix={stat.suffix}
+                                    />
+                                </h2>
 
-                <div className={styles.statCard}>
-                    <PiStudentFill className={styles.statIcon} />
-                    <div>
-                        <h2>
-                        <CountUp end={15} duration={2.5} suffix="K+" />
-                    </h2>
-                        <p>Active Learners</p>
-                    </div>
-                </div>
+                                <p className="text-[var(--text-secondary)]">
+                                    {stat.label}
+                                </p>
 
-                <div className={styles.statCard}>
-                    <HiMiniTrophy className={styles.statIcon} />
-                    <div>
-                        <h2>
-                            <CountUp end={5} duration={2.5} suffix="K" />
-                        </h2>
-                        <p>Certified Learners</p>
-                    </div>
-                </div>
+                            </div>
 
+                        </div>
+                    );
+                })}
             </section>
 
 
             {/* Core platform capabilities and
                 enterprise learning advantages. */}
 
-            <section className={styles.featuresSection}>
-
-                <div className={styles.featuresHeader}>
-
-                    <span>
+            <section className="relative z-[1] bg-[var(--background-ui)] px-[8%] py-[120px]">
+                <div>
+                    <span className="font-bold tracking-[2px] text-[var(--primary-color)]">
                         WHY XEBIA LMS
                     </span>
 
-                    <h2>
-                        Crafting The Future
+                    <h2 className="mt-5 text-[3.5rem] leading-[1.25] text-[var(--text-primary)]">
+                        Everything You Need
                         <br />
-                        Of Workforce Development
+                        To Deliver Exceptional Learning
                     </h2>
 
-                    <p>
-                        Deeply integrated learning
-                        solutions that prioritize
-                        clarity, collaboration,
-                        performance, and meaningful
-                        organizational growth.
+                    <p className="mt-[25px] max-w-[600px] leading-[1.6] text-[var(--text-secondary)]">
+                        Whether you're educating students, onboarding employees, or delivering professional training, Xebia LMS provides everything needed to create, manage, and measure impactful learning experiences.
                     </p>
 
                 </div>
 
-                {/* Each card represents a major pillar
-                    of the Xebia learning ecosystem. */}
-                <div className={styles.featureGrid}>
+                <div className="mt-20 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    {features.map((feature) => {
+                        const Icon = feature.icon;
 
-                    <div className={styles.featureCard}>
+                        return (
+                            <div
+                                key={feature.title}
+                                className="
+                                    group
+                                    rounded-3xl
+                                    border
+                                    border-transparent
+                                    bg-[var(--background)]
+                                    p-8
+                                    transition-all
+                                    duration-300
+                                    hover:-translate-y-2
+                                    hover:border-[rgba(108,29,95,0.15)]
+                                    hover:bg-[var(--background-gradient1)]
+                                    hover:shadow-[0_20px_45px_rgba(0,0,0,0.18)]
+                                "
+                            >
+                                <div
+                                    className="
+                                        flex
+                                        h-16
+                                        w-16
+                                        items-center
+                                        justify-center
+                                        rounded-2xl
+                                        bg-[var(--primary-color)]
+                                        text-3xl
+                                        text-white
+                                        transition-transform
+                                        duration-300
+                                        group-hover:scale-110
+                                    "
+                                >
+                                    <Icon />
+                                </div>
 
-                        <div className={styles.iconBox}>
-                            <FiBookOpen />
-                        </div>
+                                <span
+                                    className="
+                                        mt-7
+                                        block
+                                        text-xs
+                                        font-bold
+                                        tracking-[2px]
+                                        text-[var(--primary-color)]
+                                    "
+                                >
+                                    {feature.category}
+                                </span>
 
-                        <h3>
-                            Adaptive Learning
-                        </h3>
+                                <h3 className="mt-3 text-2xl font-semibold text-[var(--text-primary)]">
+                                    {feature.title}
+                                </h3>
 
-                        <p>
-                            Personalized learning
-                            experiences tailored
-                            to every employee.
-                        </p>
-
-                    </div>
-
-
-                    <div className={styles.featureCard}>
-
-                        <div className={styles.iconBox}>
-                            <FiShield />
-                        </div>
-
-                        <h3>
-                            Enterprise Security
-                        </h3>
-
-                        <p>
-                            Role-based access,
-                            SSO integration,
-                            and enterprise-grade
-                            protection.
-                        </p>
-
-                    </div>
-
-
-                    <div className={styles.featureCard}>
-
-                        <div className={styles.iconBox}>
-                            <FiLayers />
-                        </div>
-
-                        <h3>
-                            Modular Content
-                        </h3>
-
-                        <p>
-                            Build, manage, and
-                            scale learning assets
-                            with ease.
-                        </p>
-
-                    </div>
-
+                                <p className="mt-4 leading-8 text-[var(--text-secondary)]">
+                                    {feature.description}
+                                </p>
+                            </div>
+                        );
+                    })}
                 </div>
-
             </section>
 
 
             {/* Customer success story highlighting
                 measurable business impact. */}
 
-            <section className={styles.testimonialSection}>
+            <section
+                className="
+                    relative
+                    z-[1]
+                    bg-[linear-gradient(135deg,var(--gradient1-xebia),var(--gradient2-xebia))]
+                    px-[8%]
+                    py-[120px]
+                    text-white
+                "
+            >
 
-                <div className={styles.testimonialGrid}>
-
+                <div className="grid items-center gap-20 lg:grid-cols-2">
+                    {/* Left Side */}
                     <div>
-
-                        <span className={styles.sectionLabel}>
+                        <span className="text-[0.8rem] tracking-[2px] text-[#ffb347]">
                             CTO PERSPECTIVE
                         </span>
 
-                        <p>
+                        <p className="mt-6 text-lg leading-8">
                             “Xebia transformed our internal
                             learning ecosystem. The platform
                             became the foundation of our
                             engineering excellence.”
                         </p>
 
-                        <div className={styles.author}>
-
+                        <div className="mt-8 flex items-center gap-5">
                             <img
                                 src="/avatar.png"
                                 width={60}
                                 height={60}
                                 alt="Avatar"
+                                className="rounded-full"
                             />
 
                             <div>
-
-                                <h4>
+                                <h4 className="text-lg font-semibold">
                                     Sarah Jenkins
                                 </h4>
 
-                                <span>
+                                <span className="text-white/70">
                                     CTO, Global Dynamics
                                 </span>
 
                             </div>
-
                         </div>
-
                     </div>
 
+                    {/* Right Side */}
+                    <div
+                        className="
+                            rounded-3xl
+                            bg-white/10
+                            p-[50px]
+                            backdrop-blur-xl
+                            transition-all
+                            duration-300
+                            hover:-translate-y-1.5
+                            hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)]
+                        "
+                    >
 
-                    <div className={styles.quoteCard}>
+                        <div className="mb-[30px] h-1 w-[70px] bg-orange-500" />
 
-                        <div className={styles.line} />
-
-                        <h3>
+                        <h3 className="text-3xl font-semibold">
                             Measurable ROI
                         </h3>
 
-                        <p>
+                        <p className="mt-6 leading-8 text-white/80">
                             Since implementation,
                             organizations reported
                             faster onboarding,
@@ -319,47 +486,216 @@ export default function Home() {
                             and stronger employee
                             growth paths.
                         </p>
-
                     </div>
-
                 </div>
-
             </section>
 
 
             {/* Final conversion section encouraging
                 users to begin their learning journey. */}
 
-            <section className={styles.ctaSection}>
+            <section className="relative z-[1] bg-[var(--background-ui)] px-[6%] py-10   [perspective:1200px]">
 
-                <div className={styles.ctaCard}>
+                <div
+                    onMouseMove={handleMouseMove}
+                    onMouseLeave={handleMouseLeave}
+                    style={{
+                        transform: `
+                            rotateX(${mouse.rotateX}deg)
+                            rotateY(${mouse.rotateY}deg)
+                        `,
+                    }}
+                    className="
+                        group
+                        relative
+                        overflow-hidden
+                        rounded-2xl
+                        shadow-2xl
+                        transition-[box-shadow,border-color]
+                        duration-150
+                        hover:shadow-[0_30px_80px_rgba(108,29,95,0.35)]
+                        border
+                        border-white/10
+                        hover:border-white/20
+                    "
+                >
 
-                    <span>
-                        Ready To Transform
-                        Your Learning Culture?
-                    </span>
+                    {/* Background Image */}
+                    <img
+                        src="/homecta.jpg"
+                        alt="Enterprise Learning"
+                        className="
+                            absolute
+                            inset-0
+                            h-full
+                            w-full
+                            object-cover
+                            transition-transform
+                            duration-700
+                            group-hover:scale-120
+                        "
+                    />
 
-                    <h2>
-                        Join over 1.2 million
-                        professionals building
-                        the future.
-                    </h2>
+                    {/* Purple Glow */}
 
-                    <div className={styles.ctaButtons}>
+                    <div
+                        className="
+                            pointer-events-none
+                            absolute
+                            h-[100px]
+                            w-[100px]
+                            -translate-x-1/2
+                            -translate-y-1/2
+                            rounded-full
+                            blur-[200px]
+                            transition-opacity
+                            duration-300
+                            opacity-0
+                            group-hover:opacity-100
+                        "
+                        style={{
+                            left: mouse.x,
+                            top: mouse.y,
+                            background:
+                                "radial-gradient(circle, rgba(255, 120, 219, 1) 80%, rgba(108,29,95,.45) 60%, transparent 85%)",
+                        }}
+                    />
 
-                        <Link
-                            to="/login"
-                            className={styles.primaryButton}
-                        >
-                            Get Started
-                        </Link>
+                    {/* White Glow */}
 
-                        <Link
-                            to="/contact"
-                            className={styles.secondaryButton}
-                        >
-                            Contact Sales
-                        </Link>
+                    <div
+                        className="
+                            pointer-events-none
+                            absolute
+                            h-[100px]
+                            w-[100px]
+                            -translate-x-1/2
+                            -translate-y-1/2
+                            rounded-full
+                            blur-[200px]
+                            transition-opacity
+                            duration-300
+                            opacity-0
+                            group-hover:opacity-100
+                        "
+                        style={{
+                            left: mouse.x,
+                            top: mouse.y,
+                            background:
+                                "radial-gradient(circle, rgba(255,255,255,.28), transparent 50%)",
+                        }}
+                    />
+ 
+                    {/* Dark Overlay */}
+                    <div
+                        className="
+                            absolute
+                            inset-0
+                            bg-gradient-to-r
+                            from-black/55
+                            via-black/60
+                            to-black/50
+                        "
+                    />
+
+                    <div
+                        className="
+                            absolute
+                            inset-0
+                            pointer-events-none
+                            z-[5]
+                            opacity-60
+                        "
+                        style={{
+                            background: `radial-gradient(
+                                circle 220px at ${mouse.x}px ${mouse.y}px,
+                                rgba(255,255,255,.12),
+                                transparent 70%
+                            )`,
+                        }}
+                    />
+
+                    {/* Content */}
+                    <div
+                        className="
+                            relative
+                            z-10
+                            mx-auto
+                            max-w-3xl
+                            px-10
+                            py-16
+                            text-center
+                        "
+                    >
+
+                        <span className="font-semibold tracking-[2px] text-white/80 uppercase">
+                            Ready To Transform Your Learning Culture?
+                        </span>
+
+                        <h2 className="mt-5 text-4xl font-bold leading-tight text-white md:text-5xl">
+
+                            Join over
+                            <span className="mx-2 bg-gradient-to-r from-[#ffe9f8] to-[#8f3780] bg-clip-text text-transparent">
+                                {" "}1.2 million{" "}
+                            </span>
+
+                            professionals building
+                            <br />
+                            <span className="block mt-2"> the future of Learning.</span>
+                        </h2>
+
+                        <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-white/80">
+
+                            Empower your workforce with a modern learning platform
+                            trusted by enterprises to develop talent, accelerate
+                            growth, and drive measurable business outcomes.
+
+                        </p>
+
+                        <div className="mt-10 flex flex-wrap justify-center gap-5">
+
+                            <Link
+                                to="/login"
+                                className="
+                                    rounded-full
+                                    bg-[var(--primary-color)]
+                                    px-10
+                                    py-4
+                                    text-[1.05rem]
+                                    font-bold
+                                    text-white
+                                    transition-all
+                                    duration-300
+                                    hover:-translate-y-1
+                                    hover:shadow-[0_12px_30px_rgba(108,29,95,0.4)]
+                                "
+                            >
+                                Get Started
+                            </Link>
+
+                            <Link
+                                to="/contact"
+                                className="
+                                    rounded-full
+                                    border
+                                    border-white/30
+                                    bg-white/10
+                                    px-10
+                                    py-4
+                                    text-[1.05rem]
+                                    font-bold
+                                    text-white
+                                    backdrop-blur-md
+                                    transition-all
+                                    duration-300
+                                    hover:bg-white
+                                    hover:text-[var(--primary-color)]
+                                "
+                            >
+                                Contact Us
+                            </Link>
+
+                        </div>
 
                     </div>
 
