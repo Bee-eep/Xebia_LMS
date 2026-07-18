@@ -102,7 +102,7 @@ into other components.
 
     padding: .60rem 0.8rem;
 
-    border-radius: 8px;
+    border-radius: 4px;
 
     background: linear-gradient(
         135deg,
@@ -196,7 +196,7 @@ into other components.
     display:flex;
     align-items:center;
     justify-content:center;
-    border-radius:14px;
+    border-radius: 4px;
     background:#F5F1FA;
     color:#6C1D5F;
     font-size:1.4rem;
@@ -235,7 +235,7 @@ into other components.
 .metricCard{
     background:white;
     border:1px solid #ECEEF3;
-    border-radius:8px;
+    border-radius: 4px;
     padding:1.2rem;
     transition:.3s;
 }
@@ -299,4 +299,5 @@ into other components.
     }
 
 }
+
 

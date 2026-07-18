@@ -50,7 +50,7 @@ Contents
     padding:1rem;
     background:var(--surface);
     border:1px solid rgb(108, 29, 95, 0.75);
-    border-radius:14px;
+    border-radius: 4px;
     cursor:pointer;
     transition:.25s;
 }
@@ -103,7 +103,7 @@ Contents
     top:82px;
     width:100%;
     background:white;
-    border-radius:9px;
+    border-radius: 4px;
     box-shadow:
         0 16px 40px rgba(0,0,0,.14);
     z-index:20;
@@ -156,7 +156,7 @@ Contents
     border:none;
     width:18px;
     height:18px;
-    border-radius: 9px;
+    border-radius: 4px;
     background:none;
     display:flex;
     cursor:pointer;

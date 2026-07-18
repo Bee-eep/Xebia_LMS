@@ -57,7 +57,7 @@ Contents
     height:52px;
     padding:0 1.2rem;
     border:2px solid #D9DCE5;
-    border-radius:10px;
+    border-radius: 4px;
 
 }
 
@@ -99,7 +99,7 @@ Contents
     display:flex;
     align-items:center;
     border:1px solid rgb(108, 29, 95, 0.75);
-    border-radius:8px;
+    border-radius: 4px;
     overflow:hidden;
 
 }
@@ -127,7 +127,7 @@ Contents
     gap:.5rem;
     padding:.75rem 1rem;
     border:2px solid #D9DCE5;
-    border-radius:8px;
+    border-radius: 4px;
     background:white;
     cursor:pointer;
     transition:.25s;

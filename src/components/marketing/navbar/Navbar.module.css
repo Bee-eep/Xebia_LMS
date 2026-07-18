@@ -181,7 +181,7 @@
             var(--primary-second-color)
         );
 
-    border-radius: 10px;
+    border-radius: 4px;
 
     transition:
         width 0.3s ease;
@@ -269,7 +269,7 @@
 
     padding: 0 19px;
 
-    border-radius: 9px;
+    border-radius: 4px;
 
     text-decoration: none;
 

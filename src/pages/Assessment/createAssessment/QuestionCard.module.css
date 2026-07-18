@@ -43,7 +43,7 @@ Contents
 .card{
     background:var(--surface);
     border:1px solid rgb(108, 29, 95, 0.75);
-    border-radius:9px;
+    border-radius: 4px;
     padding:2rem;
     display:flex;
     flex-direction:column;
@@ -85,7 +85,7 @@ Contents
     width:42px;
     height:42px;
     border:none;
-    border-radius:12px;
+    border-radius: 4px;
     background:#FFF1F1;
     color:#D32F2F;
     cursor:pointer;
@@ -119,7 +119,7 @@ Contents
 .formGroup textarea,
 .formGroup select{
     border:1px solid rgb(108, 29, 95, 0.75);
-    border-radius:9px;
+    border-radius: 4px;
     padding:.9rem 1rem;
     background:var(--surface);
     outline:none;
@@ -148,7 +148,7 @@ Contents
     align-items:center;
     gap:.6rem;
     border:2px dashed rgba(108,29,95,.28);
-    border-radius:8px;
+    border-radius: 4px;
     background:#FCFAFD;
     color:#6C1D5F;
     font-weight:600;
@@ -192,7 +192,7 @@ Contents
     background:#6C1D5F;
     color:white;
     padding:.7rem 1rem;
-    border-radius:10px;
+    border-radius: 4px;
     cursor:pointer;
 }
 
@@ -232,7 +232,7 @@ Contents
     min-width:220px;
     height:46px;
     padding:0 1rem;
-    border-radius:12px;
+    border-radius: 4px;
     border:1px solid rgba(108,29,95,.18);
     background:white;
     transition:.25s;
@@ -254,7 +254,7 @@ Contents
     min-width:170px;
     height:46px;
     padding:0 1rem;
-    border-radius:9px;
+    border-radius: 4px;
     border:1px solid rgba(108,29,95,.18);
     background:white;
     transition:.25s;
@@ -276,7 +276,7 @@ Contents
     gap:.45rem;
     height:40px;
     padding:0 1rem;
-    border-radius:10px;
+    border-radius: 4px;
     font-size:.9rem;
     font-weight:600;
 }
@@ -311,7 +311,7 @@ Contents
     gap:.75rem;
     padding:.9rem 1rem;
     border:1px solid rgba(108,29,95,.18);
-    border-radius:12px;
+    border-radius: 4px;
     cursor:pointer;
     transition:.25s;
     background:white;
