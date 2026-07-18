@@ -257,7 +257,7 @@ const previousImage = () => {
                 className="
                     relative
                     flex
-                    h-[40vh]
+                    h-[44vh]
                     items-center
                     justify-center
                     overflow-hidden
@@ -274,23 +274,23 @@ const previousImage = () => {
                     after:h-[15px]
                     after:w-full
                     after:pointer-events-none
-                    after:bg-[linear-gradient(to_bottom,transparent_0%,rgba(255,255,255,0.15)_30%,var(--background)_100%)]
+                    after:bg-[linear-gradient(to_bottom,transparent_50%,rgba(255,255,255,0.15)_50%,var(--background)_100%)]
                 "
             >
-                <div className="relative z-10 text-center">
-                    <h1 className="mb-4 text-4xl font-bold text-white md:text-5xl lg:text-6xl">
+                <div className="relative z-10 mt-6 text-center">
+                    <h1 className="mb-5 text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
                         Contact Us
                     </h1>
 
-                    <p className="text-lg text-white/85">
-                        Let's build something great together.
+                    <p className="mx-auto max-w-2xl text-lg leading-8 text-white/85">
+                        Get in touch with our team and we'll respond as soon as possible.
                     </p>
                 </div>
             </section>
 
 
             {/* CONTACT */}
-            <section className="relative overflow-hidden bg-[var(--background)] px-[8%] py-24">
+            <section className="relative overflow-hidden bg-[var(--background-ui)] px-[8%] py-24">
                 {/* Background glow */}
                 <div className="absolute -left-20 top-20 h-80 w-80 rounded-full bg-[var(--primary-color)]/10 blur-3xl"></div>
                 <div className="absolute -right-20 bottom-20 h-96 w-96 rounded-full bg-[var(--primary-second-color)]/10 blur-3xl"></div>

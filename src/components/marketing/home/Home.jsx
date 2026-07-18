@@ -184,7 +184,7 @@ export default function Home() {
             <section className="relative flex h-screen items-center justify-center overflow-hidden">
 
                 <video
-                    className="fixed inset-0 z-0 mt-5 h-screen w-screen object-cover"
+                    className="fixed inset-0 z-0 h-screen w-screen object-cover"
                     autoPlay
                     muted
                     loop

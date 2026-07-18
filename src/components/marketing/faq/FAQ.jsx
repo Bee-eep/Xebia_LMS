@@ -69,7 +69,7 @@ export default function FAQ() {
                 className="
                     relative
                     flex
-                    h-[40vh]
+                    h-[44vh]
                     items-center
                     justify-center
                     overflow-hidden
@@ -89,12 +89,12 @@ export default function FAQ() {
                     after:bg-[linear-gradient(to_bottom,transparent_50%,rgba(255,255,255,0.15)_50%,var(--background)_100%)]
                 "
             >
-                <div className="relative z-10 text-center">
-                    <h1 className="mb-4 text-4xl font-bold text-white md:text-5xl lg:text-6xl">
+                <div className="relative z-10 mt-6 text-center">
+                    <h1 className="mb-5 text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
                         Frequently Asked Questions
                     </h1>
 
-                    <p className="text-lg text-white/85">
+                    <p className="mx-auto max-w-2xl text-lg leading-8 text-white/85">
                         Everything you need to know
                         <br className="sm:hidden" />
                         about our learning platform.
@@ -231,6 +231,7 @@ export default function FAQ() {
 
                 <div
                     className="
+                        group
                         relative
                         overflow-hidden
                         rounded-2xl
@@ -245,7 +246,12 @@ export default function FAQ() {
                             inset-0
                             h-full
                             w-full
-                            object-cover object-center
+                            object-cover
+                            object-center
+                            transition-transform
+                            duration-700
+                            ease-out
+                            group-hover:scale-102
                         "
                     />
 
