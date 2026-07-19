@@ -87,7 +87,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, isMobile = false,
         '/dashboard/courses',
         '/dashboard/trainer',
         '/dashboard/scheduling',
-        '/dashboard/administration',
+        '/dashboard/assessment',
         '/dashboard/profile'
       ];
       const items = group.items.filter(item => allowedPaths.includes(item.path));

@@ -27,6 +27,8 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+import JourneyTimeline from "./journey/JourneyTimeline";
+
 import {
     FiBookOpen,
     FiShield,
@@ -411,85 +413,87 @@ export default function Home() {
             {/* Customer success story highlighting
                 measurable business impact. */}
 
-            <section
-                className="
-                    relative
-                    z-[1]
-                    bg-[linear-gradient(135deg,var(--gradient1-xebia),var(--gradient2-xebia))]
-                    px-[8%]
-                    py-[120px]
-                    text-white
-                "
-            >
+            <section className="relative z-[1] bg-[var(--background)] px-[8%] pt-32 pb-20">
 
-                <div className="grid items-center gap-20 lg:grid-cols-2">
-                    {/* Left Side */}
-                    <div>
-                        <span className="text-[0.8rem] tracking-[2px] text-[#ffb347]">
-                            CTO PERSPECTIVE
-                        </span>
+                <div className="mx-auto max-w-4xl text-center">
 
-                        <p className="mt-6 text-lg leading-8">
-                            “Xebia transformed our internal
-                            learning ecosystem. The platform
-                            became the foundation of our
-                            engineering excellence.”
-                        </p>
-
-                        <div className="mt-8 flex items-center gap-5">
-                            <img
-                                src="/avatar.png"
-                                width={60}
-                                height={60}
-                                alt="Avatar"
-                                className="rounded-full"
-                            />
-
-                            <div>
-                                <h4 className="text-lg font-semibold">
-                                    Sarah Jenkins
-                                </h4>
-
-                                <span className="text-white/70">
-                                    CTO, Global Dynamics
-                                </span>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Right Side */}
-                    <div
+                    <span
                         className="
-                            rounded-3xl
-                            bg-white/10
-                            p-[50px]
-                            backdrop-blur-xl
-                            transition-all
-                            duration-300
-                            hover:-translate-y-1.5
-                            hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)]
+                            inline-block
+                            rounded-full
+                            bg-[var(--background-ui)]
+                            px-5
+                            py-2
+                            text-xs
+                            font-bold
+                            tracking-[3px]
+                            text-[var(--primary-color)]
                         "
                     >
+                        HOW IT WORKS
+                    </span>
 
-                        <div className="mb-[30px] h-1 w-[70px] bg-orange-500" />
+                    <h2
+                        className="
+                            mt-8
+                            text-5xl
+                            font-bold
+                            leading-tight
+                            text-[var(--text-primary)]
+                            md:text-6xl
+                        "
+                    >
+                        Experience the Complete
+                        <br />
+                        Learning Journey
+                    </h2>
 
-                        <h3 className="text-3xl font-semibold">
-                            Measurable ROI
-                        </h3>
+                    <p
+                        className="
+                            mx-auto
+                            mt-8
+                            max-w-3xl
+                            text-xl
+                            leading-9
+                            text-[var(--text-secondary)]
+                        "
+                    >
+                        From your first login to earning
+                        industry-recognized certifications,
+                        every step is seamlessly connected
+                        inside one modern learning platform.
+                    </p>
 
-                        <p className="mt-6 leading-8 text-white/80">
-                            Since implementation,
-                            organizations reported
-                            faster onboarding,
-                            improved retention,
-                            and stronger employee
-                            growth paths.
-                        </p>
-                    </div>
+                    <div
+                        className="
+                            mx-auto
+                            mt-14
+                            h-px
+                            w-40
+                            bg-gradient-to-r
+                            from-transparent
+                            via-[var(--primary-color)]
+                            to-transparent
+                        "
+                    />
+
+                    <p
+                        className="
+                            mt-6
+                            text-sm
+                            tracking-[2px]
+                            text-[var(--text-secondary)]
+                        "
+                    >
+                        Scroll to explore the journey
+                    </p>
+
                 </div>
+
             </section>
 
+            {/* Journey Graph */}
+            <JourneyTimeline />
 
             {/* Final conversion section encouraging
                 users to begin their learning journey. */}
