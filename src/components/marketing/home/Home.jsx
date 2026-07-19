@@ -495,6 +495,7 @@ export default function Home() {
             {/* Journey Graph */}
             <JourneyTimeline />
 
+
             {/* Final conversion section encouraging
                 users to begin their learning journey. */}
 
