@@ -69,13 +69,11 @@
 }
 
 /* Uppercase Labels Specification: 10px with increased tracking (0.8px) */
-span.uppercase,
-label,
-.uppercase {
-  font-size: 10px !important;
-  letter-spacing: 0.8px !important;
-  text-transform: uppercase !important;
-  font-weight: 700 !important;
+.uppercase-label {
+    font-size: 10px;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    font-weight: 700;
 }
 
 /* Dashboard Numbers Specification: 32px with negative letter spacing (-0.8px) */
@@ -224,9 +222,9 @@ input, select, textarea {
   --text-secondary: #444444;
   --text-special: rgb(255, 255, 255);
   --background: rgb(255, 255, 255);
-  --background-ui: rgb(255, 241, 252);
+  --background-ui: #fff1fc;
   --background-gradient1: rgba(255, 255, 255, 0.2);
-  --background-gradient2: rgba(255, 255, 255, 0.35);
+  --background-gradient2: rgba(255, 255, 255, 0.25);
   --transition-fast: 0.25s ease;
   --transition-medium: 0.4s ease;
   --transition-slow: 0.6s ease;
@@ -237,6 +235,7 @@ input, select, textarea {
 [data-theme="dark"] .marketing-theme {
   --primary-color: #6c1d5f;
   --primary-second-color: #793b74;
+  --primary-tertiary-color: #793b74;
   --text-primary: #ffffff;
   --text-secondary: #d1d5db;
   --text-special: #000000;
@@ -381,4 +380,21 @@ input, select, textarea {
 .group:hover .icon-hover-scale,
 .icon-hover-scale:hover {
   transform: scale(1.1);
+}
+
+/* ==========================================================
+   FORM AUTOFILL
+   ========================================================== */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+
+    -webkit-text-fill-color: var(--text-primary) !important;
+
+    caret-color: var(--text-primary);
+
+    transition: background-color 9999s ease-in-out;
 }

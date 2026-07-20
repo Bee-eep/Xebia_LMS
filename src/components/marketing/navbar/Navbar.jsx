@@ -25,7 +25,7 @@
  *
  * ==========================================================
  */
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import {
     MdOutlineDarkMode,
@@ -36,9 +36,6 @@ import { IoCallOutline } from "react-icons/io5";
 import { LuMessageCircleMore } from "react-icons/lu";
 
 import { useTheme } from "@/context/ThemeContext.jsx";
-
-import styles from "./Navbar.module.css";
-
 /**
  * Navbar Component
  *
@@ -54,79 +51,159 @@ export default function Navbar() {
     // and the function responsible for toggling
     // between light and dark modes.
     const { theme, toggleTheme } = useTheme();
+    const navItems = [
+        {
+            to: "/home",
+            label: "Home",
+            icon: AiOutlineHome,
+        },
+        {
+            to: "/faq",
+            label: "FAQ",
+            icon: LuMessageCircleMore,
+        },
+        {
+            to: "/contact",
+            label: "Contact Us",
+            icon: IoCallOutline,
+        },
+    ];
 
     return (
-        <nav className={styles.navbar}>
+        <nav className="fixed inset-x-0 top-3.5 z-50 px-4">
+            <div
+                className="
+                    mx-auto
+                    flex
+                    h-[64px]
+                    max-w-7xl
+                    items-center
+                    justify-between
+                    rounded-2xl
+                    border
+                    border-white/10
+                    bg-[var(--background-ui)]/80
+                    px-8
+                    shadow-xl
+                    backdrop-blur-xl
+                "
+            >
 
-            <div className={styles.container}>
+                {/* Logo */}
 
-                {/* Left Section */}
-                {/* Brand identity and homepage navigation. */}
-                <Link
-                    to="/home"
-                    className={styles.logoContainer}
-                >
+                <Link to="/home">
                     <img
-                        src={
-                            "/logo-light.png"
-                        }
+                        src="/logo-light.png"
                         alt="Xebia Logo"
-                        className={styles.logo}
+                        className="
+                            h-10
+                            w-auto
+                            transition-transform
+                            duration-300
+                            hover:scale-105
+                        "
                     />
                 </Link>
 
-                {/* Middle Section */}
-                {/* Primary navigation links for public pages. */}
-                <div className={styles.links}>
-                    <Link to="/home">
-                        <AiOutlineHome />
-                        <span>Home</span>
-                    </Link>
+                {/* Navigation */}
 
-                    <span className={styles.divider}>
-                        |
-                    </span>
+                <div className="hidden items-center gap-10 md:flex">
 
-                    <Link to="/faq">
-                        <LuMessageCircleMore />
-                        <span>FAQ</span>
-                    </Link>
+                    {navItems.map(({ to, label, icon: Icon }) => (
 
-                    <span className={styles.divider}>
-                        |
-                    </span>
-                    
-                    <Link to="/contact">
-                        <IoCallOutline />
-                        <span>Contact Us</span>
-                    </Link>
+                        <NavLink
+                            key={to}
+                            to={to}
+                            className={({ isActive }) =>
+                                `
+                                group
+                                relative
+                                flex
+                                items-center
+                                gap-2
+                                font-medium
+                                transition-all
+                                duration-300
+                                ${
+                                    isActive
+                                        ? "text-[var(--primary-color)]"
+                                        : "text-[var(--text-primary)] hover:text-[var(--primary-color)]"
+                                }
+                            `
+                            }
+                        >
+
+                            <Icon className="text-lg" />
+
+                            <span>{label}</span>
+
+                            <span
+                                className="
+                                    absolute
+                                    -bottom-2
+                                    left-0
+                                    h-0.5
+                                    w-0
+                                    rounded-full
+                                    bg-gradient-to-r
+                                    from-[var(--gradient1-xebia)]
+                                    to-[var(--gradient2-xebia)]
+                                    transition-all
+                                    duration-300
+                                    group-hover:w-full
+                                "
+                            />
+
+                        </NavLink>
+
+                    ))}
+
                 </div>
 
-                {/* Right Section */}
-                {/* Naviagte to /login & includes theme switching
-                    and the primary onboarding CTA. */}
-                <div className={styles.actions}>
-                    {/* Toggle between light and dark themes.
-                        The displayed icon represents the action
-                        that will occur when the button is pressed. */}
-                    <button
-                        className={styles.themeButton}
-                        onClick={toggleTheme}
-                    >
-                        {
-                            theme === "light"
-                                ? <MdOutlineDarkMode />
-                                : <MdOutlineLightMode />
-                        }
-                    </button>
+                {/* Right Side */}
 
-                    <span className={styles.divider}>
-                        |
-                    </span>
+                <div className="flex items-center gap-4">
+
+                    <button
+                        onClick={toggleTheme}
+                        className="
+                            flex
+                            h-11
+                            w-11
+                            items-center
+                            justify-center
+                            rounded-full
+                            border
+                            border-[var(--primary-tertiary-color)]
+                            transition-all
+                            duration-300
+                            hover:rotate-12
+                            hover:border-[var(--primary-color)]
+                            hover:text-[var(--primary-color)]
+                        "
+                    >
+                        {theme === "light"
+                            ? <MdOutlineDarkMode />
+                            : <MdOutlineLightMode />}
+                    </button>
 
                     <Link
                         to="/login"
-                        className={styles.ctaButton}
+                        className="
+                            rounded-full
+                            bg-gradient-to-r
+                            from-[var(--gradient1-xebia)]
+                            to-[var(--gradient2-xebia)]
+                            px-6
+                            py-3
+                            font-semibold
+                            text-white
+                            shadow-lg
+                            transition-all
+                            duration-300
+                            hover:-translate-y-1
+                            hover:shadow-xl
+                        "
                     >
                         Get Started
                     </Link>
@@ -134,7 +211,6 @@ export default function Navbar() {
                 </div>
 
             </div>
-
         </nav>
     );
 }

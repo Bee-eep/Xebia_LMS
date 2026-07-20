@@ -25,7 +25,18 @@
 
 import { Link } from "react-router-dom";
 
-import styles from "./Footer.module.css";
+import {
+    FaLinkedinIn,
+    FaFacebookF,
+    FaTwitter,
+} from "react-icons/fa";
+
+import {
+    IoLocationOutline,
+    IoCallOutline,
+} from "react-icons/io5";
+
+import { MdOutlineAlternateEmail } from "react-icons/md";
 
 /**
  * Footer Component
@@ -38,95 +49,194 @@ import styles from "./Footer.module.css";
  * - Contact information
  * - Copyright notice
  */
+
 export default function Footer() {
+
+    const linkStyle =
+        "block text-[var(--text-secondary)] transition-colors duration-300 hover:text-[var(--primary-color)]";
+
+    const socialStyle =
+        "flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-[var(--gradient1-xebia)] to-[var(--gradient2-xebia)] text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl";
 
     return (
 
-        <footer className={styles.footer}>
+        <footer className="border-t z-[10] border-black/10 bg-[var(--background-ui)]">
 
-            <div className={styles.footerContainer}>
-                {/* Brand identity and company mission statement. */}
-                <div className={styles.footerBrand}>
+            <div
+                className="
+                    mx-auto
+                    grid
+                    max-w-[1400px]
+                    grid-cols-1
+                    gap-15
+                    px-[5%]
+                    py-15
+                    text-center
+                    md:grid-cols-2
+                    md:text-left
+                    lg:grid-cols-4
+                "
+            >
+
+                {/* Brand */}
+
+                <div>
 
                     <img
                         src="/logo-light.png"
-                        width={180}
-                        height={80}
                         alt="Xebia"
+                        className="mx-auto mb-8 h-14 w-auto md:mx-0"
                     />
 
-                    <p>
-                        Empowering organizations through
-                        cloud, DevOps, AI, and digital
-                        transformation.
+                    <p className="mb-8 max-w-xs leading-8 text-[var(--text-secondary)] md:max-w-sm">
+                        Empowering organizations through cloud,
+                        DevOps, AI, and modern software engineering.
                     </p>
+
+                    <address className="space-y-4 not-italic">
+
+                        <div className="flex items-center justify-center gap-3 text-[var(--text-secondary)] md:justify-start">
+                            <MdOutlineAlternateEmail />
+                            <span>contact@xebia.com</span>
+                        </div>
+
+                        <div className="flex items-center justify-center gap-3 text-[var(--text-secondary)] md:justify-start">
+                            <IoCallOutline />
+                            <span>+91 124 664 7000</span>
+                        </div>
+
+                        <div className="flex items-center justify-center gap-3 text-[var(--text-secondary)] md:justify-start">
+                            <IoLocationOutline />
+                            <span>Gurugram, Haryana</span>
+                        </div>
+
+                    </address>
 
                 </div>
 
-                {/* Internal navigation links for public pages. */}
+                {/* Company */}
+
                 <div>
 
-                    <h4>Company</h4>
+                    <h3 className="mb-8 text-xl font-bold text-[var(--text-primary)]">
+                        Company
+                    </h3>
 
-                    <Link to="/home">
-                        Home
-                    </Link>
+                    <div className="space-y-4">
 
-                    <Link to="/faq">
-                        FAQ
-                    </Link>
+                        <Link
+                            to="/home"
+                            className={linkStyle}
+                        >
+                            Home
+                        </Link>
 
-                    <Link to="/contact">
-                        Contact
-                    </Link>
+                        <Link
+                            to="/faq"
+                            className={linkStyle}
+                        >
+                            FAQ
+                        </Link>
+
+                        <Link
+                            to="/contact"
+                            className={linkStyle}
+                        >
+                            Contact
+                        </Link>
+
+                    </div>
 
                 </div>
 
-                {/* Helpful resources and learning materials.
-                    Links are placeholders for future pages. */}
+                {/* Resources */}
+
                 <div>
 
-                    <h4>Resources</h4>
+                    <h3 className="mb-8 text-xl font-bold text-[var(--text-primary)]">
+                        Resources
+                    </h3>
 
-                    <a href="#">
-                        Course Catalog
-                    </a>
+                    <div className="space-y-4">
 
-                    <a href="#">
-                        Case Studies
-                    </a>
+                        <a
+                            href="#"
+                            className={linkStyle}
+                        >
+                            Courses
+                        </a>
 
-                    <a href="#">
-                        Blog
-                    </a>
+                        <a
+                            href="#"
+                            className={linkStyle}
+                        >
+                            Blog
+                        </a>
+
+                        <a
+                            href="#"
+                            className={linkStyle}
+                        >
+                            Case Studies
+                        </a>
+
+                    </div>
 
                 </div>
 
-                {/* Organization contact information. */}
+                {/* Social */}
+
                 <div>
 
-                    <h4>Get In Touch</h4>
+                    <h3 className="mb-8 text-xl font-bold text-[var(--text-primary)]">
+                        Connect
+                    </h3>
 
-                    <p>
-                        Gurugram, Haryana
-                    </p>
+                    <div className="flex justify-center gap-4 md:justify-start">
 
-                    <p>
-                        +91 124 664 7000
-                    </p>
+                        <a
+                            href="#"
+                            className={socialStyle}
+                            aria-label="LinkedIn"
+                        >
+                            <FaLinkedinIn />
+                        </a>
 
-                    <p>
-                        contact@xebia.com
-                    </p>
+                        <a
+                            href="#"
+                            className={socialStyle}
+                            aria-label="Twitter"
+                        >
+                            <FaTwitter />
+                        </a>
+
+                        <a
+                            href="#"
+                            className={socialStyle}
+                            aria-label="Facebook"
+                        >
+                            <FaFacebookF />
+                        </a>
+
+                    </div>
 
                 </div>
 
             </div>
 
-            {/* Global copyright information displayed
-                at the bottom of every page. */}
-            <div className={styles.copyright}>
-                © 2026 Xebia. All rights reserved.
+            {/* Copyright */}
+
+            <div
+                className="
+                    border-t
+                    border-black/10
+                    py-8
+                    text-center
+                    text-sm
+                    text-[var(--text-secondary)]
+                "
+            >
+                © 2026 Xebia Learning Platform. All rights reserved.
             </div>
 
         </footer>
